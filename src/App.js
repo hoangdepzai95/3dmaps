@@ -5,7 +5,7 @@ import createSagaMiddleware from 'redux-saga';
 
 import Router from './Router';
 import reducers from './reducers';
-import { rootSaga } from './sagas';
+import rootSaga from './sagas';
 
 const sagaMiddleware = createSagaMiddleware();
 const store = createStore(
