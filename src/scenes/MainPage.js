@@ -9,6 +9,7 @@ import TabNavigator from 'react-native-tab-navigator';
 import PopularPage from './account';
 import TrendingPage from './news';
 import FavoritePage from './like';
+import Map from './map';
 import MyPage from './map';
 
 export const FLAG_TAB = {
@@ -19,6 +20,7 @@ export const FLAG_TAB = {
 };
 const styles = StyleSheet.create({
   container: {
+    paddingTop: 20,
     flex: 1,
   },
   tabBarIcon: {
@@ -31,6 +33,9 @@ const styles = StyleSheet.create({
     height: 26,
     resizeMode: 'contain',
     tintColor: 'red',
+  },
+  tabTitle: {
+    color: 'red',
   },
 });
 export default class MainPage extends Component {
@@ -66,7 +71,7 @@ export default class MainPage extends Component {
       <TabNavigator.Item
         selected={this.state.selectedTab === selectedTab}
         title={title}
-        selectedTitleStyle={{}}
+        selectedTitleStyle={styles.tabTitle}
         renderIcon={MainPage.renderTabIcon.bind(this, icon)}
         renderSelectedIcon={MainPage.renderSelectedTabIcon.bind(this, icon)}
         onPress={this.onSelected.bind(this, selectedTab)}
@@ -82,7 +87,7 @@ export default class MainPage extends Component {
           tabBarStyle={{ opacity: 0.9 }}
           sceneStyle={{ paddingBottom: 0 }}
         >
-          {this.renderTab(PopularPage, FLAG_TAB.flag_popularTab, 'Popular', require('../../assets/images/ic_polular.png'))}
+          {this.renderTab(Map, FLAG_TAB.flag_popularTab, 'Map', require('../../assets/images/ic_polular.png'))}
           {this.renderTab(TrendingPage, FLAG_TAB.flag_trendingTab, 'Trending', require('../../assets//images/ic_trending.png'))}
           {this.renderTab(FavoritePage, FLAG_TAB.flag_favoriteTab, 'Favorsd', require('../../assets/images/ic_favorite.png'))}
           {this.renderTab(MyPage, FLAG_TAB.flag_myTab, 'My', require('../../assets/images/ic_my.png'))}
