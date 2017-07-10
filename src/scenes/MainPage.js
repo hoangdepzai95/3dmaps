@@ -6,17 +6,19 @@ import {
     View,
 } from 'react-native';
 import TabNavigator from 'react-native-tab-navigator';
-import PopularPage from './account';
-import TrendingPage from './news';
-import FavoritePage from './like';
-import Map from './map';
-import MyPage from './map';
+
+import AccountPage from './account';
+import ExplorePage from './explore';
+import LikePage from './like';
+import MapPage from './map';
+import NewsPage from './news';
 
 export const FLAG_TAB = {
-  flag_popularTab: 'flag_popularTab',
-  flag_trendingTab: 'flag_trendingTab',
-  flag_favoriteTab: 'flag_favoriteTab',
-  flag_myTab: 'flag_myTab',
+  account: 'account',
+  explore: 'explore',
+  like: 'like',
+  map_tab: 'map_tab',
+  news: 'news',
 };
 const styles = StyleSheet.create({
   container: {
@@ -87,10 +89,11 @@ export default class MainPage extends Component {
           tabBarStyle={{ opacity: 0.9 }}
           sceneStyle={{ paddingBottom: 0 }}
         >
-          {this.renderTab(Map, FLAG_TAB.flag_popularTab, 'Map', require('../../assets/images/ic_polular.png'))}
-          {this.renderTab(TrendingPage, FLAG_TAB.flag_trendingTab, 'Trending', require('../../assets//images/ic_trending.png'))}
-          {this.renderTab(FavoritePage, FLAG_TAB.flag_favoriteTab, 'Favorsd', require('../../assets/images/ic_favorite.png'))}
-          {this.renderTab(MyPage, FLAG_TAB.flag_myTab, 'My', require('../../assets/images/ic_my.png'))}
+          {this.renderTab(ExplorePage, FLAG_TAB.explore, 'Explore', require('../../assets/images/ic_polular.png'))}
+          {this.renderTab(MapPage, FLAG_TAB.map_tab, 'Map', require('../../assets//images/ic_trending.png'))}
+          {this.renderTab(LikePage, FLAG_TAB.like, 'Like', require('../../assets/images/ic_favorite.png'))}
+          {this.renderTab(NewsPage, FLAG_TAB.news, 'Tips', require('../../assets/images/ic_my.png'))}
+          {this.renderTab(AccountPage, FLAG_TAB.account, 'Account', require('../../assets/images/ic_my.png'))}
         </TabNavigator>
       </View>
     );
