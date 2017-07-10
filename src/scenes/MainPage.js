@@ -22,7 +22,6 @@ export const FLAG_TAB = {
 };
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 20,
     flex: 1,
   },
   tabBarIcon: {

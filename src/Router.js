@@ -1,5 +1,6 @@
 import React from 'react';
 import { Scene, Router } from 'react-native-router-flux';
+import { connect } from 'react-redux';
 
 import Wellcome from './scenes/wellcome';
 import MainPage from './scenes/MainPage';
@@ -17,4 +18,8 @@ const RouterComponent = () => {
   );
 };
 
-export default RouterComponent;
+export default connect((state) => {
+  return {
+    firstOpenApp: state.auth.firstOpenApp,
+  };
+})(RouterComponent);

@@ -1,26 +1,43 @@
-import React from 'react';
-import { Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
-import createSagaMiddleware from 'redux-saga';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { View, Text, AsyncStorage } from 'react-native';
 
 import Router from './Router';
-import reducers from './reducers';
-import rootSaga from './sagas';
+import { checkLogin } from './actions/auth';
 
-const sagaMiddleware = createSagaMiddleware();
-const store = createStore(
-                reducers,
-                applyMiddleware(sagaMiddleware),
-              );
-sagaMiddleware.run(rootSaga);
-const App = () => {
-  return (
-    <Provider
-      store={store}
-    >
+class App extends Component {
+  constructor(props) {
+    super(props);
+  }
+  componentWillMount() {
+    console.log('will mount');
+    this.props.dispatch(checkLogin());
+  }
+  componentDidUpdate() {
+    const { firstOpenApp, authChecked } = this.props;
+    if (firstOpenApp && authChecked) {
+      console.log('go');
+      AsyncStorage.setItem('first_open', '1');
+    }
+    console.log(this.props);
+  }
+  render() {
+    const { firstOpenApp, authChecked } = this.props;
+    if (!firstOpenApp && !authChecked) {
+      return (
+        <View>
+          <Text>Loading</Text>
+        </View>
+      );
+    }
+    return (
       <Router />
-    </Provider>
-  );
-};
-
-export default App;
+    );
+  }
+}
+export default connect((state) => {
+  return {
+    firstOpenApp: state.auth.firstOpenApp,
+    authChecked: state.auth.authChecked,
+  };
+})(App);
