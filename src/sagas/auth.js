@@ -1,21 +1,21 @@
 import { takeLatest, fork, call, put } from 'redux-saga/effects';
 
-import { CHECK_LOGIN, receiveCheckLogin } from '../actions/auth';
+import { INIT_APP, receiveInitApp } from '../actions/auth';
 import Api from '../api';
 
-function* checkLogin (action) {
+function* initApp () {
   try {
-	  const response = yield call(Api.checkLogin);
-    yield put(receiveCheckLogin(...response));
+	  const response = yield call(Api.initApp);
+    yield put(receiveInitApp(...response));
 	} catch (err) {
 		console.log(err);
 	}
 }
 
-function* watchCheckLogin (){
-  yield takeLatest(CHECK_LOGIN, checkLogin);
+function* watchInitApp (){
+  yield takeLatest(INIT_APP, initApp);
 }
 
 export function* auth() {
-  yield fork(watchCheckLogin);
+  yield fork(watchInitApp);
 };

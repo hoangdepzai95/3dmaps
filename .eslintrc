@@ -5,6 +5,7 @@
     "jsx-a11y/img-has-alt": [0],
     "arrow-body-style": 0,
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
-    "react/jsx-no-bind": 0
+    "react/jsx-no-bind": 0,
+    "react/prop-types": 0
   }
 }

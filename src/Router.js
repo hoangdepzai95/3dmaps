@@ -1,21 +1,14 @@
 import React from 'react';
-import { Scene, Router } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 
 import Wellcome from './scenes/wellcome';
 import MainPage from './scenes/MainPage';
 
-const RouterComponent = () => {
-  return (
-    <Router hideNavBar >
-      <Scene key="wellcomeArea">
-        <Scene key="wellcome" component={Wellcome} />
-      </Scene>
-      <Scene key="main" initial>
-        <Scene key="MainPage" component={Wellcome} initial />
-      </Scene>
-    </Router>
-  );
+const RouterComponent = (props) => {
+  if (props.firstOpenApp) {
+    return <Wellcome />;
+  }
+  return <MainPage />;
 };
 
 export default connect((state) => {

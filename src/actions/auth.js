@@ -1,17 +1,17 @@
 export const LOGIN_FACEBOOK = 'LOGIN_FACEBOOK';
-export const CHECK_LOGIN = 'CHECK_LOGIN';
-export const RECEIVE_CHECK_LOGIN = 'RECEIVE_CHECK_LOGIN';
+export const INIT_APP = 'INIT_APP';
+export const RECEIVE_INIT_APP = 'RECEIVE_INIT_APP';
 
-export function checkLogin() {
+export function initApp() {
+  console.log('init')
   return {
-    type: CHECK_LOGIN,
+    type: INIT_APP,
   };
 }
 
-export function receiveCheckLogin(fbTooken, ggTooken, firstOpen) {
-  console.log(fbTooken, ggTooken, firstOpen);
+export function receiveInitApp(fbTooken, ggTooken, firstOpen) {
   return {
-    type: RECEIVE_CHECK_LOGIN,
+    type: RECEIVE_INIT_APP,
     fbTooken,
     ggTooken,
     firstOpen,
