@@ -1,8 +1,18 @@
 import React from 'react';
-import { Text } from 'react-native';
+import { connect } from 'react-redux';
 
-const Wellcome = () => {
-  return <Text>account</Text>;
+import LoggedIn from './logged-in';
+import NotLogged from './not-logged';
+
+const Account = ({ authType }) => {
+  if (authType) {
+    return <LoggedIn />;
+  }
+  return <NotLogged />;
 };
 
-export default Wellcome;
+export default connect((state) => {
+  return {
+    authType: state.auth.authType,
+  };
+})(Account);
