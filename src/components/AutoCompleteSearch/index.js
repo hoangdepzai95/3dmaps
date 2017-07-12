@@ -10,10 +10,12 @@ const AutoCompleteSearch = () => {
         underlineColorAndroid="transparent"
         placeholder="Search"
       />
-      <Image
-        source={require('../../../assets/images/search.png')}
-        style={styles.icon}
-      />
+      <View style={styles.iconWrapper}>
+        <Image
+          source={require('../../../assets/images/search.png')}
+          style={styles.icon}
+        />
+      </View>
     </View>
   );
 };

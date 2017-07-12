@@ -221,7 +221,6 @@ const ScrollableTabView = React.createClass({
 
   _handleLayout(e) {
     const { width, } = e.nativeEvent.layout;
-
     if (Math.round(width) !== Math.round(this.state.containerWidth)) {
       this.setState({ containerWidth: width, });
       this.requestAnimationFrame(() => {
@@ -244,7 +243,6 @@ const ScrollableTabView = React.createClass({
       scrollValue: this.state.scrollValue,
       containerWidth: this.state.containerWidth - 100,
     };
-
     if (this.props.tabBarBackgroundColor) {
       tabBarProps.backgroundColor = this.props.tabBarBackgroundColor;
     }
@@ -267,21 +265,18 @@ const ScrollableTabView = React.createClass({
         right: 0,
         [this.props.tabBarPosition === 'overlayTop' ? 'top' : 'bottom']: 0,
       };
-    } else {
-      tabBarProps.style = {
-        marginLeft: 60,
-        marginRight: 40,
-      };
     }
     const iconBackStyle = {
       width: 10,
       height: 10,
     };
-    return <View style={[styles.container, this.props.style, ]} onLayout={this._handleLayout}>
-      <Image source={require('../../../assets/images/chevron_left.png')} style={iconBackStyle} />
-      {this.props.tabBarPosition === 'top' && this.renderTabBar(tabBarProps)}
-      {this.renderScrollableContent()}
-      {(this.props.tabBarPosition === 'bottom' || overlayTabs) && this.renderTabBar(tabBarProps)}
+    return <View style={[styles.container, this.props.style, ]} >
+      <View style={styles.tabarContainer}>
+        {this.props.tabBarPosition === 'top' && this.renderTabBar(tabBarProps)}
+      </View>
+      <View style={styles.mainContainer}>
+        {this.renderScrollableContent()}
+      </View>
     </View>;
   },
 });
@@ -295,4 +290,10 @@ const styles = StyleSheet.create({
   scrollableContentAndroid: {
     flex: 1,
   },
+  tabarContainer: {
+    flex: 25,
+  },
+  mainContainer: {
+    flex: 311,
+  }
 });

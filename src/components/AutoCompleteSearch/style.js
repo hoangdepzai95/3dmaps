@@ -17,11 +17,17 @@ const styles = StyleSheet.create({
   },
   icon: {
     tintColor: '#acacac',
-    position: 'absolute',
-    width: 15,
     height: 15,
-    top: 6,
-    left: 16,
+    width: 15,
+  },
+  iconWrapper: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    bottom: 0,
+    paddingLeft: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 
