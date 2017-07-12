@@ -5,7 +5,8 @@ import {
     Image,
     View,
 } from 'react-native';
-import TabNavigator from 'react-native-tab-navigator';
+import TabView from 'react-native-scrollable-tab-view';
+import DefaultTabBar from 'react-native-scrollable-tab-view/DefaultTabBar';
 
 import AccountPage from './account';
 import ExplorePage from './explore';
@@ -81,19 +82,26 @@ export default class MainPage extends Component {
       </TabNavigator.Item>
     );
   }
+  renderTabBar = () => {
+    return (
+      <DefaultTabBar
+        activeTextColor="#7076eb"
+        underlineStyle={{ backgroundColor: '#7076eb' }}
+        style={{ borderWidth: 0, justifyContent: 'flex-end' }}
+      />
+    );
+  }
   render() {
     return (
       <View style={styles.container}>
-        <TabNavigator
-          tabBarStyle={{ opacity: 0.9 }}
-          sceneStyle={{ paddingBottom: 0 }}
+        <TabView
+          renderTabBar={this.renderTabBar}
         >
-          {this.renderTab(ExplorePage, FLAG_TAB.explore, 'Explore', require('../../assets/images/ic_polular.png'))}
-          {this.renderTab(MapPage, FLAG_TAB.map_tab, 'Map', require('../../assets//images/ic_trending.png'))}
-          {this.renderTab(LikePage, FLAG_TAB.like, 'Like', require('../../assets/images/ic_favorite.png'))}
-          {this.renderTab(NewsPage, FLAG_TAB.news, 'Tips', require('../../assets/images/ic_my.png'))}
-          {this.renderTab(AccountPage, FLAG_TAB.account, 'Account', require('../../assets/images/ic_my.png'))}
-        </TabNavigator>
+          <MapPage tabLabel="HOME" />
+          <LikePage tabLabel="EXPERIENCE" />
+          <ExplorePage tabLabel="MAP" />
+          <NewsPage tabLabel="MAPs" />
+        </TabView>
       </View>
     );
   }

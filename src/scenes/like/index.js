@@ -1,8 +1,14 @@
 import React from 'react';
-import { Text } from 'react-native';
+import { Text, View } from 'react-native';
+import AutoCompleteSearch from '../../components/AutoCompleteSearch';
+
 
 const Wellcome = () => {
-  return <Text>Like</Text>;
+  return (
+    <View>
+      <AutoCompleteSearch />
+    </View>
+  );
 };
 
 export default Wellcome;
