@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, TextInput } from 'react-native';
+import { View, TextInput, Image } from 'react-native';
 import styles from './style';
 
 const AutoCompleteSearch = () => {
@@ -8,6 +8,10 @@ const AutoCompleteSearch = () => {
       <TextInput
         style={styles.input}
         underlineColorAndroid="transparent"
+      />
+      <Image
+        source={require('../../../assets/images/search.png')}
+        style={styles.icon}
       />
     </View>
   );
