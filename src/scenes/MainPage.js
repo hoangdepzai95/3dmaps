@@ -4,15 +4,17 @@ import {
     StyleSheet,
     Image,
     View,
+    StatusBar,
 } from 'react-native';
-import TabView from 'react-native-scrollable-tab-view';
-import DefaultTabBar from 'react-native-scrollable-tab-view/DefaultTabBar';
+import TabView from '../lib/react-native-scrollable-tab-view';
+import DefaultTabBar from '../lib/react-native-scrollable-tab-view/DefaultTabBar';
 
 import AccountPage from './account';
 import ExplorePage from './explore';
 import LikePage from './like';
 import MapPage from './map';
 import NewsPage from './news';
+import AutoCompleteSearch from '../components/AutoCompleteSearch';
 
 export const FLAG_TAB = {
   account: 'account',
@@ -25,62 +27,19 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  tabBarIcon: {
-    width: 26,
-    height: 26,
-    resizeMode: 'contain',
+  header: {
+    flex: 1,
   },
-  tabBarSelectedIcon: {
-    width: 26,
-    height: 26,
-    resizeMode: 'contain',
-    tintColor: 'red',
-  },
-  tabTitle: {
-    color: 'red',
+  main: {
+    flex: 18,
   },
 });
 export default class MainPage extends Component {
-  static renderTabIcon(icon) {
-    return (
-      <Image
-        style={styles.tabBarIcon}
-        source={icon}
-      />
-    );
-  }
-  static renderSelectedTabIcon(icon) {
-    return (
-      <Image
-        style={styles.tabBarSelectedIcon}
-        source={icon}
-      />
-    );
-  }
   constructor(props) {
     super(props);
     this.state = {
       selectedTab: FLAG_TAB.flag_popularTab,
     };
-  }
-  onSelected(selected) {
-    this.setState({
-      selectedTab: selected,
-    });
-  }
-  renderTab(TabComponent, selectedTab, title, icon) {
-    return (
-      <TabNavigator.Item
-        selected={this.state.selectedTab === selectedTab}
-        title={title}
-        selectedTitleStyle={styles.tabTitle}
-        renderIcon={MainPage.renderTabIcon.bind(this, icon)}
-        renderSelectedIcon={MainPage.renderSelectedTabIcon.bind(this, icon)}
-        onPress={this.onSelected.bind(this, selectedTab)}
-      >
-        <TabComponent {...this.props} homeComponent={this} />
-      </TabNavigator.Item>
-    );
   }
   renderTabBar = () => {
     return (
@@ -94,14 +53,18 @@ export default class MainPage extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <TabView
-          renderTabBar={this.renderTabBar}
-        >
-          <MapPage tabLabel="HOME" />
-          <LikePage tabLabel="EXPERIENCE" />
-          <ExplorePage tabLabel="MAP" />
-          <NewsPage tabLabel="MAPs" />
-        </TabView>
+        <View style={styles.header}>
+          <AutoCompleteSearch />
+        </View>
+        <View style={styles.main}>
+          <TabView
+            renderTabBar={this.renderTabBar}
+          >
+            <MapPage tabLabel="HOME" />
+            <LikePage tabLabel="EXPERIENCE" />
+            <ExplorePage tabLabel="MAP" />
+          </TabView>
+        </View>
       </View>
     );
   }

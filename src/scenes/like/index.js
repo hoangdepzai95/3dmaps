@@ -1,12 +1,15 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, StatusBar } from 'react-native';
 import AutoCompleteSearch from '../../components/AutoCompleteSearch';
 
 
 const Wellcome = () => {
   return (
     <View>
-      <AutoCompleteSearch />
+    <StatusBar
+      backgroundColor="red"
+      barStyle="light-content"
+    />
     </View>
   );
 };

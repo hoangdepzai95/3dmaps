@@ -2,26 +2,26 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
-    height: 37,
     flex: 1,
     position: 'relative',
+    paddingLeft: 10,
+    paddingRight: 10,
   },
   input: {
-    height: 37,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderStyle: 'solid',
+    flex: 1,
+    backgroundColor: '#f1f1f1',
     borderRadius: 3,
     paddingBottom: 0,
     paddingLeft: 35,
+    paddingRight: 10,
   },
   icon: {
-    tintColor: '#ccc',
+    tintColor: '#acacac',
     position: 'absolute',
     width: 15,
     height: 15,
-    top: 11,
-    left: 6,
+    top: 6,
+    left: 16,
   },
 });
 

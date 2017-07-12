@@ -8,6 +8,7 @@ const AutoCompleteSearch = () => {
       <TextInput
         style={styles.input}
         underlineColorAndroid="transparent"
+        placeholder="Search"
       />
       <Image
         source={require('../../../assets/images/search.png')}
