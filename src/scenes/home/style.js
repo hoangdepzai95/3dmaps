@@ -39,7 +39,12 @@ const styles = StyleSheet.create({
     height: height / 17,
     backgroundColor: 'transparent',
     zIndex: 999,
-    overflow: 'hidden',
+    shadowColor: '#333',
+    shadowOpacity: 1,
+    shadowOffset: {
+      width: 0,
+      height: 0,
+    },
   },
 });
 export default styles;

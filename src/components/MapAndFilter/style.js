@@ -8,7 +8,6 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderWidth: 1,
     borderColor: '#f6f6f6',
-    overflow: 'hidden',
     flexDirection: 'row',
     paddingHorizontal: 5,
   },
