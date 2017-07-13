@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, ScrollView, TouchableOpacity, Text } from 'react-native';
 import Post from './post';
-
+import MapAndFilter from '../../components/MapAndFilter';
 import styles from './style';
 
 export default class HomeTab extends Component {
@@ -95,6 +95,9 @@ export default class HomeTab extends Component {
             })
           }
         </ScrollView>
+        <View style={styles.mapAndFilter} elevation={5}>
+          <MapAndFilter />
+        </View>
       </View>
     );
   }

@@ -12,6 +12,7 @@
     "lodash": "^4.17.4",
     "react": "16.0.0-alpha.6",
     "react-native": "https://github.com/expo/react-native/archive/sdk-17.0.0.tar.gz",
+    "react-native-elevated-view": "0.0.4",
     "react-native-router-flux": "^4.0.0-beta.7",
     "react-native-scrollable-tab-view": "^0.7.4",
     "react-native-swipe-a-lot": "^0.2.1",

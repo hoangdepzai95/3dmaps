@@ -1,4 +1,5 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
+const { height, width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   container: {
@@ -6,6 +7,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 13,
     paddingTop: 25,
+    position: 'relative',
   },
   postRow: {
     flexDirection: 'row',
@@ -28,6 +30,16 @@ const styles = StyleSheet.create({
   },
   gallery: {
     paddingBottom: 10,
-  }
+  },
+  mapAndFilter: {
+    position: 'absolute',
+    bottom: height / 15,
+    width: width * 0.378,
+    left: (width / 2) - ((width * 0.378) / 2),
+    height: height / 17,
+    backgroundColor: 'transparent',
+    zIndex: 999,
+    overflow: 'hidden',
+  },
 });
 export default styles;
