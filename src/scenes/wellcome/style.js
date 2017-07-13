@@ -1,12 +1,80 @@
-import { StyleSheet } from 'react-native';
-
+import { StyleSheet, Dimensions } from 'react-native';
+const { height, width } = Dimensions.get('window');
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 25,
   },
   wrapper: {
     flex: 1,
+    resizeMode: 'cover',
+  },
+  backgroundImage: {
+    flex: 1,
+    width: null,
+    height: null,
+    resizeMode: 'stretch',
+  },
+  box1: {
+    flex: 3,
+    justifyContent: 'center',
+    flexDirection: 'row',
+  },
+  box2: {
+    flex: 4,
+    paddingTop: '25%',
+    paddingHorizontal: '11%',
+  },
+  iconMap: {
+    alignSelf: 'flex-end',
+    width: width * 0.35,
+    height: width * 0.35,
+    resizeMode: 'cover',
+  },
+  facebookLogin: {
+    backgroundColor: '#3b5998',
+    borderRadius: 8,
+    height: '15%',
+    marginBottom: '3%',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  googleLogin: {
+    backgroundColor: '#ff6363',
+    borderRadius: 8,
+    height: '15%',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  skip: {
+    marginTop: '5%',
+    alignSelf: 'center',
+    backgroundColor: 'transparent',
+  },
+  skipText: {
+    color: '#acaeb2',
+    backgroundColor: 'transparent',
+  },
+  company: {
+    alignSelf: 'center',
+    marginTop: '30%',
+    width: width * 0.146,
+    height: width * 0.146 * 0.574,
+  },
+  facebookIcon: {
+    height: height * 0.15 * 0.2,
+    width: height * 0.15 * 0.2 * 0.51,
+    marginRight: 16,
+  },
+  googleIcon: {
+    height: height * 0.15 * 0.23,
+    width: height * 0.15 * 0.23,
+    tintColor: 'white',
+    marginRight: 10,
+  },
+  buttonText: {
+    color: 'white',
   },
 });
 

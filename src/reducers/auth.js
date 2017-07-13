@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { RECEIVE_INIT_APP, RECEIVE_LOGIN_FACEBOOK, LOG_OUT } from '../actions/auth';
+import { RECEIVE_INIT_APP, RECEIVE_LOGIN_FACEBOOK, LOG_OUT, SKIP_LOGIN } from '../actions/auth';
 
 const initialState = {
   firstOpenApp: false,
@@ -27,6 +27,8 @@ const login = (state = initialState, action) => {
       return _.assign({}, state, { token: action.token, authType: 'facebook' });
     case LOG_OUT :
       return _.assign({}, state, { token: '', authType: '' });
+    case SKIP_LOGIN:
+      return _.assign({}, state, { authType: 'guest' });
     default:
       return state;
   }

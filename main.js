@@ -11,7 +11,6 @@ import App from './src/App';
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 25,
     flex: 1,
   },
 });

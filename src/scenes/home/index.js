@@ -14,9 +14,11 @@ export default class HomeTab extends Component {
           posts: [
             {
               favorite: true,
+              rate: 1,
             },
             {
               favorite: false,
+              rate: 2,
             },
           ],
         },
@@ -24,10 +26,12 @@ export default class HomeTab extends Component {
           name: 'Restaurent',
           posts: [
             {
-              favorite: true,
+              favorite: false,
+              rate: 5,
             },
             {
               favorite: false,
+              rate: 4,
             },
           ],
         },
@@ -36,9 +40,11 @@ export default class HomeTab extends Component {
           posts: [
             {
               favorite: true,
+              rate: 2,
             },
             {
-              favorite: false,
+              favorite: true,
+              rate: 1,
             },
           ],
         },
@@ -46,10 +52,12 @@ export default class HomeTab extends Component {
           name: 'Cute',
           posts: [
             {
-              favorite: true,
+              favorite: false,
+              rate: 3,
             },
             {
-              favorite: false,
+              favorite: true,
+              rate: 2,
             },
           ],
         },
@@ -71,7 +79,7 @@ export default class HomeTab extends Component {
             gallerys.map((gallery) => {
               return (
                 <View key={gallery.name} style={styles.gallery}>
-                <TouchableOpacity activeOpacity={0.8}>
+                <TouchableOpacity activeOpacity={0.6}>
                   <View style={styles.card}>
                     <Text>{gallery.name}</Text>
                     <Text style={styles.seeAllText}>See all</Text>

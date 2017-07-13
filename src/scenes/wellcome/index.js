@@ -1,33 +1,71 @@
-import React from 'react';
-import { View } from 'react-native';
-import Swiper from 'react-native-swipe-a-lot';
+import React, { Component } from 'react';
+import { View , Image, Text, TouchableOpacity } from 'react-native';
+import { connect } from 'react-redux';
+
+import { loginFaceBook, loginGoogle, skipLogin } from '../../actions/auth';
 import styles from './style';
-import Page1 from './Page1';
-import Page2 from './Page2';
-import Page3 from './Page3';
-import Page4 from './Page4';
-import Page5 from './Page5';
 
-const circleDefaultStyle = {
-  width: 8,
-  height: 8,
-  margin: 10,
-  backgroundColor: 'rgb(158, 158, 158)',
-  borderRadius: 4,
-};
+class WellCome extends Component {
+  constructor(props) {
+    super(props);
+  }
+  loginFaceBook = () => {
+    this.props.dispatch(loginFaceBook());
+  }
+  loginGoogle = () => {
+    this.props.dispatch(loginGoogle());
+  }
+  skipLogin = () => {
+    this.props.dispatch(skipLogin());
+  }
+  render() {
+    return (
+      <View style={styles.container}>
+        <Image
+          source={require('../../../assets/images/SIGNIN2.png')}
+          style={styles.backgroundImage}
+        >
+        <View style={styles.box1}>
+          <Image
+            source={require('../../../assets/images/3DMAP.png')}
+            style={styles.iconMap}
+          />
+        </View>
+        <View style={styles.box2}>
+          <TouchableOpacity
+            style={styles.facebookLogin}
+            activeOpacity={0.7}
+            onPress={this.loginFaceBook}
+          >
+            <Image
+              source={require('../../../assets/images/facebook.png')}
+              style={styles.facebookIcon}
+            />
+            <Text style={styles.buttonText}>Sign in with Facebook</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.googleLogin}
+            activeOpacity={0.7}
+            onPress={this.loginGoogle}
+          >
+            <Image
+              source={require('../../../assets/images/google-plus.png')}
+              style={styles.googleIcon}
+            />
+            <Text style={styles.buttonText}>Sign in with Google</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.skip} onPress={this.skipLogin}>
+            <Text style={styles.skipText}>Skip Login</Text>
+          </TouchableOpacity>
+          <Image
+            source={require('../../../assets/images/company.png')}
+            style={styles.company}
+          />
+        </View>
+        </Image>
+      </View>
+    );
+  }
+}
 
-const Wellcome = () => {
-  return (
-    <View style={styles.wrapper}>
-      <Swiper circleDefaultStyle={circleDefaultStyle}>
-        <Page1 />
-        <Page2 />
-        <Page3 />
-        <Page4 />
-        <Page5 />
-      </Swiper>
-    </View>
-  );
-};
-
-export default Wellcome;
+export default connect()(WellCome);
