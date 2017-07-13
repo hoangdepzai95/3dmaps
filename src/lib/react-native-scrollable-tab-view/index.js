@@ -291,7 +291,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   tabarContainer: {
-    flex: 25,
+    flex: 27,
   },
   mainContainer: {
     flex: 311,

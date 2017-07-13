@@ -14,6 +14,7 @@ import ExplorePage from './explore';
 import LikePage from './like';
 import MapPage from './map';
 import NewsPage from './news';
+import HomeTab from './home';
 import AutoCompleteSearch from '../components/AutoCompleteSearch';
 
 export const FLAG_TAB = {
@@ -31,7 +32,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   main: {
-    flex: 18,
+    flex: 17,
   },
 });
 export default class MainPage extends Component {
@@ -60,7 +61,7 @@ export default class MainPage extends Component {
           <TabView
             renderTabBar={this.renderTabBar}
           >
-            <MapPage tabLabel="HOME" />
+            <HomeTab tabLabel="HOME" />
             <LikePage tabLabel="EXPERIENCE" />
             <ExplorePage tabLabel="MAP" />
           </TabView>

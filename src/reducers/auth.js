@@ -9,7 +9,6 @@ const initialState = {
 };
 
 const login = (state = initialState, action) => {
-  console.log(action);
   let authType = '';
   switch (action.type) {
     case RECEIVE_INIT_APP:
@@ -18,12 +17,6 @@ const login = (state = initialState, action) => {
       } else if (action.ggToken) {
         authType = 'google';
       }
-      console.log({
-        firstOpenApp: action.firstOpen !== '1',
-        initDone: true,
-        token: action.fbToken || action.ggToken,
-        authType,
-      })
       return {
         firstOpenApp: action.firstOpen !== '1',
         initDone: true,

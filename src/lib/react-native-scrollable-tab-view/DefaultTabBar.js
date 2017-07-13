@@ -72,8 +72,6 @@ const DefaultTabBar = React.createClass({
   },
   getActiveTabLeft(space) {
     // optimize with good function later
-    console.log(space);
-    console.log(this.state);
     const activeTab  = this.props.activeTab;
     if (activeTab == 0) {
       return 0;
@@ -81,7 +79,7 @@ const DefaultTabBar = React.createClass({
       return this.state[0] + space;
     } else if (activeTab == 2) {
       // only god know why this work, i have no idea
-      return this.state[2] * 2 + space;
+      return this.state[2] * 2 + space - 1;
     }
   },
   render() {
@@ -124,6 +122,7 @@ const styles = StyleSheet.create({
   tab: {
     alignItems: 'center',
     justifyContent: 'center',
+    height: '100%',
   },
   flexOne: {
     flex: 1,
@@ -153,13 +152,13 @@ const styles = StyleSheet.create({
   iconBackStyle : {
     width: 20,
     height: 20,
-    marginLeft: 15,
+    marginLeft: 20,
     tintColor: '#1069ff',
   },
   iconAccountStyle : {
     width: 15,
     height: 15,
-    marginRight: 20,
+    marginRight: 25,
   },
 });
 

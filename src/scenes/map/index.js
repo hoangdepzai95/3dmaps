@@ -43,7 +43,6 @@ class Map extends Component {
     this.setState({ region });
   }
   onPressCallOut = () => {
-    console.log('press');
   }
   renderPost = (posts) => {
     return (

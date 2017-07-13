@@ -4,8 +4,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     position: 'relative',
-    paddingLeft: 10,
-    paddingRight: 10,
+    paddingLeft: 15,
+    paddingRight: 15,
   },
   input: {
     flex: 1,
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     bottom: 0,
-    paddingLeft: 20,
+    paddingLeft: 25,
     justifyContent: 'center',
     alignItems: 'center',
   },
