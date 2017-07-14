@@ -28,13 +28,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     height: '100%',
     alignItems: 'center',
+    justifyContent: 'center',
   },
   boxLeft: {
     flex: 1,
     flexDirection: 'row',
     height: '100%',
     alignItems: 'center',
-  }
+    justifyContent: 'center',
+  },
 });
 
 export default styles;

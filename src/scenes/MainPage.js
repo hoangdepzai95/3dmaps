@@ -51,6 +51,9 @@ export default class MainPage extends Component {
       />
     );
   }
+  onChangeTab = (tab) => {
+    this.tabView.goToPage(tab);
+  }
   render() {
     return (
       <View style={styles.container}>
@@ -60,10 +63,12 @@ export default class MainPage extends Component {
         <View style={styles.main}>
           <TabView
             renderTabBar={this.renderTabBar}
+            locked={true}
+            ref={(tabView) => { this.tabView = tabView; }}
           >
-            <HomeTab tabLabel="HOME" />
+            <HomeTab tabLabel="HOME" onChangeTab={this.onChangeTab} />
             <LikePage tabLabel="EXPERIENCE" />
-            <ExplorePage tabLabel="MAP" />
+            <MapPage tabLabel="MAP" />
           </TabView>
         </View>
       </View>

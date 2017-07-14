@@ -70,6 +70,11 @@ export default class HomeTab extends Component {
       </View>
     );
   }
+  onPressMap = () => {
+    this.props.onChangeTab(2);
+  }
+  onPressFilter = () => {
+  }
   render() {
     const { gallerys } = this.state;
     return (
@@ -96,7 +101,10 @@ export default class HomeTab extends Component {
           }
         </ScrollView>
         <View style={styles.mapAndFilter} elevation={5}>
-          <MapAndFilter />
+          <MapAndFilter
+            onPressMap={this.onPressMap}
+            onPressFilter={this.onPressFilter}
+          />
         </View>
       </View>
     );

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { MapView } from 'expo';
 import { Text, View } from 'react-native';
+import ViewPager from '../../lib/react-native-viewpager/Sample/MainScreen';
 
 import styles from './style';
 
@@ -64,11 +65,15 @@ class Map extends Component {
     return (
       <View style={styles.container}>
         <MapView
-          style={{ flex: 1 }}
+          style={styles.mapView}
           initialRegion={this.state.region}
         >
           {this.renderPost(this.state.posts)}
         </MapView>
+        <View style={styles.suggestPlace}>
+          <ViewPager
+          />
+        </View>
       </View>
     );
   }
