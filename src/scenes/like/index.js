@@ -1,15 +1,12 @@
 import React from 'react';
-import { Text, View, StatusBar } from 'react-native';
+import { Text, View, Dimensions } from 'react-native';
 import AutoCompleteSearch from '../../components/AutoCompleteSearch';
-
+const { height, width } = Dimensions.get('window');
 
 const Wellcome = () => {
   return (
-    <View>
-    <StatusBar
-      backgroundColor="red"
-      barStyle="light-content"
-    />
+    <View style={{ flex: 1, width: width }}>
+      <Text>sdfsdf</Text>
     </View>
   );
 };

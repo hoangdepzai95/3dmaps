@@ -5,7 +5,7 @@ export default StyleSheet.create({
     flex: 1,
   },
   mapView: {
-    flex: 7
+    flex: 7,
   },
   suggestPlace: {
     flex: 10,

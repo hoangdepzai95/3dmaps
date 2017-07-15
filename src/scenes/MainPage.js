@@ -4,7 +4,6 @@ import {
     StyleSheet,
     Image,
     View,
-    StatusBar,
 } from 'react-native';
 import TabView from '../lib/react-native-scrollable-tab-view';
 import DefaultTabBar from '../lib/react-native-scrollable-tab-view/DefaultTabBar';
@@ -16,6 +15,7 @@ import MapPage from './map';
 import NewsPage from './news';
 import HomeTab from './home';
 import AutoCompleteSearch from '../components/AutoCompleteSearch';
+import TabBar from '../components/TabBar';
 
 export const FLAG_TAB = {
   account: 'account',
@@ -27,6 +27,7 @@ export const FLAG_TAB = {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    marginTop: 25,
   },
   header: {
     flex: 1,
@@ -61,15 +62,16 @@ export default class MainPage extends Component {
           <AutoCompleteSearch />
         </View>
         <View style={styles.main}>
-          <TabView
+          <TabBar
             renderTabBar={this.renderTabBar}
             locked={true}
+            initTab="HOME"
             ref={(tabView) => { this.tabView = tabView; }}
           >
             <HomeTab tabLabel="HOME" onChangeTab={this.onChangeTab} />
             <LikePage tabLabel="EXPERIENCE" />
             <MapPage tabLabel="MAP" />
-          </TabView>
+          </TabBar>
         </View>
       </View>
     );
