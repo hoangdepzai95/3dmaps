@@ -96,14 +96,11 @@ export default class HomeTab extends Component {
       </View>
     );
   }
-  onPressMap = () => {
-    this.props.onChangeTab("MAP");
-  }
   onPressFilter = () => {
   }
   render() {
     const { gallerys } = this.state;
-    const { onClickFilter, scrollY } = this.props;
+    const { scrollY } = this.props;
     return (
       <View style={styles.container}>
           {
@@ -125,12 +122,6 @@ export default class HomeTab extends Component {
               );
             })
           }
-        <View style={styles.mapAndFilter} elevation={5}>
-          <MapAndFilter
-            onPressMap={this.onPressMap}
-            onPressFilter={onClickFilter}
-          />
-        </View>
       </View>
     );
   }

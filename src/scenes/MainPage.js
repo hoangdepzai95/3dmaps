@@ -51,6 +51,7 @@ export default class MainPage extends Component {
     };
     this.headerHeight = new Animated.Value(0);
     this.marginTop = new Animated.Value(0);
+    this.scrollY = new Animated.Value(0);
     this.prevOffsetY = 0;
   }
   renderTabBar = () => {
@@ -122,19 +123,18 @@ export default class MainPage extends Component {
             locked={true}
             initTab="home"
             scrollY={this.scrollY}
+            onClickFilter={this.onClickFilter}
+            onChangeTab={this.onChangeTab}
             onScroll={this.onScroll}
             ref={(tabView) => { this.tabView = tabView; }}
           >
             <HomeTab
               tabLabel="HOME"
               tabId="home"
-              onChangeTab={this.onChangeTab}
-              onClickFilter={this.onClickFilter}
             />
             <ExperiencePage
             tabLabel="EXPERIENCE"
             tabId="experience"
-            onClickFilter={this.onClickFilter}
             />
             <MapPage tabLabel="MAP" tabId="map"/>
           </TabBar>

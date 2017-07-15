@@ -71,8 +71,6 @@ class Map extends Component {
           {this.renderPost(this.state.posts)}
         </MapView>
         <View style={styles.suggestPlace}>
-          <ViewPager
-          />
         </View>
       </View>
     );

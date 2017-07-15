@@ -89,6 +89,9 @@ export default class TabBar extends Component {
       }
     });
   }
+  onPressMap = () => {
+    this.props.onChangeTab('map');
+  }
   renderTabs = () => {
     const marginLeft = this.tabSpace ? this.tabSpace / 2 : 0;
     const iconSize = height / 25;
@@ -122,8 +125,9 @@ export default class TabBar extends Component {
     );
   }
   render() {
-    const { scrollY, onScroll } = this.props;
+    const { scrollY, onScroll, onClickFilter, onChangeTab } = this.props;
     const { activeTab } = this.state;
+    console.log(activeTab);
     return (
       <View style={styles.container}>
         <View style={styles.tabsContainer}>
@@ -168,6 +172,27 @@ export default class TabBar extends Component {
         </Animated.ScrollView>
         </ScrollView>
         </View>
+        {
+          activeTab === 'home' ?
+          <View style={homeStyles.mapAndFilter} elevation={5}>
+            <MapAndFilter
+              onPressMap={this.onPressMap}
+              onPressFilter={onClickFilter}
+            />
+          </View>
+          :
+          null
+        }
+        {
+          activeTab === 'experience' ?
+          <View style={homeStyles.filterStyle} elevation={5}>
+            <Filter
+              onPressFilter={onClickFilter}
+            />
+          </View>
+          :
+          null
+        }
       </View>
     );
   }

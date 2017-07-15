@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { View, ScrollView, TouchableOpacity, Text ,Animated } from 'react-native';
 import Post from '../home/post';
-import Filter from '../../components/Filter';
 import homeStyles from '../../styles/home';
 import SelectedGallery from './SelectedGallery';
 
@@ -119,11 +118,6 @@ export default class Experience extends Component {
             <Post {...suggestionLocations[1]} />
           </View>
           </View>
-        <View style={homeStyles.filterStyle} elevation={5}>
-          <Filter
-            onPressFilter={onClickFilter}
-          />
-        </View>
       </View>
     );
   }

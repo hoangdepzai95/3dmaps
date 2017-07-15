@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { View, ScrollView, TouchableOpacity, Text , Animated} from 'react-native';
+import { View, ScrollView, TouchableOpacity, Text , Animated } from 'react-native';
 import shortid from 'shortid';
 import Post from './post';
-import Filter from '../../../components/Filter';
 import homeStyles from '../../../styles/home';
 import styles from './style';
 
@@ -91,11 +90,6 @@ export default class Experience extends Component {
                 <Post {...suggestionPosts[1]} />
               </View>
               </View>
-        <View style={homeStyles.filterStyle} elevation={5}>
-          <Filter
-            onPressFilter={onClickFilter}
-          />
-        </View>
       </View>
     );
   }
