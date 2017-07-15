@@ -14,6 +14,7 @@ import LikePage from './like';
 import MapPage from './map';
 import NewsPage from './news';
 import HomeTab from './home';
+import ExperiencePage from './experience';
 import AutoCompleteSearch from '../components/AutoCompleteSearch';
 import TabBar from '../components/TabBar';
 
@@ -53,7 +54,7 @@ export default class MainPage extends Component {
     );
   }
   onChangeTab = (tab) => {
-    this.tabView.goToPage(tab);
+    this.tabView.gotoTab(tab);
   }
   render() {
     return (
@@ -69,7 +70,7 @@ export default class MainPage extends Component {
             ref={(tabView) => { this.tabView = tabView; }}
           >
             <HomeTab tabLabel="HOME" onChangeTab={this.onChangeTab} />
-            <LikePage tabLabel="EXPERIENCE" />
+            <ExperiencePage tabLabel="EXPERIENCE" />
             <MapPage tabLabel="MAP" />
           </TabBar>
         </View>

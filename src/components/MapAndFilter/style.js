@@ -12,15 +12,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 5,
   },
   mapIcon: {
-    tintColor: '#333',
+    tintColor: 'black',
     width: (height / 17) * 0.44,
     height: (height / 17) * 0.44,
     marginRight: 5,
   },
   filterIcon: {
-    tintColor: '#333',
-    width: (height / 17) * 0.42,
-    height: (height / 17) * 0.37,
     marginRight: 5,
   },
   boxRight: {

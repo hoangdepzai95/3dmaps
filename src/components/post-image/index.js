@@ -1,6 +1,15 @@
 import React, { Component } from 'react';
 import { View, ScrollView, Image, Text } from 'react-native';
 import styles from './style';
+import _ from 'lodash';
+
+const links = [
+  'http://maapvn.com/admin/images/post/IMG0000000145.jpeg?1494490153',
+  'http://maapvn.com/admin/images/post/IMG0000000140.jpeg?1494409196',
+  'http://maapvn.com/admin/images/post/IMG0000000059.jpeg?1494399433',
+  'http://maapvn.com/admin/images/post/IMG0000000120.jpeg?1494411491',
+  'http://maapvn.com/admin/images/post/IMG0000000116.jpeg?1494560441',
+];
 
 export default class HomeTab extends Component {
   constructor(props) {
@@ -30,7 +39,7 @@ export default class HomeTab extends Component {
       {
         containerWidth ?
           <Image
-            source={{ uri: 'http://maapvn.com/admin/images/post/IMG0000000140.jpeg?1494409196' }}
+            source={{ uri: links[_.random(1, links.length - 1)] }}
             style={{ height: containerWidth * 0.75, width: containerWidth }}
             resizeMode="cover"
           />

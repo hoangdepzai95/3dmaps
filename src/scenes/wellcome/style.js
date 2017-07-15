@@ -64,15 +64,9 @@ const styles = StyleSheet.create({
     height: width * 0.146 * 0.574,
   },
   facebookIcon: {
-    height: height * 0.15 * 0.2,
-    width: height * 0.15 * 0.2 * 0.51,
-    marginRight: 16,
   },
   googleIcon: {
-    height: height * 0.15 * 0.23,
-    width: height * 0.15 * 0.23,
-    tintColor: 'white',
-    marginRight: 10,
+    marginRight: 5,
   },
   buttonText: {
     color: 'white',

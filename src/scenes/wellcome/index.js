@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
-import { View , Image, Text, TouchableOpacity } from 'react-native';
+import { View , Image, Text, TouchableOpacity, Dimensions } from 'react-native';
 import { connect } from 'react-redux';
+import { EvilIcons } from '@expo/vector-icons';
 
 import { loginFaceBook, loginGoogle, skipLogin } from '../../actions/auth';
 import styles from './style';
+
+const { height, width } = Dimensions.get('window');
 
 class WellCome extends Component {
   constructor(props) {
@@ -19,6 +22,7 @@ class WellCome extends Component {
     this.props.dispatch(skipLogin());
   }
   render() {
+    const iconSize = height / 25;
     return (
       <View style={styles.container}>
         <Image
@@ -37,10 +41,7 @@ class WellCome extends Component {
             activeOpacity={0.7}
             onPress={this.loginFaceBook}
           >
-            <Image
-              source={require('../../../assets/images/facebook.png')}
-              style={styles.facebookIcon}
-            />
+            <EvilIcons color="#FFF" name="sc-facebook" size={iconSize} style={styles.facebookIcon} />
             <Text style={styles.buttonText}>Sign in with Facebook</Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -48,10 +49,7 @@ class WellCome extends Component {
             activeOpacity={0.7}
             onPress={this.loginGoogle}
           >
-            <Image
-              source={require('../../../assets/images/google-plus.png')}
-              style={styles.googleIcon}
-            />
+            <EvilIcons color="#FFF" name="sc-google-plus" size={iconSize} style={styles.googleIcon} />
             <Text style={styles.buttonText}>Sign in with Google</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.skip} onPress={this.skipLogin}>

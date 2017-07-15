@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { View, ScrollView, TouchableOpacity, Text } from 'react-native';
-import Post from './post';
+import Post from '../home/post';
 import MapAndFilter from '../../components/MapAndFilter';
-import styles from '../../styles/home';
+import homeStyles from '../../styles/home';
+import SelectedGallery from './SelectedGallery';
 
-export default class HomeTab extends Component {
+export default class Experience extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -23,7 +24,7 @@ export default class HomeTab extends Component {
           ],
         },
         {
-          name: 'Restaurent',
+          name: 'Art',
           posts: [
             {
               favorite: false,
@@ -36,7 +37,7 @@ export default class HomeTab extends Component {
           ],
         },
         {
-          name: 'Experience',
+          name: 'Game',
           posts: [
             {
               favorite: true,
@@ -61,46 +62,40 @@ export default class HomeTab extends Component {
             },
           ],
         },
-      ]
+      ],
+      selectedGallery: '',
     };
   }
-  renderGallery() {
-    return (
-      <View>
-      </View>
-    );
-  }
-  onPressMap = () => {
-    this.props.onChangeTab("MAP");
-  }
-  onPressFilter = () => {
+  onSelectGallery(name) {
+    this.setState({ selectedGallery: name });
   }
   render() {
-    const { gallerys } = this.state;
+    const { gallerys, selectedGallery } = this.state;
+    if (selectedGallery) return <SelectedGallery />;
     return (
-      <View style={styles.container}>
+      <View style={homeStyles.container}>
         <ScrollView>
           {
             gallerys.map((gallery) => {
               return (
-                <View key={gallery.name} style={styles.gallery}>
-                  <TouchableOpacity activeOpacity={0.6}>
-                    <View style={styles.card}>
-                      <Text>{gallery.name}</Text>
-                      <Text style={styles.seeAllText}>See all</Text>
-                    </View>
-                  </TouchableOpacity>
-                  <View style={styles.postRow}>
-                    <Post {...gallery.posts[0]} />
-                    <View style={styles.divider}></View>
-                    <Post {...gallery.posts[1]} />
+                <View key={gallery.name} style={homeStyles.gallery}>
+                <TouchableOpacity activeOpacity={0.6} onPress={this.onSelectGallery.bind(this, gallery.name)}>
+                  <View style={homeStyles.card}>
+                    <Text>{gallery.name}</Text>
+                    <Text style={homeStyles.seeAllText}>See all</Text>
                   </View>
+                </TouchableOpacity>
+                <View style={homeStyles.postRow}>
+                  <Post {...gallery.posts[0]} />
+                  <View style={homeStyles.divider} />
+                  <Post {...gallery.posts[1]} />
+                </View>
                 </View>
               );
             })
           }
         </ScrollView>
-        <View style={styles.mapAndFilter} elevation={5}>
+        <View style={homeStyles.mapAndFilter} elevation={5}>
           <MapAndFilter
             onPressMap={this.onPressMap}
             onPressFilter={this.onPressFilter}

@@ -33,7 +33,8 @@ export default class TabBar extends Component {
   }
   handleOnLayout(label, e) {
     // on last call handleOnLayout
-    if (label === '_mainArea' ) {
+    if (this.state.caculatedLayout) return;
+    if (label === '_mainArea') {
       this.tabsContainerWidth = e.nativeEvent.layout.width;
     } else {
       this.labelsSize[label] = e.nativeEvent.layout.width;
@@ -46,12 +47,16 @@ export default class TabBar extends Component {
       this.tabSpace = (this.tabsContainerWidth - totalLabelWidth) /
                       Object.keys(this.labelsSize).length;
       let tempX = 0;
-      for (const key in this.labelsSize) {
+      React.Children.map(this.props.children, (child) => {
+        const key = child.props.tabLabel;
         this.tabsPositon[key] = tempX;
         this.tabsSize[key] = this.tabSpace + this.labelsSize[key];
         tempX += this.tabsSize[key];
-      }
-      this.setState({ caculatedLayout: true, widthAnimation: this.labelsSize[Object.keys(this.labelsSize)[0]]});
+      });
+      this.setState({
+        caculatedLayout: true,
+        widthAnimation: this.labelsSize[this.props.children[0].props.tabLabel],
+      });
     }
   }
   getDistance = (currentTab, nextTab) => {
@@ -83,10 +88,11 @@ export default class TabBar extends Component {
   }
   renderTabs = () => {
     const marginLeft = this.tabSpace ? this.tabSpace / 2 : 0;
+    const iconSize = height / 25;
     return (
       <View style={styles.tabs}>
         <View style={styles.leftArea}>
-          <Entypo name="chevron-left" size={18} color="#1069ff" />
+          <Entypo name="chevron-left" size={iconSize} color="#1069ff" />
         </View>
         <View style={styles.mainArea} onLayout={this.handleOnLayout.bind(this, '_mainArea')}>
           {
@@ -107,7 +113,7 @@ export default class TabBar extends Component {
           <Animated.View style={[styles.tabUnderlineStyle, { left: this.state.leftAnimation, width: this.state.widthAnimation, marginLeft }]}></Animated.View>
         </View>
         <View style={styles.rightArea}>
-          <EvilIcons name="user" size={18} />
+          <EvilIcons name="user" size={iconSize} />
         </View>
       </View>
     );

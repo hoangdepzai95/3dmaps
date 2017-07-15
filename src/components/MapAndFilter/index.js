@@ -1,7 +1,9 @@
 import React from 'react';
-import { View, Text, Image, TouchableOpacity } from 'react-native';
+import { SimpleLineIcons } from '@expo/vector-icons';
+import { View, Text, Image, TouchableOpacity, Dimensions } from 'react-native';
 
 import styles from './style';
+const { height, width } = Dimensions.get('window');
 
 const MapAndFilter = (props) => {
   const { onPressMap, onPressFilter } = props;
@@ -15,10 +17,7 @@ const MapAndFilter = (props) => {
         <Text>MAP</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.boxRight} onPress={onPressFilter}>
-        <Image
-          source={require('../../../assets/images/ic_filter.png')}
-          style={styles.filterIcon}
-        />
+        <SimpleLineIcons size={height/43} name="equalizer" style={styles.filterIcon} color="#333" />
         <Text>FILTER</Text>
       </TouchableOpacity>
     </View>
