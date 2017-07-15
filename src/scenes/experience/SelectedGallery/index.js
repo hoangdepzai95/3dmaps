@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, ScrollView, TouchableOpacity, Text } from 'react-native';
+import { View, ScrollView, TouchableOpacity, Text , Animated} from 'react-native';
 import shortid from 'shortid';
 import Post from './post';
 import Filter from '../../../components/Filter';
@@ -49,10 +49,9 @@ export default class Experience extends Component {
   }
   render() {
     const { gallery, suggestionPosts } = this.state;
-    const { onClickFilter } = this.props;
+    const { onClickFilter, scrollY } = this.props;
     return (
       <View style={homeStyles.container}>
-        <ScrollView>
               <View key={gallery.name} style={homeStyles.gallery}>
               <TouchableOpacity activeOpacity={0.6}>
                 <View style={homeStyles.card}>
@@ -92,7 +91,6 @@ export default class Experience extends Component {
                 <Post {...suggestionPosts[1]} />
               </View>
               </View>
-        </ScrollView>
         <View style={homeStyles.filterStyle} elevation={5}>
           <Filter
             onPressFilter={onClickFilter}

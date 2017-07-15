@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, ScrollView, TouchableOpacity, Text } from 'react-native';
+import { View, ScrollView, TouchableOpacity, Text, Animated } from 'react-native';
 import Post from './post';
 import MapAndFilter from '../../components/MapAndFilter';
 import styles from '../../styles/home';
@@ -61,6 +61,32 @@ export default class HomeTab extends Component {
             },
           ],
         },
+        {
+          name: 'Cute1',
+          posts: [
+            {
+              favorite: false,
+              rate: 3,
+            },
+            {
+              favorite: true,
+              rate: 2,
+            },
+          ],
+        },
+        {
+          name: 'Cute2',
+          posts: [
+            {
+              favorite: false,
+              rate: 3,
+            },
+            {
+              favorite: true,
+              rate: 2,
+            },
+          ],
+        },
       ]
     };
   }
@@ -77,10 +103,9 @@ export default class HomeTab extends Component {
   }
   render() {
     const { gallerys } = this.state;
-    const { onClickFilter } = this.props;
+    const { onClickFilter, scrollY } = this.props;
     return (
       <View style={styles.container}>
-        <ScrollView>
           {
             gallerys.map((gallery) => {
               return (
@@ -100,7 +125,6 @@ export default class HomeTab extends Component {
               );
             })
           }
-        </ScrollView>
         <View style={styles.mapAndFilter} elevation={5}>
           <MapAndFilter
             onPressMap={this.onPressMap}

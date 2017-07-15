@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { View, Text, ScrollView, Dimensions, Image, TouchableOpacity, Animated } from 'react-native';
 import { Ionicons, EvilIcons, Entypo } from '@expo/vector-icons';
 import styles from './style';
+import MapAndFilter from '../../components/MapAndFilter';
+import Filter from '../../components/Filter';
+import homeStyles from '../../styles/home';
 const { height, width } = Dimensions.get('window');
 
 export default class TabBar extends Component {
@@ -31,13 +34,13 @@ export default class TabBar extends Component {
   componentWillMount() {
     this.setState({ activeTab: this.props.initTab });
   }
-  handleOnLayout(label, e) {
+  handleOnLayout(id, e) {
     // on last call handleOnLayout
     if (this.state.caculatedLayout) return;
-    if (label === '_mainArea') {
+    if (id === '_mainArea') {
       this.tabsContainerWidth = e.nativeEvent.layout.width;
     } else {
-      this.labelsSize[label] = e.nativeEvent.layout.width;
+      this.labelsSize[id] = e.nativeEvent.layout.width;
     }
     if (this.tabsContainerWidth && this.props.children.length === Object.keys(this.labelsSize).length) {
       let totalLabelWidth = 0;
@@ -48,40 +51,40 @@ export default class TabBar extends Component {
                       Object.keys(this.labelsSize).length;
       let tempX = 0;
       React.Children.map(this.props.children, (child) => {
-        const key = child.props.tabLabel;
+        const key = child.props.tabId;
         this.tabsPositon[key] = tempX;
         this.tabsSize[key] = this.tabSpace + this.labelsSize[key];
         tempX += this.tabsSize[key];
       });
       this.setState({
         caculatedLayout: true,
-        widthAnimation: this.labelsSize[this.props.children[0].props.tabLabel],
+        widthAnimation: this.labelsSize[this.props.children[0].props.tabId],
       });
     }
   }
   getDistance = (currentTab, nextTab) => {
     return this.tabsPositon[nextTab] - this.tabsPositon[currentTab];
   }
-  gotoTab(label) {
+  gotoTab(id) {
     this.tabAnimateValue.setValue(0);
     this.underlineWidthValue.setValue(0);
     const leftAnimation = this.tabAnimateValue.interpolate({
       inputRange: [0, 1],
-      outputRange: [this.tabsPositon[this.state.activeTab], this.tabsPositon[label]],
+      outputRange: [this.tabsPositon[this.state.activeTab], this.tabsPositon[id]],
     });
     const widthAnimation = this.tabAnimateValue.interpolate({
       inputRange: [0, 1],
-      outputRange: [this.labelsSize[this.state.activeTab], this.labelsSize[label]],
+      outputRange: [this.labelsSize[this.state.activeTab], this.labelsSize[id]],
     });
     this.setState(
-      { activeTab: label, leftAnimation, widthAnimation },
+      { activeTab: id, leftAnimation, widthAnimation },
       () => {
         this.tabAnimation.start();
         this.underlineWidthAnimation.start();
       }
     );
     React.Children.map(this.props.children, (child, index) => {
-      if (child.props.tabLabel === label) {
+      if (child.props.tabId === id) {
         this.scrollView._component.scrollTo({ x: width * index, animated: true });
       }
     });
@@ -97,14 +100,14 @@ export default class TabBar extends Component {
         <View style={styles.mainArea} onLayout={this.handleOnLayout.bind(this, '_mainArea')}>
           {
             React.Children.map(this.props.children, (child) => {
-              const label = child.props.tabLabel;
-              const caculatedStyle = this.state.caculatedLayout ? { width: this.tabsSize[label], flex: 0 } : {};
+              const id = child.props.tabId;
+              const caculatedStyle = this.state.caculatedLayout ? { width: this.tabsSize[id], flex: 0 } : {};
               return (
-                <TouchableOpacity style={[styles.tab, caculatedStyle]} onPress={this.gotoTab.bind(this, label)}>
+                <TouchableOpacity style={[styles.tab, caculatedStyle]} onPress={this.gotoTab.bind(this, id)}>
                   <Text
-                    onLayout={this.handleOnLayout.bind(this, label)}
+                    onLayout={this.handleOnLayout.bind(this, id)}
                   >
-                    { label }
+                    { child.props.tabLabel }
                   </Text>
                 </TouchableOpacity>
               );
@@ -119,12 +122,18 @@ export default class TabBar extends Component {
     );
   }
   render() {
+    const { scrollY, onScroll } = this.props;
+    const { activeTab } = this.state;
     return (
       <View style={styles.container}>
         <View style={styles.tabsContainer}>
           {this.renderTabs()}
         </View>
         <View style={styles.mainContainer}>
+        <ScrollView
+        scrollEventThrottle={1}
+       onScroll={onScroll}
+        >
         <Animated.ScrollView
           horizontal
           pagingEnabled
@@ -150,11 +159,14 @@ export default class TabBar extends Component {
           {
             this.props.children.map((child, index) => {
               return (
-                <View style={{ width }} key={index}>{child}</View>
+                <View style={{ width }} key={index}>
+                  {child}
+                </View>
               );
             })
           }
         </Animated.ScrollView>
+        </ScrollView>
         </View>
       </View>
     );

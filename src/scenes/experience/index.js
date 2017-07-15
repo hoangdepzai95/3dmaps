@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, ScrollView, TouchableOpacity, Text } from 'react-native';
+import { View, ScrollView, TouchableOpacity, Text ,Animated } from 'react-native';
 import Post from '../home/post';
 import Filter from '../../components/Filter';
 import homeStyles from '../../styles/home';
@@ -83,11 +83,10 @@ export default class Experience extends Component {
   }
   render() {
     const { gallerys, selectedGallery, suggestionLocations } = this.state;
-    const { onClickFilter } = this.props;
-    if (selectedGallery) return <SelectedGallery onClickFilter={onClickFilter} />;
+    const { onClickFilter, scrollY } = this.props;
+    if (selectedGallery) return <SelectedGallery onClickFilter={onClickFilter} scrollY={scrollY} />;
     return (
       <View style={homeStyles.container}>
-        <ScrollView>
           {
             gallerys.map((gallery) => {
               return (
@@ -120,7 +119,6 @@ export default class Experience extends Component {
             <Post {...suggestionLocations[1]} />
           </View>
           </View>
-        </ScrollView>
         <View style={homeStyles.filterStyle} elevation={5}>
           <Filter
             onPressFilter={onClickFilter}

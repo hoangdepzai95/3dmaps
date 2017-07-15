@@ -4,6 +4,9 @@ import {
     StyleSheet,
     Image,
     View,
+    Animated,
+    Dimensions,
+    StatusBar,
 } from 'react-native';
 import TabView from '../lib/react-native-scrollable-tab-view';
 import DefaultTabBar from '../lib/react-native-scrollable-tab-view/DefaultTabBar';
@@ -17,7 +20,8 @@ import HomeTab from './home';
 import ExperiencePage from './experience';
 import AutoCompleteSearch from '../components/AutoCompleteSearch';
 import TabBar from '../components/TabBar';
-
+const { height, width } = Dimensions.get('window');
+const standradHeight = (height - 25) / 17;
 export const FLAG_TAB = {
   account: 'account',
   explore: 'explore',
@@ -29,12 +33,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginTop: 25,
+    position: 'relative',
   },
   header: {
-    flex: 1,
+    overflow: 'hidden',
+    height: standradHeight,
   },
   main: {
-    flex: 17,
+    flex: 1,
   },
 });
 export default class MainPage extends Component {
@@ -43,6 +49,9 @@ export default class MainPage extends Component {
     this.state = {
       selectedTab: FLAG_TAB.flag_popularTab,
     };
+    this.headerHeight = new Animated.Value(0);
+    this.marginTop = new Animated.Value(0);
+    this.prevOffsetY = 0;
   }
   renderTabBar = () => {
     return (
@@ -55,28 +64,81 @@ export default class MainPage extends Component {
   }
   onChangeTab = (tab) => {
     this.tabView.gotoTab(tab);
+    this.scrollY.setValue(0);
   }
   onClickFilter = () => {
     console.log('click filter');
   }
+  showHeader() {
+    this.headerHeightAnimation = Animated.timing(this.headerHeight, {
+      toValue: -standradHeight - 25,
+      duration: 100,
+    });
+    this.marginTopAnimation = Animated.timing(this.marginTop, {
+      toValue: -standradHeight,
+      duration: 100,
+    });
+    this.playAnimation();
+  }
+  playAnimation() {
+    Animated.parallel([this.headerHeightAnimation, this.marginTopAnimation]).start();
+  }
+  hideHeader() {
+    this.headerHeightAnimation = Animated.timing(this.headerHeight, {
+      toValue: 0,
+      duration: 100,
+    });
+    this.marginTopAnimation = Animated.timing(this.marginTop, {
+      toValue: 0,
+      duration: 100,
+    });
+    this.playAnimation();
+  }
+  onScroll = (e) => {
+    const offsetY = e.nativeEvent.contentOffset.y;
+    if ((offsetY - this.prevOffsetY) > height/10) {
+      this.showHeader();
+      this.prevOffsetY = offsetY;
+    }
+    if ((offsetY - this.prevOffsetY) < -height/10) {
+      this.hideHeader();
+      this.prevOffsetY = offsetY;
+    }
+  }
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.header}>
+        <StatusBar
+          translucent
+          barStyle="light-content"
+          backgroundColor="rgba(0, 0, 0, 0.251)"
+        />
+        <Animated.View style={[styles.header, { top: this.headerHeight}]}>
           <AutoCompleteSearch />
-        </View>
-        <View style={styles.main}>
+        </Animated.View>
+        <Animated.View style={[styles.main, { marginTop: this.marginTop }]}>
           <TabBar
             renderTabBar={this.renderTabBar}
             locked={true}
-            initTab="HOME"
+            initTab="home"
+            scrollY={this.scrollY}
+            onScroll={this.onScroll}
             ref={(tabView) => { this.tabView = tabView; }}
           >
-            <HomeTab tabLabel="HOME" onChangeTab={this.onChangeTab}  onClickFilter={this.onClickFilter}/>
-            <ExperiencePage tabLabel="EXPERIENCE" onClickFilter={this.onClickFilter} />
-            <MapPage tabLabel="MAP" />
+            <HomeTab
+              tabLabel="HOME"
+              tabId="home"
+              onChangeTab={this.onChangeTab}
+              onClickFilter={this.onClickFilter}
+            />
+            <ExperiencePage
+            tabLabel="EXPERIENCE"
+            tabId="experience"
+            onClickFilter={this.onClickFilter}
+            />
+            <MapPage tabLabel="MAP" tabId="map"/>
           </TabBar>
-        </View>
+        </Animated.View>
       </View>
     );
   }

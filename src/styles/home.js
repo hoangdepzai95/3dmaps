@@ -7,7 +7,6 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 13,
     paddingTop: 25,
-    position: 'relative',
   },
   postRow: {
     flexDirection: 'row',
