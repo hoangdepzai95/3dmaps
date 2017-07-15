@@ -77,6 +77,7 @@ export default class HomeTab extends Component {
   }
   render() {
     const { gallerys } = this.state;
+    const { onClickFilter } = this.props;
     return (
       <View style={styles.container}>
         <ScrollView>
@@ -103,7 +104,7 @@ export default class HomeTab extends Component {
         <View style={styles.mapAndFilter} elevation={5}>
           <MapAndFilter
             onPressMap={this.onPressMap}
-            onPressFilter={this.onPressFilter}
+            onPressFilter={onClickFilter}
           />
         </View>
       </View>

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, ScrollView, TouchableOpacity, Text } from 'react-native';
 import shortid from 'shortid';
 import Post from './post';
-import MapAndFilter from '../../../components/MapAndFilter';
+import Filter from '../../../components/Filter';
 import homeStyles from '../../../styles/home';
 import styles from './style';
 
@@ -35,10 +35,21 @@ export default class Experience extends Component {
           },
         ],
       },
+      suggestionPosts: [
+        {
+          favorite: false,
+          rate: 3,
+        },
+        {
+          favorite: true,
+          rate: 2,
+        },
+      ],
     };
   }
   render() {
-    const { gallery } = this.state;
+    const { gallery, suggestionPosts } = this.state;
+    const { onClickFilter } = this.props;
     return (
       <View style={homeStyles.container}>
         <ScrollView>
@@ -68,11 +79,23 @@ export default class Experience extends Component {
                   })
                 }
               </View>
+              <View style={homeStyles.gallery}>
+              <TouchableOpacity activeOpacity={0.6} >
+                <View style={[homeStyles.card, styles.suggestions]}>
+                  <Text>SUUGESTED POST</Text>
+                  <Text style={homeStyles.seeAllText}>See all</Text>
+                </View>
+              </TouchableOpacity>
+              <View style={homeStyles.postRow}>
+                <Post {...suggestionPosts[0]} />
+                <View style={homeStyles.divider} />
+                <Post {...suggestionPosts[1]} />
+              </View>
+              </View>
         </ScrollView>
-        <View style={homeStyles.mapAndFilter} elevation={5}>
-          <MapAndFilter
-            onPressMap={this.onPressMap}
-            onPressFilter={this.onPressFilter}
+        <View style={homeStyles.filterStyle} elevation={5}>
+          <Filter
+            onPressFilter={onClickFilter}
           />
         </View>
       </View>

@@ -46,5 +46,20 @@ const styles = StyleSheet.create({
       height: 0,
     },
   },
+  filterStyle: {
+    position: 'absolute',
+    bottom: height / 15,
+    width: width * 0.25,
+    left: (width / 2) - ((width * 0.25) / 2),
+    height: height / 17,
+    backgroundColor: 'transparent',
+    zIndex: 999,
+    shadowColor: '#333',
+    shadowOpacity: 1,
+    shadowOffset: {
+      width: 0,
+      height: 0,
+    },
+  },
 });
 export default styles;

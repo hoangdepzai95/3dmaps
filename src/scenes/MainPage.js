@@ -56,6 +56,9 @@ export default class MainPage extends Component {
   onChangeTab = (tab) => {
     this.tabView.gotoTab(tab);
   }
+  onClickFilter = () => {
+    console.log('click filter');
+  }
   render() {
     return (
       <View style={styles.container}>
@@ -69,8 +72,8 @@ export default class MainPage extends Component {
             initTab="HOME"
             ref={(tabView) => { this.tabView = tabView; }}
           >
-            <HomeTab tabLabel="HOME" onChangeTab={this.onChangeTab} />
-            <ExperiencePage tabLabel="EXPERIENCE" />
+            <HomeTab tabLabel="HOME" onChangeTab={this.onChangeTab}  onClickFilter={this.onClickFilter}/>
+            <ExperiencePage tabLabel="EXPERIENCE" onClickFilter={this.onClickFilter} />
             <MapPage tabLabel="MAP" />
           </TabBar>
         </View>
