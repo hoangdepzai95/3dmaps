@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { View, ScrollView, TouchableOpacity, Text, Animated } from 'react-native';
+import { View, ScrollView, TouchableOpacity, Text } from 'react-native';
 import Post from './post';
-import MapAndFilter from '../../components/MapAndFilter';
 import styles from '../../styles/home';
 
 export default class HomeTab extends Component {
@@ -87,22 +86,19 @@ export default class HomeTab extends Component {
             },
           ],
         },
-      ]
+      ],
     };
-  }
-  renderGallery() {
-    return (
-      <View>
-      </View>
-    );
   }
   onPressFilter = () => {
   }
   render() {
     const { gallerys } = this.state;
-    const { scrollY } = this.props;
+    const { onScroll } = this.props;
     return (
       <View style={styles.container}>
+        <ScrollView
+          onScroll={onScroll}
+        >
           {
             gallerys.map((gallery) => {
               return (
@@ -115,13 +111,14 @@ export default class HomeTab extends Component {
                   </TouchableOpacity>
                   <View style={styles.postRow}>
                     <Post {...gallery.posts[0]} />
-                    <View style={styles.divider}></View>
+                    <View style={styles.divider} />
                     <Post {...gallery.posts[1]} />
                   </View>
                 </View>
               );
             })
           }
+        </ScrollView>
       </View>
     );
   }

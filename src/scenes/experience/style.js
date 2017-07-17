@@ -1,8 +1,7 @@
-import { StyleSheet, Dimensions } from 'react-native';
-const { height, width } = Dimensions.get('window');
+import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
-  emptyPost : {
+  emptyPost: {
     flex: 1,
   },
   suggestions: {

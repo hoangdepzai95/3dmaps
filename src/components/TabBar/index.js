@@ -125,19 +125,14 @@ export default class TabBar extends Component {
     );
   }
   render() {
-    const { scrollY, onScroll, onClickFilter, onChangeTab } = this.props;
+    const { onPressFilter, onScroll } = this.props;
     const { activeTab } = this.state;
-    console.log(activeTab);
     return (
       <View style={styles.container}>
         <View style={styles.tabsContainer}>
           {this.renderTabs()}
         </View>
         <View style={styles.mainContainer}>
-        <ScrollView
-        scrollEventThrottle={1}
-       onScroll={onScroll}
-        >
         <Animated.ScrollView
           horizontal
           pagingEnabled
@@ -170,14 +165,13 @@ export default class TabBar extends Component {
             })
           }
         </Animated.ScrollView>
-        </ScrollView>
         </View>
         {
           activeTab === 'home' ?
           <View style={homeStyles.mapAndFilter} elevation={5}>
             <MapAndFilter
               onPressMap={this.onPressMap}
-              onPressFilter={onClickFilter}
+              onPressFilter={onPressFilter}
             />
           </View>
           :
@@ -187,7 +181,7 @@ export default class TabBar extends Component {
           activeTab === 'experience' ?
           <View style={homeStyles.filterStyle} elevation={5}>
             <Filter
-              onPressFilter={onClickFilter}
+              onPressFilter={onPressFilter}
             />
           </View>
           :

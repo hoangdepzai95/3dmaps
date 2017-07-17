@@ -37,14 +37,13 @@ export default class MainPage extends Component {
     super(props);
     this.headerHeight = new Animated.Value(0);
     this.marginTop = new Animated.Value(0);
-    this.scrollY = new Animated.Value(0);
     this.prevOffsetY = 0;
   }
   onChangeTab = (tab) => {
     this.tabView.gotoTab(tab);
     this.scrollY.setValue(0);
   }
-  onClickFilter = () => {
+  onPressFilter = () => {
   }
   onScroll = (e) => {
     const offsetY = e.nativeEvent.contentOffset.y;
@@ -96,8 +95,7 @@ export default class MainPage extends Component {
         <Animated.View style={[styles.main, { marginTop: this.marginTop }]}>
           <TabBar
             initTab="home"
-            scrollY={this.scrollY}
-            onClickFilter={this.onClickFilter}
+            onPressFilter={this.onPressFilter}
             onChangeTab={this.onChangeTab}
             onScroll={this.onScroll}
             ref={(tabView) => { this.tabView = tabView; }}
@@ -105,14 +103,17 @@ export default class MainPage extends Component {
             <HomeTab
               tabLabel="HOME"
               tabId="home"
+              onScroll={this.onScroll}
             />
             <ExperiencePage
               tabLabel="EXPERIENCE"
               tabId="experience"
+              onScroll={this.onScroll}
             />
             <MapPage
               tabLabel="MAP"
               tabId="map"
+              onScroll={this.onScroll}
             />
           </TabBar>
         </Animated.View>
