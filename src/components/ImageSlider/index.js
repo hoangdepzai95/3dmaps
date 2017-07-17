@@ -6,27 +6,18 @@ import styles from './styles/index.style';
 import getStyles from './styles/SliderEntry.style';
 
 export default class example extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      containerHeight: null,
-      containerWidth: null,
-      caculatedLayout: false,
-    };
-  }
   getSlides = () => {
-    const { images } = this.props;
-    const { containerHeight, containerWidth } = this.state;
-    if (!images) {
+    const { source, containerHeight, containerWidth } = this.props;
+    if (!source) {
       return null;
     }
 
-    return images.map((image, index) => {
+    return source.map((data, index) => {
       return (
         <SliderEntry
           key={`carousel-entry-${index}`}
           even={(index + 1) % 2 === 0}
-          image={image}
+          data={data}
           containerWidth={containerWidth}
           containerHeight={containerHeight}
         />
@@ -34,7 +25,7 @@ export default class example extends Component {
     });
   }
   getContent = () => {
-    const { containerWidth, containerHeight } = this.state;
+    const { containerWidth, containerHeight, onSnapToItem } = this.props;
     const contentStyles = getStyles(containerWidth, containerHeight);
     return (
       <Carousel
@@ -49,29 +40,18 @@ export default class example extends Component {
         showsHorizontalScrollIndicator={false}
         snapOnAndroid
         removeClippedSubviews={false}
+        onSnapToItem={onSnapToItem}
       >
         {this.getSlides()}
       </Carousel>
     );
   }
-  handleOnLayout = (e) => {
-    const { width, height } = e.nativeEvent.layout;
-    if (!this.state.caculatedLayout) {
-      this.setState({ containerWidth: width, containerHeight: height, caculatedLayout: true });
-    }
-  }
   render() {
     return (
       <View
         style={styles.container}
-        onLayout={this.handleOnLayout}
       >
-        {
-          this.state.caculatedLayout ?
-            this.getContent()
-            :
-            null
-        }
+        {this.getContent()}
       </View>
     );
   }

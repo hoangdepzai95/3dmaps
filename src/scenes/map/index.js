@@ -90,6 +90,8 @@ class Map extends Component {
       })
     );
   }
+  onSnapToItem = (index) => {
+  }
   render() {
     const { posts, region } = this.state;
     return (
@@ -102,8 +104,13 @@ class Map extends Component {
         </MapView>
         <View style={styles.suggestPlace} >
           <ImageSlider
-            images={posts.map(o => o.image)}
+            source={posts}
+            containerWidth={width/1.3}
+            containerHeight={height/5}
+            onSnapToItem={this.onSnapToItem}
           />
+          <View style={styles.contentSuggest}>
+          </View>
         </View>
       </View>
     );

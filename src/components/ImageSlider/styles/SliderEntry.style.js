@@ -5,14 +5,14 @@ export default (viewportWidth, viewportHeight) => {
     const value = (percentage * viewportWidth) / 100;
     return Math.round(value);
   }
-  const slideHeight = viewportHeight * 0.4;
+  const slideHeight = viewportHeight;
   const slideWidth = wp(75);
   const itemHorizontalMargin = wp(2);
 
   const sliderWidth = viewportWidth;
   const itemWidth = slideWidth + (itemHorizontalMargin * 2);
 
-  const entryBorderRadius = 8;
+  const entryBorderRadius = 2;
 
   return {
     slideHeight,
