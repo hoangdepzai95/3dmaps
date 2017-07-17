@@ -4,10 +4,9 @@ export default StyleSheet.create({
   container: {
     flex: 1,
   },
-  mapView: {
-    flex: 7,
+  slider: {
+    marginBottom: 30,
   },
-  suggestPlace: {
-    flex: 15,
+  sliderContainer: {
   },
 });

@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { MapView } from 'expo';
-import { Text, View } from 'react-native';
+import { Text, View, Image, Dimensions } from 'react-native';
 
+import ImageSlider from '../../components/ImageSlider';
 import styles from './style';
+
+const { height, width } = Dimensions.get('window');
 
 class Map extends Component {
   constructor(props) {
@@ -21,6 +24,7 @@ class Map extends Component {
             latitude: 37.01,
           },
           title: 'post1',
+          image: 'http://maapvn.com/admin/images/post/IMG0000000145.jpeg?1494490153',
         },
         {
           coordinate: {
@@ -28,6 +32,7 @@ class Map extends Component {
             latitude: 37.04,
           },
           title: 'post2',
+          image: 'http://maapvn.com/admin/images/post/IMG0000000140.jpeg?1494409196',
         },
         {
           coordinate: {
@@ -35,6 +40,31 @@ class Map extends Component {
             latitude: 37.06,
           },
           title: 'post3',
+          image: 'http://maapvn.com/admin/images/post/IMG0000000059.jpeg?1494399433',
+        },
+        {
+          coordinate: {
+            longitude: -122,
+            latitude: 37.06,
+          },
+          title: 'post6',
+          image: 'http://maapvn.com/admin/images/post/IMG0000000059.jpeg?1494399433',
+        },
+        {
+          coordinate: {
+            longitude: -122,
+            latitude: 37.06,
+          },
+          title: 'post4',
+          image: 'http://maapvn.com/admin/images/post/IMG0000000059.jpeg?1494399433',
+        },
+        {
+          coordinate: {
+            longitude: -122,
+            latitude: 37.06,
+          },
+          title: 'post7',
+          image: 'http://maapvn.com/admin/images/post/IMG0000000059.jpeg?1494399433',
         },
       ],
     };
@@ -61,15 +91,20 @@ class Map extends Component {
     );
   }
   render() {
+    const { posts, region } = this.state;
     return (
       <View style={styles.container}>
         <MapView
           style={styles.mapView}
-          initialRegion={this.state.region}
+          initialRegion={region}
         >
-          {this.renderPost(this.state.posts)}
+          {this.renderPost(posts)}
         </MapView>
-        <View style={styles.suggestPlace} />
+        <View style={styles.suggestPlace} >
+          <ImageSlider
+            images={posts.map(o => o.image)}
+          />
+        </View>
       </View>
     );
   }

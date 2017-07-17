@@ -150,7 +150,7 @@ export default class TabBar extends Component {
           <Animated.ScrollView
             horizontal
             pagingEnabled
-            scrollEnabled
+            scrollEnabled={false}
             automaticallyAdjustContentInsets={false}
             contentOffset={{ x: 0 }}
             ref={(scroll) => { this.scrollView = scroll; }}
