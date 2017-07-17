@@ -1,7 +1,7 @@
 import React from 'react';
 import Expo from 'expo';
 import { Provider } from 'react-redux';
-import { View, StyleSheet, StatusBar  } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { createStore, applyMiddleware } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 
@@ -27,11 +27,6 @@ const root = () => {
       store={store}
     >
       <View style={styles.container}>
-        <StatusBar
-           backgroundColor="transparent"
-           barStyle="light-content"
-           translucent={false}
-         />
         <App />
       </View>
     </Provider>

@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { View, Text, ScrollView, Dimensions, Image, TouchableOpacity, Animated } from 'react-native';
-import { Ionicons, EvilIcons, Entypo } from '@expo/vector-icons';
+import { View, Text, Dimensions, TouchableOpacity, Animated } from 'react-native';
+import { EvilIcons, Entypo } from '@expo/vector-icons';
 import styles from './style';
 import MapAndFilter from '../../components/MapAndFilter';
 import Filter from '../../components/Filter';
 import homeStyles from '../../styles/home';
+
 const { height, width } = Dimensions.get('window');
 
 export default class TabBar extends Component {
@@ -34,6 +35,12 @@ export default class TabBar extends Component {
   componentWillMount() {
     this.setState({ activeTab: this.props.initTab });
   }
+  onPressMap = () => {
+    this.props.onChangeTab('map');
+  }
+  getDistance = (currentTab, nextTab) => {
+    return this.tabsPositon[nextTab] - this.tabsPositon[currentTab];
+  }
   handleOnLayout(id, e) {
     // on last call handleOnLayout
     if (this.state.caculatedLayout) return;
@@ -42,9 +49,12 @@ export default class TabBar extends Component {
     } else {
       this.labelsSize[id] = e.nativeEvent.layout.width;
     }
-    if (this.tabsContainerWidth && this.props.children.length === Object.keys(this.labelsSize).length) {
+    if (
+      this.tabsContainerWidth &&
+      this.props.children.length === Object.keys(this.labelsSize).length
+    ) {
       let totalLabelWidth = 0;
-      for (let key in this.labelsSize) {
+      for (const key in this.labelsSize) {
         totalLabelWidth += this.labelsSize[key];
       }
       this.tabSpace = (this.tabsContainerWidth - totalLabelWidth) /
@@ -62,9 +72,6 @@ export default class TabBar extends Component {
       });
     }
   }
-  getDistance = (currentTab, nextTab) => {
-    return this.tabsPositon[nextTab] - this.tabsPositon[currentTab];
-  }
   gotoTab(id) {
     this.tabAnimateValue.setValue(0);
     this.underlineWidthValue.setValue(0);
@@ -81,16 +88,14 @@ export default class TabBar extends Component {
       () => {
         this.tabAnimation.start();
         this.underlineWidthAnimation.start();
-      }
+      },
     );
     React.Children.map(this.props.children, (child, index) => {
       if (child.props.tabId === id) {
         this.scrollView._component.scrollTo({ x: width * index, animated: true });
       }
     });
-  }
-  onPressMap = () => {
-    this.props.onChangeTab('map');
+    this.props.showHeader();
   }
   renderTabs = () => {
     const marginLeft = this.tabSpace ? this.tabSpace / 2 : 0;
@@ -104,9 +109,13 @@ export default class TabBar extends Component {
           {
             React.Children.map(this.props.children, (child) => {
               const id = child.props.tabId;
-              const caculatedStyle = this.state.caculatedLayout ? { width: this.tabsSize[id], flex: 0 } : {};
+              const caculatedStyle = this.state.caculatedLayout ?
+                                    { width: this.tabsSize[id], flex: 0 } : {};
               return (
-                <TouchableOpacity style={[styles.tab, caculatedStyle]} onPress={this.gotoTab.bind(this, id)}>
+                <TouchableOpacity
+                  style={[styles.tab, caculatedStyle]}
+                  onPress={this.gotoTab.bind(this, id)}
+                >
                   <Text
                     onLayout={this.handleOnLayout.bind(this, id)}
                   >
@@ -116,7 +125,12 @@ export default class TabBar extends Component {
               );
             })
           }
-          <Animated.View style={[styles.tabUnderlineStyle, { left: this.state.leftAnimation, width: this.state.widthAnimation, marginLeft }]}></Animated.View>
+          <Animated.View
+            style={
+            [styles.tabUnderlineStyle,
+                { left: this.state.leftAnimation, width: this.state.widthAnimation, marginLeft }]
+            }
+          />
         </View>
         <View style={styles.rightArea}>
           <EvilIcons name="user" size={iconSize} />
@@ -125,7 +139,7 @@ export default class TabBar extends Component {
     );
   }
   render() {
-    const { onPressFilter, onScroll } = this.props;
+    const { onPressFilter } = this.props;
     const { activeTab } = this.state;
     return (
       <View style={styles.container}>
@@ -133,59 +147,51 @@ export default class TabBar extends Component {
           {this.renderTabs()}
         </View>
         <View style={styles.mainContainer}>
-        <Animated.ScrollView
-          horizontal
-          pagingEnabled
-          scrollEnabled={true}
-          automaticallyAdjustContentInsets={false}
-          contentOffset={{ x: 0 }}
-          onScroll={
-            Animated.event([{
-                  nativeEvent: { contentOffset: { x: this.scrollX } }
-                }], {
-                  useNativeDriver: true,
-                })
-          }
-          ref={(scroll) => {this.scrollView = scroll}}
-          scrollEventThrottle={16}
-          scrollsToTop={false}
-          showsHorizontalScrollIndicator={false}
-          scrollEnabled={false}
-          directionalLockEnabled
-          alwaysBounceVertical={false}
-          keyboardDismissMode="on-drag"
-        >
-          {
-            this.props.children.map((child, index) => {
-              return (
-                <View style={{ width }} key={index}>
-                  {child}
-                </View>
-              );
-            })
-          }
-        </Animated.ScrollView>
+          <Animated.ScrollView
+            horizontal
+            pagingEnabled
+            scrollEnabled
+            automaticallyAdjustContentInsets={false}
+            contentOffset={{ x: 0 }}
+            ref={(scroll) => { this.scrollView = scroll; }}
+            scrollEventThrottle={16}
+            scrollsToTop={false}
+            showsHorizontalScrollIndicator={false}
+            directionalLockEnabled
+            alwaysBounceVertical={false}
+            keyboardDismissMode="on-drag"
+          >
+            {
+              this.props.children.map((child) => {
+                return (
+                  <View style={{ width }} key={child.props.tabId}>
+                    {child}
+                  </View>
+                );
+              })
+            }
+          </Animated.ScrollView>
         </View>
         {
           activeTab === 'home' ?
-          <View style={homeStyles.mapAndFilter} elevation={5}>
-            <MapAndFilter
-              onPressMap={this.onPressMap}
-              onPressFilter={onPressFilter}
-            />
-          </View>
-          :
-          null
+            <View style={homeStyles.mapAndFilter} elevation={5}>
+              <MapAndFilter
+                onPressMap={this.onPressMap}
+                onPressFilter={onPressFilter}
+              />
+            </View>
+            :
+            null
         }
         {
           activeTab === 'experience' ?
-          <View style={homeStyles.filterStyle} elevation={5}>
-            <Filter
-              onPressFilter={onPressFilter}
-            />
-          </View>
-          :
-          null
+            <View style={homeStyles.filterStyle} elevation={5}>
+              <Filter
+                onPressFilter={onPressFilter}
+              />
+            </View>
+            :
+            null
         }
       </View>
     );

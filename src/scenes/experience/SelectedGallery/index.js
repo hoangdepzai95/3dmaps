@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { View, ScrollView, TouchableOpacity, Text } from 'react-native';
-import shortid from 'shortid';
 import Post from './post';
 import homeStyles from '../../../styles/home';
 import styles from './style';
@@ -15,22 +14,27 @@ export default class Experience extends Component {
           {
             favorite: true,
             rate: 1,
+            id: 1,
           },
           {
             favorite: false,
             rate: 2,
+            id: 2,
           },
           {
             favorite: true,
             rate: 4,
+            id: 3,
           },
           {
             favorite: true,
             rate: 2,
+            id: 4,
           },
           {
             favorite: true,
             rate: 5,
+            id: 5,
           },
         ],
       },
@@ -65,7 +69,7 @@ export default class Experience extends Component {
               gallery.posts.map((post, index) => {
                 if ((index % 2) === 0) {
                   return (
-                    <View style={homeStyles.postRow} key={shortid.generate()}>
+                    <View style={homeStyles.postRow} key={post.id}>
                       <Post {...gallery.posts[index]} />
                       <View style={homeStyles.divider} />
                       {

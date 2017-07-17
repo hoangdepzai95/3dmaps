@@ -41,7 +41,6 @@ export default class MainPage extends Component {
   }
   onChangeTab = (tab) => {
     this.tabView.gotoTab(tab);
-    this.scrollY.setValue(0);
   }
   onPressFilter = () => {
   }
@@ -56,7 +55,7 @@ export default class MainPage extends Component {
       this.prevOffsetY = offsetY;
     }
   }
-  hideHeader() {
+  hideHeader = () => {
     this.headerHeightAnimation = Animated.timing(this.headerHeight, {
       toValue: -standradHeight - 25,
       duration: 100,
@@ -70,7 +69,7 @@ export default class MainPage extends Component {
   playAnimation() {
     Animated.parallel([this.headerHeightAnimation, this.marginTopAnimation]).start();
   }
-  showHeader() {
+  showHeader = () => {
     this.headerHeightAnimation = Animated.timing(this.headerHeight, {
       toValue: 0,
       duration: 100,
@@ -98,6 +97,7 @@ export default class MainPage extends Component {
             onPressFilter={this.onPressFilter}
             onChangeTab={this.onChangeTab}
             onScroll={this.onScroll}
+            showHeader={this.showHeader}
             ref={(tabView) => { this.tabView = tabView; }}
           >
             <HomeTab

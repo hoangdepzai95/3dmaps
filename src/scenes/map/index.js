@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { MapView } from 'expo';
 import { Text, View } from 'react-native';
-import ViewPager from '../../lib/react-native-viewpager/Sample/MainScreen';
 
 import styles from './style';
 
@@ -70,8 +69,7 @@ class Map extends Component {
         >
           {this.renderPost(this.state.posts)}
         </MapView>
-        <View style={styles.suggestPlace}>
-        </View>
+        <View style={styles.suggestPlace} />
       </View>
     );
   }

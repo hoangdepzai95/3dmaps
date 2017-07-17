@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { View, ScrollView, Image, Text } from 'react-native';
-import styles from './style';
+import { View, Image } from 'react-native';
 import _ from 'lodash';
+import styles from './style';
 
 const links = [
   'http://maapvn.com/admin/images/post/IMG0000000145.jpeg?1494490153',
@@ -14,9 +14,9 @@ const links = [
 export default class HomeTab extends Component {
   constructor(props) {
     super(props);
-    this.state= {
+    this.state = {
       containerWidth: null,
-    }
+    };
   }
   handleLayout = (e) => {
     if (!this.state.containerWidth) {
@@ -25,8 +25,7 @@ export default class HomeTab extends Component {
       });
     }
   }
-  renderGallery() {
-    return;
+  renderGallery = () => {
   }
   render() {
     const { containerWidth } = this.state;
@@ -36,28 +35,36 @@ export default class HomeTab extends Component {
         style={styles.container}
         onLayout={this.handleLayout}
       >
-      {
-        containerWidth ?
-          <Image
-            source={{ uri: links[_.random(1, links.length - 1)] }}
-            style={{ height: containerWidth * 0.75, width: containerWidth }}
-            resizeMode="cover"
-          />
-          :
-          null
-      }
-      {
-        favorite ?
-        <Image
-          source={require('../../../assets/images/heart.png')}
-          style={[styles.favoriteIcon, { width: containerWidth / 10, height: containerWidth / 10 }]}
-        />
-        :
-        <Image
-          source={require('../../../assets/images/ic_favorite.png')}
-          style={[styles.favoriteIcon, { width: containerWidth / 10, height: containerWidth / 10 }]}
-        />
-      }
+        {
+          containerWidth ?
+            <Image
+              source={{ uri: links[_.random(1, links.length - 1)] }}
+              style={{ height: containerWidth * 0.75, width: containerWidth }}
+              resizeMode="cover"
+            />
+            :
+            null
+        }
+        {
+          favorite ?
+            <Image
+              source={require('../../../assets/images/heart.png')}
+              style={
+              [styles.favoriteIcon,
+                { width: containerWidth / 10, height: containerWidth / 10 },
+              ]
+              }
+            />
+            :
+            <Image
+              source={require('../../../assets/images/ic_favorite.png')}
+              style={
+              [styles.favoriteIcon,
+                { width: containerWidth / 10, height: containerWidth / 10 },
+              ]
+              }
+            />
+        }
       </View>
     );
   }
