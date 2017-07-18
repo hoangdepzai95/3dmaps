@@ -1,8 +1,9 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import Stars from 'react-native-stars-rating';
+import StarRatingBar from '../../../lib/react-native-star-rating-view/StarRatingBar';
 import PostImage from '../../../components/post-image';
 import styles from './style';
+import startstyles from '../../../styles/starRating';
 
 const Post = (props) => {
   return (
@@ -14,13 +15,13 @@ const Post = (props) => {
           <Text style={styles.smallText}>Nguyễn huy tưởng</Text>
         </View>
         <View style={styles.rating}>
-          <Stars
-            isActive={false}
-            rateMax={5}
-            isHalfStarEnabled={false}
-            rate={props.rate}
-            color="#ff8b00"
-            size={12}
+          <StarRatingBar
+            score={props.rate}
+            allowsHalfStars={false}
+            accurateHalfStars={false}
+            readOnly
+            starStyle={startstyles.star}
+            spacing={startstyles.space}
           />
         </View>
       </View>

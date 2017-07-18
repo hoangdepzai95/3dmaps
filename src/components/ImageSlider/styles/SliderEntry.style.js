@@ -10,7 +10,7 @@ export default (viewportWidth, viewportHeight) => {
   const itemHorizontalMargin = wp(2);
 
   const sliderWidth = viewportWidth;
-  const itemWidth = slideWidth + (itemHorizontalMargin * 2);
+  const itemWidth = slideWidth + (itemHorizontalMargin * 2) - slideWidth / 4;
 
   const entryBorderRadius = 2;
 

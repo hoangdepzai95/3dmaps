@@ -6,6 +6,11 @@ import styles from './styles/index.style';
 import getStyles from './styles/SliderEntry.style';
 
 export default class example extends Component {
+  componentDidMount() {
+    if (this.props.onMounted) {
+      this.props.onMounted(this.slider);
+    }
+  }
   getSlides = () => {
     const { source, containerHeight, containerWidth } = this.props;
     if (!source) {
@@ -25,20 +30,21 @@ export default class example extends Component {
     });
   }
   getContent = () => {
-    const { containerWidth, containerHeight, onSnapToItem } = this.props;
+    const { containerWidth, containerHeight, onSnapToItem, activePostIndex } = this.props;
     const contentStyles = getStyles(containerWidth, containerHeight);
     return (
       <Carousel
         sliderWidth={contentStyles.sliderWidth}
         itemWidth={contentStyles.itemWidth}
-        firstItem={1}
-        inactiveSlideScale={0.94}
-        inactiveSlideOpacity={0.6}
+        firstItem={activePostIndex}
+        inactiveSlideScale={0.9}
+        inactiveSlideOpacity={0.7}
         enableMomentum={false}
         containerCustomStyle={styles.slider}
         contentContainerCustomStyle={styles.sliderContainer}
         showsHorizontalScrollIndicator={false}
         snapOnAndroid
+        ref={(slider) => { this.slider = slider; }}
         removeClippedSubviews={false}
         onSnapToItem={onSnapToItem}
       >

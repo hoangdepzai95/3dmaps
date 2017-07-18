@@ -14,4 +14,14 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  contentSuggest: {
+    flex: 1,
+  },
+  rating: {
+    paddingTop: 3,
+    flex: 7,
+  },
+  boldText: {
+    fontWeight: '400',
+  },
 });
