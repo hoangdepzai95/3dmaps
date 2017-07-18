@@ -42,6 +42,11 @@ const styles = StyleSheet.create({
     height: 3,
     width: 50,
   },
+  profile: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });
 
 export default styles;

@@ -5,7 +5,7 @@ import LoggedIn from './logged-in';
 import NotLogged from './not-logged';
 
 const Account = ({ authType }) => {
-  if (authType) {
+  if (authType && authType !== 'guest') {
     return <LoggedIn />;
   }
   return <NotLogged />;

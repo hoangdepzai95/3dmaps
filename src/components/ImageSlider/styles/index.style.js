@@ -5,7 +5,6 @@ export default StyleSheet.create({
     flex: 1,
   },
   slider: {
-    marginBottom: 30,
   },
   sliderContainer: {
   },

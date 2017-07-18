@@ -16,12 +16,37 @@ export default StyleSheet.create({
   },
   contentSuggest: {
     flex: 1,
+    paddingBottom: 10,
   },
   rating: {
-    paddingTop: 3,
-    flex: 7,
+    paddingBottom: 5,
   },
   boldText: {
     fontWeight: '400',
+    marginBottom: 4,
+  },
+  tags: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'flex-start',
+  },
+  tag: {
+    borderWidth: 1,
+    borderRadius: 8,
+    borderColor: '#74a8ff',
+    marginRight: 6,
+    marginBottom: 6,
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexWrap: 'nowrap',
+  },
+  tagText: {
+    color: '#808cff',
+    fontSize: 11,
+  },
+  textFooter: {
+    fontSize: 11,
   },
 });

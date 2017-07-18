@@ -5,7 +5,6 @@ import {
     View,
     Animated,
     Dimensions,
-    StatusBar,
 } from 'react-native';
 
 import MapPage from './map';
@@ -39,6 +38,9 @@ export default class MainPage extends Component {
     this.marginTop = new Animated.Value(0);
     this.prevOffsetY = 0;
   }
+  onTabViewMounted = (tabView) => {
+    this.tabView = tabView;
+  }
   onChangeTab = (tab) => {
     this.tabView.gotoTab(tab);
   }
@@ -46,11 +48,11 @@ export default class MainPage extends Component {
   }
   onScroll = (e) => {
     const offsetY = e.nativeEvent.contentOffset.y;
-    if ((offsetY - this.prevOffsetY) > height / 10) {
+    if ((offsetY - this.prevOffsetY) > 30) {
       this.hideHeader();
       this.prevOffsetY = offsetY;
     }
-    if ((offsetY - this.prevOffsetY) < -height / 10) {
+    if ((offsetY - this.prevOffsetY) < -30) {
       this.showHeader();
       this.prevOffsetY = offsetY;
     }
@@ -83,11 +85,6 @@ export default class MainPage extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <StatusBar
-          translucent
-          barStyle="light-content"
-          backgroundColor="rgba(0, 0, 0, 0.251)"
-        />
         <Animated.View style={[styles.header, { top: this.headerHeight }]}>
           <AutoCompleteSearch />
         </Animated.View>
@@ -96,9 +93,9 @@ export default class MainPage extends Component {
             initTab="home"
             onPressFilter={this.onPressFilter}
             onChangeTab={this.onChangeTab}
+            onMounted={this.onTabViewMounted}
             onScroll={this.onScroll}
             showHeader={this.showHeader}
-            ref={(tabView) => { this.tabView = tabView; }}
           >
             <HomeTab
               tabLabel="HOME"

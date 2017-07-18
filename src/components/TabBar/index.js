@@ -1,19 +1,22 @@
 import React, { Component } from 'react';
 import { View, Text, Dimensions, TouchableOpacity, Animated } from 'react-native';
 import { EvilIcons, Entypo } from '@expo/vector-icons';
+import { connect } from 'react-redux';
+import { setActiveTab, backTab } from '../../actions/layout';
 import styles from './style';
 import MapAndFilter from '../../components/MapAndFilter';
 import Filter from '../../components/Filter';
+import TabsContent from './TabsContent';
 import homeStyles from '../../styles/home';
+import Account from '../../scenes/account';
 
 const { height, width } = Dimensions.get('window');
 
-export default class TabBar extends Component {
+class TabBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
       caculatedLayout: false,
-      activeTab: '',
       leftAnimation: 0,
       widthAnimation: 0,
     };
@@ -33,13 +36,24 @@ export default class TabBar extends Component {
     });
   }
   componentWillMount() {
-    this.setState({ activeTab: this.props.initTab });
+    this.props.dispatch(setActiveTab(this.props.initTab));
   }
-  onPressMap = () => {
-    this.props.onChangeTab('map');
+  componentDidMount() {
+    this.props.onMounted(this);
   }
   getDistance = (currentTab, nextTab) => {
     return this.tabsPositon[nextTab] - this.tabsPositon[currentTab];
+  }
+  onPressAccount = () => {
+    if (this.props.activeTab !== '_account') {
+      this.props.dispatch(setActiveTab('_account'));
+    }
+  }
+  onPressBack = () => {
+    this.props.dispatch(backTab());
+  }
+  onTabContentMounted = (scrollView) => {
+    this.scrollView = scrollView;
   }
   handleOnLayout(id, e) {
     // on last call handleOnLayout
@@ -73,19 +87,21 @@ export default class TabBar extends Component {
     }
   }
   gotoTab(id) {
+    const { activeTab } = this.props;
     this.tabAnimateValue.setValue(0);
     this.underlineWidthValue.setValue(0);
     const leftAnimation = this.tabAnimateValue.interpolate({
       inputRange: [0, 1],
-      outputRange: [this.tabsPositon[this.state.activeTab], this.tabsPositon[id]],
+      outputRange: [this.tabsPositon[activeTab], this.tabsPositon[id]],
     });
     const widthAnimation = this.tabAnimateValue.interpolate({
       inputRange: [0, 1],
-      outputRange: [this.labelsSize[this.state.activeTab], this.labelsSize[id]],
+      outputRange: [this.labelsSize[activeTab], this.labelsSize[id]],
     });
     this.setState(
-      { activeTab: id, leftAnimation, widthAnimation },
+      { leftAnimation, widthAnimation },
       () => {
+        this.props.dispatch(setActiveTab(id));
         this.tabAnimation.start();
         this.underlineWidthAnimation.start();
       },
@@ -98,85 +114,98 @@ export default class TabBar extends Component {
     this.props.showHeader();
   }
   renderTabs = () => {
+    const { activeTab } = this.props;
     const marginLeft = this.tabSpace ? this.tabSpace / 2 : 0;
     const iconSize = height / 25;
     return (
       <View style={styles.tabs}>
-        <View style={styles.leftArea}>
-          <Entypo name="chevron-left" size={iconSize} color="#1069ff" />
-        </View>
+        {
+          activeTab === '_account' ?
+            <TouchableOpacity
+              style={styles.leftArea}
+              onPress={this.onPressBack}
+            >
+              <Entypo name="chevron-left" size={iconSize} color="#1069ff" />
+            </TouchableOpacity>
+          :
+            <View style={styles.leftArea} />
+        }
         <View style={styles.mainArea} onLayout={this.handleOnLayout.bind(this, '_mainArea')}>
           {
-            React.Children.map(this.props.children, (child) => {
-              const id = child.props.tabId;
-              const caculatedStyle = this.state.caculatedLayout ?
-                                    { width: this.tabsSize[id], flex: 0 } : {};
-              return (
-                <TouchableOpacity
-                  style={[styles.tab, caculatedStyle]}
-                  onPress={this.gotoTab.bind(this, id)}
-                >
-                  <Text
-                    onLayout={this.handleOnLayout.bind(this, id)}
-                  >
-                    { child.props.tabLabel }
-                  </Text>
-                </TouchableOpacity>
-              );
-            })
+            this.props.children.find(child => child.props.tabId === activeTab) ?
+              <View style={{ flex: 1, flexDirection: 'row' }}>
+                {
+                React.Children.map(this.props.children, (child) => {
+                  const id = child.props.tabId;
+                  const caculatedStyle = this.state.caculatedLayout ?
+                                        { width: this.tabsSize[id], flex: 0 } : {};
+                  return (
+                    <TouchableOpacity
+                      style={[styles.tab, caculatedStyle]}
+                      onPress={this.gotoTab.bind(this, id)}
+                    >
+                      <Text
+                        onLayout={this.handleOnLayout.bind(this, id)}
+                      >
+                        { child.props.tabLabel }
+                      </Text>
+                    </TouchableOpacity>
+                  );
+                })
+              }
+                <Animated.View
+                  style={
+                  [styles.tabUnderlineStyle,
+                      { left: this.state.leftAnimation, width: this.state.widthAnimation, marginLeft }]
+                  }
+                />
+              </View>
+            : null
           }
-          <Animated.View
-            style={
-            [styles.tabUnderlineStyle,
-                { left: this.state.leftAnimation, width: this.state.widthAnimation, marginLeft }]
-            }
-          />
+          {
+            activeTab === '_account' ?
+              <View style={styles.profile}>
+                <Text>PROFILE</Text>
+              </View>
+              : null
+          }
         </View>
-        <View style={styles.rightArea}>
+        <TouchableOpacity
+          style={styles.rightArea}
+          onPress={this.onPressAccount}
+        >
           <EvilIcons name="user" size={iconSize} />
-        </View>
+        </TouchableOpacity>
       </View>
     );
   }
   render() {
-    const { onPressFilter } = this.props;
-    const { activeTab } = this.state;
+    const { onPressFilter, activeTab, onChangeTab } = this.props;
+    const isMainTab = !!this.props.children.find(child => child.props.tabId === activeTab);
     return (
       <View style={styles.container}>
         <View style={styles.tabsContainer}>
           {this.renderTabs()}
         </View>
-        <View style={styles.mainContainer}>
-          <Animated.ScrollView
-            horizontal
-            pagingEnabled
-            scrollEnabled={false}
-            automaticallyAdjustContentInsets={false}
-            contentOffset={{ x: 0 }}
-            ref={(scroll) => { this.scrollView = scroll; }}
-            scrollEventThrottle={16}
-            scrollsToTop={false}
-            showsHorizontalScrollIndicator={false}
-            directionalLockEnabled
-            alwaysBounceVertical={false}
-            keyboardDismissMode="on-drag"
-          >
-            {
-              this.props.children.map((child) => {
-                return (
-                  <View style={{ width }} key={child.props.tabId}>
-                    {child}
-                  </View>
-                );
-              })
-            }
-          </Animated.ScrollView>
+        <View style={[styles.mainContainer, { display: isMainTab ? 'flex' : 'none' }]}>
+          <TabsContent tabs={this.props.children} onMounted={this.onTabContentMounted} />
         </View>
+        {
+          isMainTab ?
+          null :
+          <View style={[styles.mainContainer]}>
+            {
+              activeTab === '_account' ?
+                <Account />
+                : null
+            }
+          </View>
+        }
         {
           activeTab === 'home' ?
             <View style={homeStyles.mapAndFilter} elevation={5}>
               <MapAndFilter
-                onPressMap={this.onPressMap}
+                onPressMap={() => { onChangeTab('map'); }}
                 onPressFilter={onPressFilter}
               />
             </View>
@@ -197,3 +226,9 @@ export default class TabBar extends Component {
     );
   }
 }
+
+export default connect((state) => {
+  return {
+    activeTab: state.layout.activeTab,
+  };
+})(TabBar);
