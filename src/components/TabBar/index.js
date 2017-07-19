@@ -86,7 +86,7 @@ class TabBar extends Component {
       });
     }
   }
-  gotoTab(id) {
+  gotoTab(id, animated = true) {
     const { activeTab } = this.props;
     this.tabAnimateValue.setValue(0);
     this.underlineWidthValue.setValue(0);
@@ -102,13 +102,12 @@ class TabBar extends Component {
       { leftAnimation, widthAnimation },
       () => {
         this.props.dispatch(setActiveTab(id));
-        this.tabAnimation.start();
-        this.underlineWidthAnimation.start();
+        Animated.parallel([this.tabAnimation, this.underlineWidthAnimation]).start();
       },
     );
     React.Children.map(this.props.children, (child, index) => {
       if (child.props.tabId === id) {
-        this.scrollView._component.scrollTo({ x: width * index, animated: true });
+        this.scrollView._component.scrollTo({ x: width * index, animated });
       }
     });
     this.props.showHeader();
@@ -187,20 +186,20 @@ class TabBar extends Component {
         <View style={styles.tabsContainer}>
           {this.renderTabs()}
         </View>
-        <View style={[styles.mainContainer, { display: isMainTab ? 'flex' : 'none' }]}>
+        <View style={[styles.mainContainer]}>
           <TabsContent tabs={this.props.children} onMounted={this.onTabContentMounted} />
+          {
+            isMainTab ?
+            null :
+            <View style={[{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: '#FFF', zIndex: 9999 }]}>
+              {
+                activeTab === '_account' ?
+                  <Account />
+                  : null
+              }
+            </View>
+          }
         </View>
-        {
-          isMainTab ?
-          null :
-          <View style={[styles.mainContainer]}>
-            {
-              activeTab === '_account' ?
-                <Account />
-                : null
-            }
-          </View>
-        }
         {
           activeTab === 'home' ?
             <View style={homeStyles.mapAndFilter} elevation={5}>
@@ -230,5 +229,6 @@ class TabBar extends Component {
 export default connect((state) => {
   return {
     activeTab: state.layout.activeTab,
+    prevTab: state.layout.prevTab,
   };
 })(TabBar);

@@ -37,6 +37,7 @@ export default class MainPage extends Component {
     this.headerHeight = new Animated.Value(0);
     this.marginTop = new Animated.Value(0);
     this.prevOffsetY = 0;
+    this.isShowHeader = true;
   }
   onTabViewMounted = (tabView) => {
     this.tabView = tabView;

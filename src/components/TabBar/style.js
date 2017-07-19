@@ -18,6 +18,7 @@ const styles = StyleSheet.create({
   },
   mainContainer: {
     flex: 311,
+    position: 'relative',
   },
   leftArea: {
     flex: 44,
