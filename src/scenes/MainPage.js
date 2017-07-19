@@ -6,6 +6,7 @@ import {
     Animated,
     Dimensions,
 } from 'react-native';
+import _ from 'lodash';
 
 import MapPage from './map';
 import HomeTab from './home';
@@ -37,7 +38,6 @@ export default class MainPage extends Component {
     this.headerHeight = new Animated.Value(0);
     this.marginTop = new Animated.Value(0);
     this.prevOffsetY = 0;
-    this.isShowHeader = true;
   }
   onTabViewMounted = (tabView) => {
     this.tabView = tabView;
@@ -49,11 +49,11 @@ export default class MainPage extends Component {
   }
   onScroll = (e) => {
     const offsetY = e.nativeEvent.contentOffset.y;
-    if ((offsetY - this.prevOffsetY) > 30) {
+    if ((offsetY - this.prevOffsetY) > height / 5) {
       this.hideHeader();
       this.prevOffsetY = offsetY;
     }
-    if ((offsetY - this.prevOffsetY) < -30) {
+    if ((offsetY - this.prevOffsetY) < -height / 5) {
       this.showHeader();
       this.prevOffsetY = offsetY;
     }

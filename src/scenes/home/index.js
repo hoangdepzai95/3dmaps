@@ -98,6 +98,10 @@ export default class HomeTab extends Component {
       <View style={styles.container}>
         <ScrollView
           onScroll={onScroll}
+          scrollEventThrottle={16}
+          alwaysBounceVertical={false}
+          bounces={false}
+          bouncesZoom={false}
         >
           {
             gallerys.map((gallery) => {

@@ -90,6 +90,10 @@ export default class Experience extends Component {
       <View style={homeStyles.container}>
         <ScrollView
           onScroll={onScroll}
+          scrollEventThrottle={16}
+          alwaysBounceVertical={false}
+          bounces={false}
+          bouncesZoom={false}
         >
           {
             gallerys.map((gallery) => {
