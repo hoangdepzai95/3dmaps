@@ -8,6 +8,7 @@ import createSagaMiddleware from 'redux-saga';
 import reducers from './src/reducers';
 import rootSaga from './src/sagas';
 import App from './src/App';
+import setUpLang from './src/util/lang';
 
 const styles = StyleSheet.create({
   container: {
@@ -21,6 +22,7 @@ const store = createStore(
                 applyMiddleware(sagaMiddleware),
               );
 sagaMiddleware.run(rootSaga);
+setUpLang();
 const root = () => {
   return (
     <Provider

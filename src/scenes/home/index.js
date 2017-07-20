@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, ScrollView, TouchableOpacity, Text } from 'react-native';
+import I18n from 'i18n-js';
 import Post from './post';
 import styles from '../../styles/home';
 
@@ -110,7 +111,7 @@ export default class HomeTab extends Component {
                   <TouchableOpacity activeOpacity={0.6}>
                     <View style={styles.card}>
                       <Text>{gallery.name}</Text>
-                      <Text style={styles.seeAllText}>See all</Text>
+                      <Text style={styles.seeAllText}>{I18n.t('SEE_ALL')}</Text>
                     </View>
                   </TouchableOpacity>
                   <View style={styles.postRow}>

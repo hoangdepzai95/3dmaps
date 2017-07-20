@@ -6,7 +6,7 @@ import {
     Animated,
     Dimensions,
 } from 'react-native';
-import _ from 'lodash';
+import I18n from 'i18n-js';
 
 import MapPage from './map';
 import HomeTab from './home';
@@ -99,17 +99,17 @@ export default class MainPage extends Component {
             showHeader={this.showHeader}
           >
             <HomeTab
-              tabLabel="HOME"
+              tabLabel={I18n.t('HOME')}
               tabId="home"
               onScroll={this.onScroll}
             />
             <ExperiencePage
-              tabLabel="EXPERIENCE"
+              tabLabel={I18n.t('EXPERIENCE')}
               tabId="experience"
               onScroll={this.onScroll}
             />
             <MapPage
-              tabLabel="MAP"
+              tabLabel={I18n.t('MAP')}
               tabId="map"
               onScroll={this.onScroll}
             />

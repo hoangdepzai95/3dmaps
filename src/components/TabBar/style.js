@@ -21,9 +21,9 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   leftArea: {
-    flex: 44,
+    flex: 30,
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'flex-end',
   },
   rightArea: {
     flex: 49,
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   mainArea: {
-    flex: 117,
+    flex: 200,
     flexDirection: 'row',
     position: 'relative',
   },

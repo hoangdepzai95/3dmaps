@@ -1,4 +1,6 @@
 import { StyleSheet, Dimensions } from 'react-native';
+import I18n from 'i18n-js';
+
 const { height, width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
@@ -25,7 +27,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   seeAllText: {
-    color: '#8f90fe'
+    color: '#8f90fe',
   },
   gallery: {
     paddingBottom: 10,
@@ -33,8 +35,6 @@ const styles = StyleSheet.create({
   mapAndFilter: {
     position: 'absolute',
     bottom: height / 15,
-    width: width * 0.378,
-    left: (width / 2) - ((width * 0.378) / 2),
     height: height / 17,
     backgroundColor: 'transparent',
     zIndex: 999,

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Image, Text, TouchableOpacity, Dimensions } from 'react-native';
 import { connect } from 'react-redux';
 import { EvilIcons } from '@expo/vector-icons';
+import I18n from 'i18n-js';
 
 import { loginFaceBook, loginGoogle, skipLogin } from '../../actions/auth';
 import styles from './style';
@@ -39,7 +40,7 @@ class WellCome extends Component {
               onPress={this.loginFaceBook}
             >
               <EvilIcons color="#FFF" name="sc-facebook" size={iconSize} style={styles.facebookIcon} />
-              <Text style={styles.buttonText}>Sign in with Facebook</Text>
+              <Text style={styles.buttonText}>{I18n.t('Sign_in_with_Facebook')}</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.googleLogin}
@@ -47,10 +48,10 @@ class WellCome extends Component {
               onPress={this.loginGoogle}
             >
               <EvilIcons color="#FFF" name="sc-google-plus" size={iconSize} style={styles.googleIcon} />
-              <Text style={styles.buttonText}>Sign in with Google</Text>
+              <Text style={styles.buttonText}>{I18n.t('Sign_in_with_Google')}</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.skip} onPress={this.skipLogin}>
-              <Text style={styles.skipText}>Skip Login</Text>
+              <Text style={styles.skipText}>{I18n.t('Skip_Login')}</Text>
             </TouchableOpacity>
             <Image
               source={require('../../../assets/images/company.png')}

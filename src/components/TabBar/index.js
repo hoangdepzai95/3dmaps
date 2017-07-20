@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, Dimensions, TouchableOpacity, Animated } from 'react-native';
 import { EvilIcons, Entypo } from '@expo/vector-icons';
+import I18n from 'i18n-js';
 import { connect } from 'react-redux';
 import { setActiveTab, backTab } from '../../actions/layout';
 import styles from './style';
@@ -164,7 +165,7 @@ class TabBar extends Component {
           {
             activeTab === '_account' ?
               <View style={styles.profile}>
-                <Text>PROFILE</Text>
+                <Text>{I18n.t('PROFILE')}</Text>
               </View>
               : null
           }
@@ -181,6 +182,8 @@ class TabBar extends Component {
   render() {
     const { onPressFilter, activeTab, onChangeTab } = this.props;
     const isMainTab = !!this.props.children.find(child => child.props.tabId === activeTab);
+    const MapAndFilterWidth = I18n.currentLocale() === 'vi_VN' ? width * 0.46 : width * 0.378;
+    const MapAndFilterFeft = (width / 2) - (MapAndFilterWidth / 2);
     return (
       <View style={styles.container}>
         <View style={styles.tabsContainer}>
@@ -202,7 +205,7 @@ class TabBar extends Component {
         </View>
         {
           activeTab === 'home' ?
-            <View style={homeStyles.mapAndFilter} elevation={5}>
+            <View style={[homeStyles.mapAndFilter, { width: MapAndFilterWidth, left: MapAndFilterFeft }]} >
               <MapAndFilter
                 onPressMap={() => { onChangeTab('map'); }}
                 onPressFilter={onPressFilter}

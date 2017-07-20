@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, ScrollView, TouchableOpacity, Text } from 'react-native';
+import I18n from 'i18n-js';
 import Post from '../home/post';
 import homeStyles from '../../styles/home';
 import SelectedGallery from './SelectedGallery';
@@ -105,7 +106,7 @@ export default class Experience extends Component {
                   >
                     <View style={homeStyles.card}>
                       <Text>{gallery.name}</Text>
-                      <Text style={homeStyles.seeAllText}>See all</Text>
+                      <Text style={homeStyles.seeAllText}>{I18n.t('SEE_ALL')}</Text>
                     </View>
                   </TouchableOpacity>
                   <View style={homeStyles.postRow}>
@@ -120,8 +121,8 @@ export default class Experience extends Component {
           <View style={homeStyles.gallery}>
             <TouchableOpacity activeOpacity={0.6} >
               <View style={[homeStyles.card, styles.suggestions]}>
-                <Text>Suggestion Location</Text>
-                <Text style={homeStyles.seeAllText}>See all</Text>
+                <Text>{I18n.t('Suggested_Places')}</Text>
+                <Text style={homeStyles.seeAllText}>{I18n.t('SEE_ALL')}</Text>
               </View>
             </TouchableOpacity>
             <View style={homeStyles.postRow}>
