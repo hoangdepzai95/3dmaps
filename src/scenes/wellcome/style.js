@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   googleLogin: {
-    backgroundColor: '#ff6363',
+    backgroundColor: '#d34836',
     borderRadius: 8,
     height: '15%',
     flexDirection: 'row',
