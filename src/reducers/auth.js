@@ -6,6 +6,7 @@ const initialState = {
   initDone: false,
   authType: '',
   token: '',
+  locale: '',
 };
 
 const login = (state = initialState, action) => {
@@ -22,6 +23,7 @@ const login = (state = initialState, action) => {
         initDone: true,
         token: action.fbToken || action.ggToken,
         authType,
+        locale: action.locale,
       };
     case RECEIVE_LOGIN_FACEBOOK:
       return _.assign({}, state, { token: action.token, authType: 'facebook' });

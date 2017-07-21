@@ -1,130 +1,62 @@
 import React, { Component } from 'react';
 import { View, ScrollView, TouchableOpacity, Text } from 'react-native';
+import { connect } from 'react-redux';
 import I18n from 'i18n-js';
 import Post from './post';
+import { getHomeGallery } from '../../actions/fetchData';
+import Loading from '../../components/Loading';
 import styles from '../../styles/home';
 
-export default class HomeTab extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      gallerys: [
-        {
-          name: 'Cities',
-          posts: [
-            {
-              favorite: true,
-              rate: 1,
-            },
-            {
-              favorite: false,
-              rate: 2,
-            },
-          ],
-        },
-        {
-          name: 'Restaurent',
-          posts: [
-            {
-              favorite: false,
-              rate: 5,
-            },
-            {
-              favorite: false,
-              rate: 4,
-            },
-          ],
-        },
-        {
-          name: 'Experience',
-          posts: [
-            {
-              favorite: true,
-              rate: 2,
-            },
-            {
-              favorite: true,
-              rate: 1,
-            },
-          ],
-        },
-        {
-          name: 'Cute',
-          posts: [
-            {
-              favorite: false,
-              rate: 3,
-            },
-            {
-              favorite: true,
-              rate: 2,
-            },
-          ],
-        },
-        {
-          name: 'Cute1',
-          posts: [
-            {
-              favorite: false,
-              rate: 3,
-            },
-            {
-              favorite: true,
-              rate: 2,
-            },
-          ],
-        },
-        {
-          name: 'Cute2',
-          posts: [
-            {
-              favorite: false,
-              rate: 3,
-            },
-            {
-              favorite: true,
-              rate: 2,
-            },
-          ],
-        },
-      ],
-    };
+class HomeTab extends Component {
+  componentDidMount() {
+    this.props.dispatch(getHomeGallery());
   }
   onPressFilter = () => {
   }
   render() {
-    const { gallerys } = this.state;
-    const { onScroll } = this.props;
+    const { onScroll, homePageData, loading } = this.props;
     return (
       <View style={styles.container}>
-        <ScrollView
-          onScroll={onScroll}
-          scrollEventThrottle={16}
-          alwaysBounceVertical={false}
-          bounces={false}
-          bouncesZoom={false}
-        >
-          {
-            gallerys.map((gallery) => {
-              return (
-                <View key={gallery.name} style={styles.gallery}>
-                  <TouchableOpacity activeOpacity={0.6}>
-                    <View style={styles.card}>
-                      <Text>{gallery.name}</Text>
-                      <Text style={styles.seeAllText}>{I18n.t('SEE_ALL')}</Text>
+        {
+          loading ?
+            <Loading />
+            :
+            <ScrollView
+              onScroll={onScroll}
+              scrollEventThrottle={16}
+              alwaysBounceVertical={false}
+              bounces={false}
+              bouncesZoom={false}
+            >
+              {
+                homePageData.map((gallery) => {
+                  return (
+                    <View key={gallery.name} style={styles.gallery}>
+                      <TouchableOpacity activeOpacity={0.6}>
+                        <View style={styles.card}>
+                          <Text>{gallery.name}</Text>
+                          <Text style={styles.seeAllText}>{I18n.t('SEE_ALL')}</Text>
+                        </View>
+                      </TouchableOpacity>
+                      <View style={styles.postRow}>
+                        <Post {...gallery.posts[0]} />
+                        <View style={styles.divider} />
+                        <Post {...gallery.posts[1]} />
+                      </View>
                     </View>
-                  </TouchableOpacity>
-                  <View style={styles.postRow}>
-                    <Post {...gallery.posts[0]} />
-                    <View style={styles.divider} />
-                    <Post {...gallery.posts[1]} />
-                  </View>
-                </View>
-              );
-            })
-          }
-        </ScrollView>
+                  );
+                })
+              }
+            </ScrollView>
+        }
       </View>
     );
   }
 }
+
+export default connect((state) => {
+  return {
+    homePageData: state.data.home,
+    loading: !state.data.home.length,
+  };
+})(HomeTab);

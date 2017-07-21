@@ -12,12 +12,14 @@ export function initApp() {
   };
 }
 
-export function receiveInitApp(fbToken, ggToken, firstOpen) {
+export function receiveInitApp(fbToken, ggToken, firstOpen, homePageData, locale) {
   return {
     type: RECEIVE_INIT_APP,
     fbToken,
     ggToken,
     firstOpen,
+    homePageData,
+    locale,
   };
 }
 

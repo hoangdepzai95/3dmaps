@@ -3,7 +3,7 @@ import { View, Text, Dimensions, TouchableOpacity, Animated } from 'react-native
 import { EvilIcons, Entypo } from '@expo/vector-icons';
 import I18n from 'i18n-js';
 import { connect } from 'react-redux';
-import { setActiveTab, backTab } from '../../actions/layout';
+import { setActiveTab, backTab, changeLoading } from '../../actions/layout';
 import styles from './style';
 import MapAndFilter from '../../components/MapAndFilter';
 import Filter from '../../components/Filter';
@@ -38,6 +38,7 @@ class TabBar extends Component {
   }
   componentWillMount() {
     this.props.dispatch(setActiveTab(this.props.initTab));
+    this.props.dispatch(changeLoading(true));
   }
   componentDidMount() {
     this.props.onMounted(this);
@@ -81,10 +82,15 @@ class TabBar extends Component {
         this.tabsSize[key] = this.tabSpace + this.labelsSize[key];
         tempX += this.tabsSize[key];
       });
-      this.setState({
-        caculatedLayout: true,
-        widthAnimation: this.labelsSize[this.props.children[0].props.tabId],
-      });
+      this.setState(
+        {
+          caculatedLayout: true,
+          widthAnimation: this.labelsSize[this.props.children[0].props.tabId],
+        },
+        () => {
+          this.props.dispatch(changeLoading(false));
+        },
+      );
     }
   }
   gotoTab(id, animated = true) {
@@ -181,6 +187,7 @@ class TabBar extends Component {
   }
   render() {
     const { onPressFilter, activeTab, onChangeTab } = this.props;
+    const { caculatedLayout } = this.state;
     const isMainTab = !!this.props.children.find(child => child.props.tabId === activeTab);
     const MapAndFilterWidth = I18n.currentLocale() === 'vi_VN' ? width * 0.46 : width * 0.378;
     const MapAndFilterFeft = (width / 2) - (MapAndFilterWidth / 2);

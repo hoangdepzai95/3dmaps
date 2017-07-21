@@ -4,20 +4,20 @@ import { AsyncStorage } from 'react-native';
 import { INIT_APP, receiveInitApp, LOGIN_FACEBOOK, receiveLoginFaceBook } from '../actions/auth';
 import Api from '../api';
 
-function* initApp () {
+function* initApp() {
   try {
-	  const response = yield call(Api.initApp);
+    const response = yield call(Api.initApp);
     yield put(receiveInitApp(...response));
-	} catch (err) {
-		console.log(err);
-	}
+  } catch (err) {
+    console.log(err);
+  }
 }
 
-function* watchInitApp (){
+function* watchInitApp() {
   yield takeLatest(INIT_APP, initApp);
 }
 
-function* loginFaceBook () {
+function* loginFaceBook() {
   try {
     const res = yield call(Api.loginFaceBook);
     if (res.type === 'success') {
@@ -30,7 +30,7 @@ function* loginFaceBook () {
 }
 
 function* watchLoginFaceBook() {
-  yield takeLatest(LOGIN_FACEBOOK, loginFaceBook)
+  yield takeLatest(LOGIN_FACEBOOK, loginFaceBook);
 }
 export function* auth() {
   yield fork(watchInitApp);

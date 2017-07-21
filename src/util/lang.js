@@ -2,7 +2,7 @@ import I18n from 'i18n-js';
 import { Util } from 'expo';
 
 function setUpI18n(locale) {
-  I18n.locale = 'vi_VN';
+  I18n.locale = locale;
   I18n.translations = {
     en_US: {
       HOME: 'HOME',
@@ -75,7 +75,8 @@ function setUpI18n(locale) {
   };
 }
 export default function setUpLang() {
-  Util.getCurrentLocaleAsync().then((locale) => {
+  return Util.getCurrentLocaleAsync().then((locale) => {
     setUpI18n(locale === 'vi_VN' ? locale : 'en_US');
+    return locale;
   });
 }

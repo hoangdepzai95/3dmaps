@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
-import { View, Image } from 'react-native';
+import { View } from 'react-native';
+import Image from 'react-native-image-progress';
+import * as ProgressBar from 'react-native-progress';
 import _ from 'lodash';
+import { PostImageWidth } from '../../styles/home';
 import styles from './style';
 
 const links = [
@@ -12,39 +15,27 @@ const links = [
 ];
 
 export default class HomeTab extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      containerWidth: null,
-    };
-  }
-  handleLayout = (e) => {
-    if (!this.state.containerWidth) {
-      this.setState({
-        containerWidth: e.nativeEvent.layout.width,
-      });
-    }
-  }
   renderGallery = () => {
   }
   render() {
-    const { containerWidth } = this.state;
+    const containerWidth = PostImageWidth;
     const { favorite } = this.props;
     return (
       <View
         style={styles.container}
         onLayout={this.handleLayout}
       >
-        {
-          containerWidth ?
-            <Image
-              source={{ uri: links[_.random(1, links.length - 1)] }}
-              style={{ height: containerWidth * 0.75, width: containerWidth }}
-              resizeMode="cover"
-            />
-            :
-            null
-        }
+        <Image
+          source={{ uri: links[_.random(1, links.length - 1)] }}
+          style={{ height: containerWidth * 0.75, width: containerWidth }}
+          indicator={ProgressBar.Circle}
+          indicatorProps={{
+            size: 25,
+            borderWidth: 1,
+            color: '#7076eb',
+          }}
+          resizeMode="cover"
+        />
         {
           favorite ?
             <Image

@@ -16,7 +16,7 @@ const Post = (props) => {
         </View>
         <View style={styles.rating}>
           <StarRatingBar
-            score={props.rate}
+            score={props.rate || 5}
             allowsHalfStars={false}
             accurateHalfStars={false}
             readOnly

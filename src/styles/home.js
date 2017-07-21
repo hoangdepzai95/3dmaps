@@ -1,20 +1,20 @@
 import { StyleSheet, Dimensions } from 'react-native';
-import I18n from 'i18n-js';
 
 const { height, width } = Dimensions.get('window');
-
+const padding = 13;
+export const PostImageWidth = (width - (padding * 3)) / 2;
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#f6f6f6',
     flex: 1,
-    padding: 13,
+    padding,
     paddingTop: 25,
   },
   postRow: {
     flexDirection: 'row',
   },
   divider: {
-    width: 13,
+    width: padding,
   },
   card: {
     height: height / 19,
