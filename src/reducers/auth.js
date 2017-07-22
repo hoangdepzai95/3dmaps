@@ -7,6 +7,7 @@ const initialState = {
   authType: '',
   token: '',
   locale: '',
+  userInfo: {},
 };
 
 const login = (state = initialState, action) => {
@@ -26,7 +27,7 @@ const login = (state = initialState, action) => {
         locale: action.locale,
       };
     case RECEIVE_LOGIN_FACEBOOK:
-      return _.assign({}, state, { token: action.token, authType: 'facebook' });
+      return _.assign({}, state, { token: action.token, authType: 'facebook', userInfo: action.userInfo });
     case LOG_OUT :
       return _.assign({}, state, { token: '', authType: '' });
     case SKIP_LOGIN:

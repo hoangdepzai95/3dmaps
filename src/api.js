@@ -30,10 +30,20 @@ export default {
   },
   loginFaceBook() {
     return Facebook.logInWithReadPermissionsAsync(FACEBOOK_ID, {
-      permissions: ['public_profile'],
+      permissions: ['public_profile', 'email'],
     });
   },
   getHomeGallery() {
     return axios.get(`galleries?locale=${getLocale()}&posts=2`);
+  },
+  getUserInfo(token) {
+    return axios.get( `https://graph.facebook.com/me?access_token=${token}&fields=email,name,picture`);
+  },
+  loginBackend(userInfo) {
+    return axios.post('sign_in', {
+      emai: userInfo.email,
+      avatar: userInfo.avatar,
+      name: userInfo.name,
+    });
   },
 };

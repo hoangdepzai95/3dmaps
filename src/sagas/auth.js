@@ -2,6 +2,7 @@ import { takeLatest, fork, call, put } from 'redux-saga/effects';
 import { AsyncStorage } from 'react-native';
 
 import { INIT_APP, receiveInitApp, LOGIN_FACEBOOK, receiveLoginFaceBook } from '../actions/auth';
+import { changeLoading } from '../actions/layout';
 import Api from '../api';
 
 function* initApp() {
@@ -20,12 +21,21 @@ function* watchInitApp() {
 function* loginFaceBook() {
   try {
     const res = yield call(Api.loginFaceBook);
+    yield put(changeLoading(true));
     if (res.type === 'success') {
       AsyncStorage.setItem('facebook_token', res.token);
-      yield put(receiveLoginFaceBook(res.token));
+      let userInfo = yield call(Api.getUserInfo, res.token);
+      userInfo = {
+        avatar: userInfo.data.picture.data.url,
+        email: userInfo.data.email,
+        name: userInfo.data.name,
+      };
+      // const backendUserInfo = yield call(Api.loginBackend, userInfo);
+      yield put(receiveLoginFaceBook(res.token, userInfo));
     }
+    yield put(changeLoading(false));
   } catch (e) {
-    console.log(e);
+    yield put(changeLoading(false));
   }
 }
 

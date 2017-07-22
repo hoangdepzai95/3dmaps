@@ -35,10 +35,11 @@ export function loginGoogle() {
   };
 }
 
-export function receiveLoginFaceBook(token) {
+export function receiveLoginFaceBook(token, userInfo) {
   return {
     type: RECEIVE_LOGIN_FACEBOOK,
     token,
+    userInfo,
   };
 }
 
