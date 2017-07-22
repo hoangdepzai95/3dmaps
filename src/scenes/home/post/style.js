@@ -5,14 +5,11 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   footer: {
-    flexDirection: 'row',
-  },
-  description: {
-    flex: 12,
+    paddingTop: 3,
+    justifyContent: 'flex-start',
   },
   rating: {
     paddingTop: 3,
-    flex: 7,
   },
   smallText: {
     fontSize: 11,
