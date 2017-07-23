@@ -6,20 +6,21 @@ export const RECEIVE_INIT_APP = 'RECEIVE_INIT_APP';
 export const LOG_OUT = 'LOG_OUT';
 export const SKIP_LOGIN = 'SKIP_LOGIN';
 export const RECEIVE_USER_INFO = 'RECEIVE_USER_INFO';
+export const CHANGE_LOCALE = 'CHANGE_LOCALE';
 
-export function initApp() {
+export function initApp(App) {
   return {
     type: INIT_APP,
+    App,
   };
 }
 
-export function receiveInitApp(fbToken, ggToken, firstOpen, homePageData, locale) {
+export function receiveInitApp(fbToken, ggToken, firstOpen, locale) {
   return {
     type: RECEIVE_INIT_APP,
     fbToken,
     ggToken,
     firstOpen,
-    homePageData,
     locale,
   };
 }
@@ -57,5 +58,12 @@ export function receiveUserInfo(userInfo) {
   return {
     type: RECEIVE_USER_INFO,
     userInfo,
+  };
+}
+
+export function changeLocale(locale) {
+  return {
+    type: CHANGE_LOCALE,
+    locale,
   };
 }

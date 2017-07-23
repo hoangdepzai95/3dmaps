@@ -5,10 +5,17 @@ import AppLoading from './components/AppLoading';
 
 import Router from './Router';
 import { initApp } from './actions/auth';
+import { changeLoading } from './actions/layout';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showApp: true,
+    };
+  }
   componentWillMount() {
-    this.props.dispatch(initApp());
+    this.props.dispatch(initApp(this));
   }
   componentDidUpdate() {
     const { firstOpenApp, initDone } = this.props;
@@ -16,13 +23,22 @@ class App extends Component {
       AsyncStorage.setItem('first_open', '1');
     }
   }
+  forceRender = () => {
+    this.setState(
+      { showApp: false },
+      () => {
+        this.setState({ showApp: true });
+      },
+    );
+  }
   render() {
     const { loading, initDone } = this.props;
+    const { showApp } = this.state;
     return (
       <View style={{ flex: 1 }}>
-        <AppLoading loading={loading} />
+        <AppLoading loading={loading || !showApp} />
         {
-          initDone ?
+          initDone && showApp ?
             <View style={{ flex: 1, opacity: loading ? 0 : 1 }}>
               <Router />
             </View>

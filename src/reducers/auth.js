@@ -5,6 +5,7 @@ import {
   LOG_OUT,
   SKIP_LOGIN,
   RECEIVE_USER_INFO,
+  CHANGE_LOCALE,
 } from '../actions/auth';
 
 const initialState = {
@@ -44,6 +45,8 @@ const login = (state = initialState, action) => {
       return _.assign({}, state, { authType: 'guest' });
     case RECEIVE_USER_INFO:
       return _.assign({}, state, { userInfo: action.userInfo });
+    case CHANGE_LOCALE:
+      return _.assign({}, state, { locale: action.locale });
     default:
       return state;
   }

@@ -1,7 +1,8 @@
 import I18n from 'i18n-js';
 import { Util } from 'expo';
+import { AsyncStorage } from 'react-native';
 
-function setUpI18n(locale) {
+export function setUpI18n(locale) {
   I18n.locale = locale;
   I18n.translations = {
     en_US: {
@@ -38,6 +39,7 @@ function setUpI18n(locale) {
       Skip_Login: 'Skip Login',
       COPYRIGHT_TEXT: 'Toan Dung Media, All Rights Reserved',
       NETWORK_ERROR_MESSAGE: 'Error! Please check your internet connection or restart',
+      LOG_OUT: 'Log out',
     },
     vi_VN: {
       HOME: 'TRANG CHỦ',
@@ -73,12 +75,19 @@ function setUpI18n(locale) {
       Skip_Login: 'Bỏ qua đăng nhập',
       COPYRIGHT_TEXT: 'Đã đăng kí và bảo hộ bởi Toàn Dũng Media',
       NETWORK_ERROR_MESSAGE: 'Có lỗi xảy ra. Vui lòng kiểm tra kết nối internet hoặc khởi động lại',
+      LOG_OUT: 'Đăng xuất',
     },
   };
 }
-export default function setUpLang() {
-  return Util.getCurrentLocaleAsync().then((locale) => {
-    setUpI18n(locale === 'vi_VN' ? locale : 'en_US');
-    return locale;
-  });
+export default async function setUpLang() {
+  let locale;
+  const savedLocale = await AsyncStorage.getItem('locale');
+  if (savedLocale) {
+    locale = savedLocale;
+  } else {
+    const defaultLocale = await Util.getCurrentLocaleAsync();
+    locale = defaultLocale;
+  }
+  setUpI18n(locale === 'vi_VN' ? locale : 'en_US');
+  return locale;
 }

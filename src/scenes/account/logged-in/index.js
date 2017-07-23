@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import { View, Text, AsyncStorage, Dimensions, Image } from 'react-native';
+import { View, Text, AsyncStorage, Image, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import I18n from 'i18n-js';
 
-import { logOut } from '../../../actions/auth';
+import { logOut, changeLocale } from '../../../actions/auth';
+import { resetData } from '../../../actions/fetchData';
 import styles from './style';
 import ToolTag from '../ToolTag';
 
-const { height, width } = Dimensions.get('window');
 
 class LoggedIn extends Component {
   logOut = () => {
@@ -16,11 +16,41 @@ class LoggedIn extends Component {
     AsyncStorage.removeItem('user_id');
     this.props.dispatch(logOut());
   }
+  changeLocale(locale) {
+    I18n.locale = locale;
+    AsyncStorage.setItem('locale', locale);
+    this.props.dispatch(resetData());
+    this.props.App.forceRender();
+    this.props.dispatch(changeLocale(locale));
+  }
   render() {
-    const { userInfo } = this.props;
+    const { userInfo, vnSelected, engSelected } = this.props;
     return (
       <View style={styles.container}>
         <View style={styles.header}>
+          <View style={styles.flags}>
+            <TouchableOpacity
+              style={[styles.wrapFlag1, vnSelected ? styles.selectedFlag : {}]}
+              onPress={this.changeLocale.bind(this, 'vi_VN')}
+            >
+              <Image
+                source={require('../../../../assets/images/VN.png')}
+                style={styles.flag1}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.wrapFlag2, engSelected ? styles.selectedFlag : {}]}
+              onPress={this.changeLocale.bind(this, 'en_US')}
+            >
+              <Image
+                source={require('../../../../assets/images/GB.png')}
+                style={styles.flag2}
+              />
+            </TouchableOpacity>
+          </View>
+          <TouchableOpacity>
+            <Text>{I18n.t('LOG_OUT')}</Text>
+          </TouchableOpacity>
         </View>
         <View style={styles.userInfo}>
           <Image
@@ -41,8 +71,10 @@ class LoggedIn extends Component {
 }
 
 export default connect((state) => {
-  console.log(state.auth);
   return {
     userInfo: state.auth.userInfo,
+    vnSelected: state.auth.locale === 'vi_VN',
+    engSelected: state.auth.locale !== 'vi_VN',
+    App: state.layout.App,
   };
 })(LoggedIn);
