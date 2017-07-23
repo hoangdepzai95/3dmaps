@@ -8,6 +8,7 @@ class LoggedIn extends Component {
   logOut = () => {
     AsyncStorage.removeItem('facebook_token');
     AsyncStorage.removeItem('google_token');
+    AsyncStorage.removeItem('user_id');
     this.props.dispatch(logOut());
   }
   render() {

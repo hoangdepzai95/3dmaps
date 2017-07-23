@@ -26,7 +26,8 @@ export default {
     const p2 = AsyncStorage.getItem('google_token');
     const p3 = AsyncStorage.getItem('first_open');
     const p4 = setUpLang();
-    return Promise.all([p1, p2, p3, p4]);
+    const p5 = AsyncStorage.getItem('user_id');
+    return Promise.all([p1, p2, p3, p4, p5]);
   },
   loginFaceBook() {
     return Facebook.logInWithReadPermissionsAsync(FACEBOOK_ID, {
@@ -41,9 +42,12 @@ export default {
   },
   loginBackend(userInfo) {
     return axios.post('sign_in', {
-      emai: userInfo.email,
+      email: userInfo.email,
       avatar: userInfo.avatar,
-      name: userInfo.name,
+      fullname: userInfo.name,
     });
+  },
+  getUserBackendInfo(userId) {
+    return axios.get(`users?id=${userId}`);
   },
 };

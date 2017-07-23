@@ -37,6 +37,7 @@ function setUpI18n(locale) {
       SAVED: 'SAVED',
       Skip_Login: 'Skip Login',
       COPYRIGHT_TEXT: 'Toan Dung Media, All Rights Reserved',
+      NETWORK_ERROR_MESSAGE: 'Error! Please check your internet connection or restart',
     },
     vi_VN: {
       HOME: 'TRANG CHỦ',
@@ -71,6 +72,7 @@ function setUpI18n(locale) {
       SAVED: 'ĐÃ LƯU',
       Skip_Login: 'Bỏ qua đăng nhập',
       COPYRIGHT_TEXT: 'Đã đăng kí và bảo hộ bởi Toàn Dũng Media',
+      NETWORK_ERROR_MESSAGE: 'Có lỗi xảy ra. Vui lòng kiểm tra kết nối internet hoặc khởi động lại',
     },
   };
 }

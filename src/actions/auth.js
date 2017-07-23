@@ -5,6 +5,7 @@ export const INIT_APP = 'INIT_APP';
 export const RECEIVE_INIT_APP = 'RECEIVE_INIT_APP';
 export const LOG_OUT = 'LOG_OUT';
 export const SKIP_LOGIN = 'SKIP_LOGIN';
+export const RECEIVE_USER_INFO = 'RECEIVE_USER_INFO';
 
 export function initApp() {
   return {
@@ -35,11 +36,10 @@ export function loginGoogle() {
   };
 }
 
-export function receiveLoginFaceBook(token, userInfo) {
+export function receiveLoginFaceBook(token) {
   return {
     type: RECEIVE_LOGIN_FACEBOOK,
     token,
-    userInfo,
   };
 }
 
@@ -51,5 +51,11 @@ export function logOut() {
 export function skipLogin() {
   return {
     type: SKIP_LOGIN,
+  };
+}
+export function receiveUserInfo(userInfo) {
+  return {
+    type: RECEIVE_USER_INFO,
+    userInfo,
   };
 }
