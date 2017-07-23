@@ -40,7 +40,7 @@ function* loginFaceBook() {
       AsyncStorage.setItem('facebook_token', res.token);
       let userInfo = yield call(Api.getUserInfo, res.token);
       userInfo = {
-        avatar: userInfo.data.picture.data.url,
+        avatar: `https://graph.facebook.com/${userInfo.data.id}/picture?type=large`,
         email: userInfo.data.email,
         name: userInfo.data.name,
       };

@@ -27,7 +27,7 @@ function setUpI18n(locale) {
       PROFILE: 'PROFILE',
       Sign_in_with_Facebook: 'Sign in with Facebook',
       Sign_in_with_Google: 'Sign in with Google',
-      ACCOUNT_SETTINGS: 'ACCOUNT_SETTINGS',
+      ACCOUNT_SETTINGS: 'ACCOUNT SETTINGS',
       HELP_AND_SUPPORT: 'HELP & SUPPORT',
       SAVED_CONTENTS: 'SAVED CONTENTS',
       SAVE_TO: 'SAVE TO',

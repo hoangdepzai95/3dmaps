@@ -8,12 +8,12 @@ import {
 } from '../actions/auth';
 
 const initialState = {
+  userInfo: null,
   firstOpenApp: false,
   initDone: false,
   authType: '',
   token: '',
   locale: '',
-  userInfo: {},
 };
 
 const login = (state = initialState, action) => {
@@ -25,13 +25,17 @@ const login = (state = initialState, action) => {
       } else if (action.ggToken) {
         authType = 'google';
       }
-      return {
-        firstOpenApp: action.firstOpen !== '1',
-        initDone: true,
-        token: action.fbToken || action.ggToken,
-        authType,
-        locale: action.locale,
-      };
+      return _.assign(
+        {},
+        state,
+        {
+          firstOpenApp: action.firstOpen !== '1',
+          initDone: true,
+          token: action.fbToken || action.ggToken,
+          authType,
+          locale: action.locale,
+        },
+      );
     case RECEIVE_LOGIN_FACEBOOK:
       return _.assign({}, state, { token: action.token, authType: 'facebook' });
     case LOG_OUT :

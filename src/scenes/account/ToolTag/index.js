@@ -1,10 +1,10 @@
 import React from 'react';
-import { View, Text, Dimensions, TouchableOpacity } from 'react-native';
-import { EvilIcons, Entypo, Ionicons, SimpleLineIcons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { Text, Dimensions, TouchableOpacity } from 'react-native';
+import { Entypo, Ionicons, SimpleLineIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 
 import styles from './style';
 
-const { height, width } = Dimensions.get('window');
+const { height } = Dimensions.get('window');
 const ToolTag = ({ label, iconName, iconType }) => {
   let leftIcon;
   const iconSize = height / 25;
@@ -12,6 +12,8 @@ const ToolTag = ({ label, iconName, iconType }) => {
     leftIcon = <SimpleLineIcons size={iconSize} name={iconName} />;
   } else if (iconType === 'MaterialCommunityIcons') {
     leftIcon = <MaterialCommunityIcons size={iconSize} name={iconName} />;
+  } else if (iconType === 'Ionicons') {
+    leftIcon = <Ionicons size={iconSize} name={iconName} />;
   }
   return (
     <TouchableOpacity style={styles.container} activeOpacity={0.3}>

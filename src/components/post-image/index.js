@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
-import Image from 'react-native-image-progress';
-import * as ProgressBar from 'react-native-progress';
-import _ from 'lodash';
+import { View, Image } from 'react-native';
+import ProgressImage from '../ProgressImage';
 import { PostImageWidth } from '../../styles/home';
 import styles from './style';
 
@@ -25,16 +23,9 @@ export default class HomeTab extends Component {
         style={styles.container}
         onLayout={this.handleLayout}
       >
-        <Image
-          source={{ uri: links[_.random(1, links.length - 1)] }}
+        <ProgressImage
+          url={links[0]}
           style={{ height: containerWidth * 0.75, width: containerWidth }}
-          indicator={ProgressBar.Circle}
-          indicatorProps={{
-            size: 25,
-            borderWidth: 1,
-            color: '#7076eb',
-          }}
-          resizeMode="cover"
         />
         {
           favorite ?
