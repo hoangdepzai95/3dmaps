@@ -48,8 +48,10 @@ class LoggedIn extends Component {
               />
             </TouchableOpacity>
           </View>
-          <TouchableOpacity>
-            <Text>{I18n.t('LOG_OUT')}</Text>
+          <TouchableOpacity
+            onPress={this.logOut}
+          >
+            <Text style={styles.logoutText}>{I18n.t('LOG_OUT')}</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.userInfo}>

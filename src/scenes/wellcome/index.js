@@ -5,6 +5,7 @@ import { EvilIcons } from '@expo/vector-icons';
 import I18n from 'i18n-js';
 
 import { loginFaceBook, loginGoogle, skipLogin } from '../../actions/auth';
+import { changeLoading } from '../../actions/layout';
 import styles from './style';
 
 const { height } = Dimensions.get('window');
@@ -14,10 +15,13 @@ class WellCome extends Component {
     this.props.dispatch(loginFaceBook());
   }
   loginGoogle = () => {
-    this.props.dispatch(loginGoogle());
+      this.props.dispatch(loginGoogle());
   }
   skipLogin = () => {
-    this.props.dispatch(skipLogin());
+    this.props.dispatch(changeLoading(true));
+    setTimeout(() => {
+      this.props.dispatch(skipLogin());
+    }, 0);
   }
   render() {
     const iconSize = height / 25;

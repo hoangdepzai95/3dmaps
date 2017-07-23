@@ -59,6 +59,9 @@ const styles = StyleSheet.create({
   userName: {
     marginTop: 10,
   },
+  logoutText: {
+    color: '#c70000',
+  },
 });
 
 export default styles;
