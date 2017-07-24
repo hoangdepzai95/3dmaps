@@ -10,11 +10,11 @@ const Post = (props) => {
     <View style={styles.container}>
       <PostImage {...props} />
       <View style={styles.footer}>
-        <Text>{props.title || ''}</Text>
-        <Text style={styles.smallText}>Nguyễn huy tưởng</Text>
+        <Text>{props.title}</Text>
+        <Text style={styles.smallText}>{props.formatedAddress}</Text>
         <View style={styles.rating}>
           <StarRatingBar
-            score={props.rate || 5}
+            score={props.rating}
             allowsHalfStars={false}
             accurateHalfStars={false}
             readOnly

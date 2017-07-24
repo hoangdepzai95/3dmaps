@@ -18,13 +18,14 @@ export default class HomeTab extends Component {
   render() {
     const containerWidth = PostImageWidth;
     const { favorite } = this.props;
+    const seo = this.props.seo || {};
     return (
       <View
         style={styles.container}
         onLayout={this.handleLayout}
       >
         <ProgressImage
-          url={links[0]}
+          url={seo.featured_image}
           style={{ height: containerWidth * 0.75, width: containerWidth }}
         />
         {

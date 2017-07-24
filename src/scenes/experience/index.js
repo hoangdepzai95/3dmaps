@@ -12,68 +12,8 @@ export default class Experience extends Component {
     super(props);
     this.state = {
       gallerys: [
-        {
-          name: 'Cities',
-          posts: [
-            {
-              favorite: true,
-              rate: 1,
-            },
-            {
-              favorite: false,
-              rate: 2,
-            },
-          ],
-        },
-        {
-          name: 'Art',
-          posts: [
-            {
-              favorite: false,
-              rate: 5,
-            },
-            {
-              favorite: false,
-              rate: 4,
-            },
-          ],
-        },
-        {
-          name: 'Game',
-          posts: [
-            {
-              favorite: true,
-              rate: 2,
-            },
-            {
-              favorite: true,
-              rate: 1,
-            },
-          ],
-        },
-        {
-          name: 'Cute',
-          posts: [
-            {
-              favorite: false,
-              rate: 3,
-            },
-            {
-              favorite: true,
-              rate: 2,
-            },
-          ],
-        },
       ],
       suggestionLocations: [
-        {
-          favorite: false,
-          rate: 3,
-        },
-        {
-          favorite: true,
-          rate: 2,
-        },
       ],
       selectedGallery: '',
     };
@@ -126,9 +66,13 @@ export default class Experience extends Component {
               </View>
             </TouchableOpacity>
             <View style={homeStyles.postRow}>
+            {
+              /*
               <Post {...suggestionLocations[0]} />
               <View style={homeStyles.divider} />
               <Post {...suggestionLocations[1]} />
+              */
+            }
             </View>
           </View>
         </ScrollView>

@@ -9,44 +9,8 @@ export default class Experience extends Component {
     super(props);
     this.state = {
       gallery: {
-        name: 'Cities',
-        posts: [
-          {
-            favorite: true,
-            rate: 1,
-            id: 1,
-          },
-          {
-            favorite: false,
-            rate: 2,
-            id: 2,
-          },
-          {
-            favorite: true,
-            rate: 4,
-            id: 3,
-          },
-          {
-            favorite: true,
-            rate: 2,
-            id: 4,
-          },
-          {
-            favorite: true,
-            rate: 5,
-            id: 5,
-          },
-        ],
       },
       suggestionPosts: [
-        {
-          favorite: false,
-          rate: 3,
-        },
-        {
-          favorite: true,
-          rate: 2,
-        },
       ],
     };
   }
