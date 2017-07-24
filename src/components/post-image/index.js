@@ -11,7 +11,6 @@ export default class HomeTab extends Component {
     const containerWidth = PostImageWidth;
     const { favorite } = this.props;
     const seo = this.props.seo || {};
-    console.log(seo);
     return (
       <View
         style={styles.container}

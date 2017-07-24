@@ -6,12 +6,16 @@ import Post from './post';
 import { getHomeGallery } from '../../actions/fetchData';
 import Loading from '../../components/Loading';
 import styles from '../../styles/home';
+import { setActiveSubTab } from '../../actions/layout';
 
 class HomeTab extends Component {
   componentDidMount() {
     this.props.dispatch(getHomeGallery());
   }
   onPressFilter = () => {
+  }
+  seeAll() {
+    this.props.dispatch(setActiveSubTab('home2'));
   }
   render() {
     const { onScroll, homePageData, loading } = this.props;
@@ -31,8 +35,11 @@ class HomeTab extends Component {
               {
                 homePageData.map((gallery) => {
                   return (
-                    <View key={gallery.name} style={styles.gallery}>
-                      <TouchableOpacity activeOpacity={0.6}>
+                    <View key={gallery.id} style={styles.gallery}>
+                      <TouchableOpacity
+                        activeOpacity={0.6}
+                        onPress={this.seeAll.bind(this, gallery.id)}
+                      >
                         <View style={styles.card}>
                           <Text>{gallery.name}</Text>
                           <Text style={styles.seeAllText}>{I18n.t('SEE_ALL')}</Text>
@@ -51,6 +58,7 @@ class HomeTab extends Component {
                   );
                 })
               }
+              <View style={styles.footerSpace} />
             </ScrollView>
         }
       </View>

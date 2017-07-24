@@ -10,6 +10,9 @@ const styles = StyleSheet.create({
     paddingTop: 25,
     padding,
   },
+  footerSpace: {
+    height: height / 8,
+  },
   postRow: {
     flexDirection: 'row',
   },

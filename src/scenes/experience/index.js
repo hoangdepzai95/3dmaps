@@ -93,6 +93,7 @@ class Experience extends Component {
                 }
                 </View>
               </View>
+              <View style={homeStyles.footerSpace} />
             </ScrollView>
         }
       </View>
