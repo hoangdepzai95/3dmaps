@@ -39,9 +39,13 @@ class HomeTab extends Component {
                         </View>
                       </TouchableOpacity>
                       <View style={styles.postRow}>
-                        <Post {...gallery.posts[0]} />
-                        <View style={styles.divider} />
-                        <Post {...gallery.posts[1]} />
+                        {
+                          gallery.posts.map((post, index) => {
+                            return (
+                              <Post {...post} key={post.id} even={index === 0} />
+                            );
+                          })
+                        }
                       </View>
                     </View>
                   );
@@ -56,7 +60,7 @@ class HomeTab extends Component {
 
 export default connect((state) => {
   return {
-    homePageData: state.data.home,
-    loading: !state.data.home.length,
+    homePageData: state.data.home.data,
+    loading: !state.data.home.loaded,
   };
 })(HomeTab);

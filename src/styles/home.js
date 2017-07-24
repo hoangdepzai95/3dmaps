@@ -7,14 +7,11 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#f6f6f6',
     flex: 1,
-    padding,
     paddingTop: 25,
+    padding,
   },
   postRow: {
     flexDirection: 'row',
-  },
-  divider: {
-    width: padding,
   },
   card: {
     height: height / 19,

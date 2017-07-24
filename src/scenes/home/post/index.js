@@ -7,7 +7,7 @@ import startstyles from '../../../styles/starRating';
 
 const Post = (props) => {
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, props.even ? { marginRight: 13 } : null]}>
       <PostImage {...props} />
       <View style={styles.footer}>
         <Text>{props.title}</Text>

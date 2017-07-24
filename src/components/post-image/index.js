@@ -4,14 +4,6 @@ import ProgressImage from '../ProgressImage';
 import { PostImageWidth } from '../../styles/home';
 import styles from './style';
 
-const links = [
-  'http://maapvn.com/admin/images/post/IMG0000000145.jpeg?1494490153',
-  'http://maapvn.com/admin/images/post/IMG0000000140.jpeg?1494409196',
-  'http://maapvn.com/admin/images/post/IMG0000000059.jpeg?1494399433',
-  'http://maapvn.com/admin/images/post/IMG0000000120.jpeg?1494411491',
-  'http://maapvn.com/admin/images/post/IMG0000000116.jpeg?1494560441',
-];
-
 export default class HomeTab extends Component {
   renderGallery = () => {
   }
@@ -19,6 +11,7 @@ export default class HomeTab extends Component {
     const containerWidth = PostImageWidth;
     const { favorite } = this.props;
     const seo = this.props.seo || {};
+    console.log(seo);
     return (
       <View
         style={styles.container}
