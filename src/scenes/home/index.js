@@ -6,7 +6,7 @@ import Post from './post';
 import { getHomeGallery } from '../../actions/fetchData';
 import Loading from '../../components/Loading';
 import styles from '../../styles/home';
-import { setActiveSubTab } from '../../actions/layout';
+import { pushSubTab, setActiveGallery } from '../../actions/layout';
 
 class HomeTab extends Component {
   componentDidMount() {
@@ -14,8 +14,9 @@ class HomeTab extends Component {
   }
   onPressFilter = () => {
   }
-  seeAll() {
-    this.props.dispatch(setActiveSubTab('home2'));
+  seeAll(id) {
+    this.props.dispatch(setActiveGallery(id));
+    this.props.dispatch(pushSubTab('stackHome', 'gallery'));
   }
   render() {
     const { onScroll, homePageData, loading } = this.props;

@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { SET_ACTIVE_TAB, BACK_TAB, CHANGE_LOADING } from '../actions/layout';
+import { SET_ACTIVE_TAB, BACK_TAB, CHANGE_LOADING, PUSH_SUB_TAB, POP_SUB_TAB, SET_ACTIVE_GALLERY } from '../actions/layout';
 import { INIT_APP } from '../actions/auth';
 
 const initialState = {
@@ -7,6 +7,9 @@ const initialState = {
   prevTab: '',
   loading: false,
   App: null,
+  stackHome: [],
+  stackExperience: [],
+  activeGallery: null,
 };
 
 const layout = (state = initialState, action) => {
@@ -19,6 +22,12 @@ const layout = (state = initialState, action) => {
       return _.assign({}, state, { loading: action.loading });
     case INIT_APP:
       return _.assign({}, state, { App: action.App });
+    case PUSH_SUB_TAB:
+      return _.assign({}, state, { [action.stackName]: [...state[action.stackName], action.subTab] });
+    case POP_SUB_TAB:
+      return _.assign({}, state, { [action.stackName]: _.dropRight(state[action.stackName]) });
+    case SET_ACTIVE_GALLERY:
+      return _.assign({}, state, { activeGallery: action.id });
     default:
       return state;
   }

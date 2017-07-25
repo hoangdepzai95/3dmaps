@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     bottom: height / 15,
     height: height / 17,
     backgroundColor: 'transparent',
-    zIndex: 999,
+    zIndex: 9999,
     shadowColor: '#333',
     shadowOpacity: 1,
     shadowOffset: {

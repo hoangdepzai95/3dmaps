@@ -5,6 +5,7 @@ const initialState = {
   home: { loaded: false, data: [] },
   experience: { loaded: false, data: [] },
   map: { loaded: false, data: [] },
+  galleries: {},
 };
 
 function formatPostData(galleries, isExperience) {

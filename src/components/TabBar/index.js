@@ -3,13 +3,14 @@ import { View, Text, Dimensions, TouchableOpacity, Animated } from 'react-native
 import { EvilIcons, Entypo } from '@expo/vector-icons';
 import I18n from 'i18n-js';
 import { connect } from 'react-redux';
-import { setActiveTab, backTab, changeLoading } from '../../actions/layout';
+import { setActiveTab, backTab, changeLoading, popSubTab } from '../../actions/layout';
 import styles from './style';
 import MapAndFilter from '../../components/MapAndFilter';
 import Filter from '../../components/Filter';
 import TabsContent from './TabsContent';
 import homeStyles from '../../styles/home';
 import Account from '../../scenes/account';
+import Gallery from '../../scenes/home/gallery';
 
 const { height, width } = Dimensions.get('window');
 
@@ -20,6 +21,8 @@ class TabBar extends Component {
       caculatedLayout: false,
       leftAnimation: 0,
       widthAnimation: 0,
+      stackNavigatorHome: [],
+      stackNavigatorExperience: [],
     };
     this.labelsSize = {};
     this.tabsSize = {};
@@ -52,7 +55,14 @@ class TabBar extends Component {
     }
   }
   onPressBack = () => {
-    this.props.dispatch(backTab());
+    const { activeTab } = this.props;
+    if (activeTab === 'home') {
+      this.props.dispatch(popSubTab('stackHome'));
+    } else if (activeTab === 'experience') {
+      this.props.dispatch(popSubTab('stackExperience'));
+    } else {
+      this.props.dispatch(backTab());
+    }
   }
   onTabContentMounted = (scrollView) => {
     this.scrollView = scrollView;
@@ -119,14 +129,14 @@ class TabBar extends Component {
     });
     this.props.showHeader();
   }
-  renderTabs = () => {
-    const { activeTab } = this.props;
+  renderTabs = (isMainTab) => {
+    const { activeTab, stackHome } = this.props;
     const marginLeft = this.tabSpace ? this.tabSpace / 2 : 0;
     const iconSize = height / 25;
     return (
       <View style={styles.tabs}>
         {
-          activeTab === '_account' ?
+          !isMainTab ?
             <TouchableOpacity
               style={styles.leftArea}
               onPress={this.onPressBack}
@@ -185,16 +195,25 @@ class TabBar extends Component {
       </View>
     );
   }
+  isMainTab() {
+    const { activeTab, stackHome, stackExperience } = this.props;
+    let rs = true;
+    if (activeTab === '_account') {
+      rs = false;
+    } else if ((activeTab === 'home' && stackHome.length) || (activeTab === 'experience' && stackExperience.length)) {
+      rs = false;
+    }
+    return rs;
+  }
   render() {
-    const { onPressFilter, activeTab, onChangeTab } = this.props;
-    const { caculatedLayout } = this.state;
-    const isMainTab = !!this.props.children.find(child => child.props.tabId === activeTab);
+    const { onPressFilter, activeTab, onChangeTab, stackHome } = this.props;
+    const isMainTab = this.isMainTab();
     const MapAndFilterWidth = I18n.currentLocale() === 'vi_VN' ? width * 0.46 : width * 0.378;
     const MapAndFilterFeft = (width / 2) - (MapAndFilterWidth / 2);
     return (
       <View style={styles.container}>
         <View style={styles.tabsContainer}>
-          {this.renderTabs()}
+          {this.renderTabs(isMainTab)}
         </View>
         <View style={[styles.mainContainer]}>
           <TabsContent tabs={this.props.children} onMounted={this.onTabContentMounted} />
@@ -205,6 +224,11 @@ class TabBar extends Component {
               {
                 activeTab === '_account' ?
                   <Account />
+                  : null
+              }
+              {
+                 activeTab === 'home' && stackHome.length === 1 ?
+                   <Gallery />
                   : null
               }
             </View>
@@ -240,5 +264,7 @@ export default connect((state) => {
   return {
     activeTab: state.layout.activeTab,
     prevTab: state.layout.prevTab,
+    stackHome: state.layout.stackHome,
+    stackExperience: state.layout.stackExperience,
   };
 })(TabBar);
