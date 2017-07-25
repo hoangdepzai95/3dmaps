@@ -114,7 +114,7 @@ export default class StarRatingBar extends Component {
             starWidth = starStyle.width;
         }
         let starViewWidth = (starWidth + spacing) * maximumValue - spacing;
-        return <View style={styles.startList}>
+        return <View style={[styles.startList, this.props.style]}>
             <View style={{width: starViewWidth, overflow: 'hidden'}}>
                 <StarRatingView
                     starStyle={this.props.starStyle}
@@ -148,9 +148,8 @@ export default class StarRatingBar extends Component {
 const styles = StyleSheet.create({
     startList: {
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     star: {
-        marginRight: 10
     },
 });

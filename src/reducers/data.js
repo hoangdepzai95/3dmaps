@@ -26,7 +26,7 @@ function formatPosts(posts, isExperience) {
       post.address.detail,
       post.address.district.name,
       post.address.city.name,
-    ].join(', ');
+    ].filter(o => _.trim(o)).join(', ');
     if (isExperience) post.seo.featured_image = `http://staging.3dmaps.vn${post.seo.featured_image}`;
     return post;
   });

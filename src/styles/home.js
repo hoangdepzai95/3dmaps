@@ -60,5 +60,13 @@ const styles = StyleSheet.create({
       height: 0,
     },
   },
+  statusText: {
+    color: '#8f90fe',
+    fontWeight: '200',
+  },
+  timeText: {
+    color: '#969696',
+    fontWeight: '200',
+  },
 });
 export default styles;

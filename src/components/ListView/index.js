@@ -1,14 +1,20 @@
 import React, { Component } from 'react';
-import { ListView } from 'react-native';
+import { ListView, Dimensions } from 'react-native';
 import Loading from '../Loading';
+
+const { height } = Dimensions.get('window');
 
 export default class HorizontalListView extends Component {
   renderFooter = () => {
-    const { loading, hasMore } = this.props;
+    const { loading, hasMore, horizontal } = this.props;
     if (!hasMore) return null;
     return (
       <Loading
-        style={{ paddingHorizontal: 50, opacity: loading ? 1 : 0 }}
+        style={{
+          paddingHorizontal: 50,
+          opacity: loading ? 1 : 0,
+          paddingBottom: horizontal ? 0 : height / 8,
+        }}
       />
     );
   }
@@ -25,7 +31,7 @@ export default class HorizontalListView extends Component {
         alwaysBounceHorizontal={false}
         horizontal={horizontal}
         onEndReached={onEndReached}
-        onEndReachedThreshold={200}
+        onEndReachedThreshold={horizontal ? 200 : 400}
         bounces={false}
         bouncesZoom={false}
         renderFooter={this.renderFooter}

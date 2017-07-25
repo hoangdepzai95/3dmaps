@@ -8,8 +8,8 @@ export default class HomeTab extends Component {
   renderGallery = () => {
   }
   render() {
-    const containerWidth = PostImageWidth;
-    const { favorite } = this.props;
+    const { favorite, width } = this.props;
+    const containerWidth = width || PostImageWidth;
     const seo = this.props.seo || {};
     return (
       <View
