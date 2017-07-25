@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, Dimensions, TouchableOpacity, Animated } from 'react-native';
 import { EvilIcons, Entypo } from '@expo/vector-icons';
+import _ from 'lodash';
 import I18n from 'i18n-js';
 import { connect } from 'react-redux';
 import { setActiveTab, backTab, changeLoading, popSubTab } from '../../actions/layout';
@@ -227,7 +228,7 @@ class TabBar extends Component {
                   : null
               }
               {
-                 activeTab === 'home' && stackHome.length === 1 ?
+                 activeTab === 'home' && _.last(stackHome) === 'gallery' ?
                    <Gallery />
                   : null
               }

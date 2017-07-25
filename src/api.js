@@ -3,7 +3,7 @@ import { AsyncStorage } from 'react-native';
 import { Facebook } from 'expo';
 import I18n from 'i18n-js';
 import setUpLang from './util/lang';
-import { BASE_API_URL, FACEBOOK_ID } from './config';
+import { BASE_API_URL, FACEBOOK_ID, PER_PAGE } from './config';
 // inital
 axios.defaults.baseURL = BASE_API_URL;
 // ---------------------
@@ -35,10 +35,13 @@ export default {
     });
   },
   getHomeGallery() {
-    return axios.get(`galleries?locale=${getLocale()}&posts=10`);
+    return axios.get(`galleries?locale=${getLocale()}&posts=${PER_PAGE}`);
+  },
+  getGalleryPost(id, page) {
+    return axios.get(`posts?locale=${getLocale()}&page=${page}&per_page=${PER_PAGE}&gallery_id=${id}`);
   },
   getExperienceCategory() {
-    return axios.get(`categories?locale=${getLocale()}&experiences=10`);
+    return axios.get(`categories?locale=${getLocale()}&experiences=${PER_PAGE}`);
   },
   getUserInfo(token) {
     return axios.get( `https://graph.facebook.com/me?access_token=${token}&fields=email,name,picture`);

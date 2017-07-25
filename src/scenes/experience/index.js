@@ -8,6 +8,7 @@ import Loading from '../../components/Loading';
 import SelectedGallery from './SelectedGallery';
 import { getExperienceCategory } from '../../actions/fetchData';
 import styles from './style';
+import HorizontalListView from '../../components/ListView';
 
 class Experience extends Component {
   constructor(props) {
@@ -30,10 +31,18 @@ class Experience extends Component {
     return nextProps.loading !== this.props.loading ||
            nextProps.data !== this.props.data;
   }
+  renderPost = (post) => {
+    return (
+      <Post {...post} key={post.id} even />
+    );
+  }
+  onEndReached() {
+    
+  }
   render() {
     const { selectedGallery, suggestionLocations } = this.state;
-    const { onPressFilter, onScroll, loading } = this.props;
-    const gallerys = this.props.data;
+    const { onPressFilter, onScroll, loading, categoriesData } = this.props;
+    const categories = this.props.data;
     if (selectedGallery) {
       return <SelectedGallery onPressFilter={onPressFilter} onScroll={onScroll} />;
     }
@@ -51,26 +60,25 @@ class Experience extends Component {
               bouncesZoom={false}
             >
               {
-                gallerys.map((gallery) => {
+                categories.map((category) => {
                   return (
-                    <View key={gallery.name} style={homeStyles.gallery}>
+                    <View key={category.name} style={homeStyles.gallery}>
                       <TouchableOpacity
                         activeOpacity={0.6}
-                        onPress={this.onSelectGallery.bind(this, gallery.name)}
+                        onPress={this.onSelectGallery.bind(this, category.name)}
                       >
                         <View style={homeStyles.card}>
-                          <Text>{gallery.name}</Text>
+                          <Text>{category.name}</Text>
                           <Text style={homeStyles.seeAllText}>{I18n.t('SEE_ALL')}</Text>
                         </View>
                       </TouchableOpacity>
                       <View style={homeStyles.postRow}>
-                        {
-                          gallery.experiences.map((post, index) => {
-                            return (
-                              <Post {...post} key={post.id} even={index === 0} />
-                            );
-                          })
-                        }
+                        <HorizontalListView
+                          horizontal
+                          onEndReached={this.onEndReached.bind(this, gallery.id)}
+                          data={categoriesData[category.id]}
+                          renderRow={this.renderPost}
+                        />
                       </View>
                     </View>
                   );
@@ -106,5 +114,6 @@ export default connect((state) => {
     loading: !state.data.experience.loaded,
     activeTab: state.layout.activeTab,
     data: state.data.experience.data,
+    categoriesData: state.data.categories,
   };
 })(Experience);
