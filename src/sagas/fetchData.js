@@ -6,8 +6,8 @@ import {
   receiveHomeGallery,
   GET_EXPERIENCE_CATEGORY,
   receiveExperienceCategory,
-  GET_GALLERY_POST,
-  receiveGalleryPost,
+  GET_POST,
+  receivePost,
  } from '../actions/fetchData';
 import Api from '../api';
 import alert from '../util/alert';
@@ -38,22 +38,21 @@ function* getExperienceCategory() {
 function* watchGetExperienceCategory() {
   yield takeLatest(GET_EXPERIENCE_CATEGORY, getExperienceCategory);
 }
-function* getGalleryPost(action) {
+function* getPost(action) {
   try {
-    const response = yield call(Api.getGalleryPost, action.id, action.page);
-    console.log(response);
-    yield put(receiveGalleryPost(action.id, action.page, response.data));
+    const response = yield call(Api.getPost, action.id, action.page, action.postType);
+    yield put(receivePost(action.id, action.page, response.data, action.postType));
   } catch (err) {
-    alert(I18n.t('NETWORK_ERROR_MESSAGE'));
+    yield put(receivePost(action.id, action.page - 1, [], action.postType));
   }
 }
 
 
-function* watchGetGalleryPost() {
-  yield takeEvery(GET_GALLERY_POST, getGalleryPost);
+function* watchGetPost() {
+  yield takeEvery(GET_POST, getPost);
 }
 export function* fetchData() {
   yield fork(watchGetHomeGallery);
   yield fork(watchGetExperienceCategory);
-  yield fork(watchGetGalleryPost);
+  yield fork(watchGetPost);
 }

@@ -3,7 +3,7 @@ import { View, ScrollView, TouchableOpacity, Text } from 'react-native';
 import { connect } from 'react-redux';
 import I18n from 'i18n-js';
 import Post from './post';
-import { getHomeGallery, getGalleryPost } from '../../actions/fetchData';
+import { getHomeGallery, getPost } from '../../actions/fetchData';
 import Loading from '../../components/Loading';
 import styles from '../../styles/home';
 import { pushSubTab, setActiveGallery } from '../../actions/layout';
@@ -20,9 +20,9 @@ class HomeTab extends Component {
     this.props.dispatch(pushSubTab('stackHome', 'gallery'));
   }
   onEndReached(id) {
-    const { galleriesLoading, galleriesCurrentPage } = this.props;
-    if (!galleriesLoading[id]) {
-      this.props.dispatch(getGalleryPost(id, (galleriesCurrentPage[id] || 1) + 1));
+    const { postsData } = this.props;
+    if (!postsData.gallery[id].loading) {
+      this.props.dispatch(getPost(id, postsData.gallery[id].currentPage + 1, 'gallery'));
     }
   }
   renderPost = (post) => {
@@ -31,7 +31,7 @@ class HomeTab extends Component {
     );
   }
   render() {
-    const { onScroll, homePageData, loading, galleriesData } = this.props;
+    const { onScroll, homePageData, loading, postsData } = this.props;
     return (
       <View style={styles.container}>
         {
@@ -60,9 +60,10 @@ class HomeTab extends Component {
                       </TouchableOpacity>
                       <View style={styles.postRow}>
                         <HorizontalListView
+                          loading={postsData.gallery[gallery.id].loading}
                           horizontal
                           onEndReached={this.onEndReached.bind(this, gallery.id)}
-                          data={galleriesData[gallery.id]}
+                          data={postsData.gallery[gallery.id].data}
                           renderRow={this.renderPost}
                         />
                       </View>
@@ -81,7 +82,7 @@ class HomeTab extends Component {
 export default connect((state) => {
   return {
     homePageData: state.data.home.data,
-    galleriesData: state.data.galleries,
+    postsData: state.data.postsData,
     loading: !state.data.home.loaded,
   };
 })(HomeTab);

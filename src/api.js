@@ -37,8 +37,12 @@ export default {
   getHomeGallery() {
     return axios.get(`galleries?locale=${getLocale()}&posts=${PER_PAGE}`);
   },
-  getGalleryPost(id, page) {
-    return axios.get(`posts?locale=${getLocale()}&page=${page}&per_page=${PER_PAGE}&gallery_id=${id}`);
+  getPost(id, page, type) {
+    if (type === 'category') {
+      return axios.get(`experiences?locale=${getLocale()}&category_id=${id}&page=${page}&per_page=${PER_PAGE}`)
+    } else if (type === 'gallery') {
+      return axios.get(`posts?locale=${getLocale()}&page=${page}&per_page=${PER_PAGE}&gallery_id=${id}`)
+    }
   },
   getExperienceCategory() {
     return axios.get(`categories?locale=${getLocale()}&experiences=${PER_PAGE}`);

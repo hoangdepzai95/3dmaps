@@ -3,8 +3,8 @@ export const RECEIVE_HOME_GALLERY = 'RECEIVE_HOME_GALLERY';
 export const GET_EXPERIENCE_CATEGORY = 'GET_EXPERIENCE_CATEGORY';
 export const RECEIVE_EXPERIENCE_CATEGORY = 'RECEIVE_EXPERIENCE_CATEGORY';
 export const RESET_DATA = 'RESET_DATA';
-export const GET_GALLERY_POST = 'GET_GALLERY_POST';
-export const RECEIVE_GALLERY_POST = 'RECEIVE_GALLERY_POST';
+export const GET_POST = 'GET_GALLERY_POST';
+export const RECEIVE_POST = 'RECEIVE_GALLERY_POST';
 
 export function getHomeGallery() {
   return {
@@ -36,18 +36,20 @@ export function receiveExperienceCategory(categories) {
   };
 }
 
-export function getGalleryPost(id, page) {
+export function getPost(id, page, postType) {
   return {
-    type: GET_GALLERY_POST,
+    type: GET_POST,
     id,
     page,
+    postType,
   };
 }
-export function receiveGalleryPost(id, page, data) {
+export function receivePost(id, page, data, postType) {
   return {
-    type: RECEIVE_GALLERY_POST,
+    type: RECEIVE_POST,
     data,
     page,
     id,
+    postType,
   };
 }
