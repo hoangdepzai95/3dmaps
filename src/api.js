@@ -35,10 +35,10 @@ export default {
     });
   },
   getHomeGallery() {
-    return axios.get(`galleries?locale=${getLocale()}&posts=2`);
+    return axios.get(`galleries?locale=${getLocale()}&posts=10`);
   },
   getExperienceCategory() {
-    return axios.get(`categories?locale=${getLocale()}&experiences=2`);
+    return axios.get(`categories?locale=${getLocale()}&experiences=10`);
   },
   getUserInfo(token) {
     return axios.get( `https://graph.facebook.com/me?access_token=${token}&fields=email,name,picture`);

@@ -19,7 +19,7 @@ class HomeTab extends Component {
     this.props.dispatch(pushSubTab('stackHome', 'gallery'));
   }
   render() {
-    const { onScroll, homePageData, loading } = this.props;
+    const { onScroll, homePageData, loading, galleriesData } = this.props;
     return (
       <View style={styles.container}>
         {
@@ -48,7 +48,7 @@ class HomeTab extends Component {
                       </TouchableOpacity>
                       <View style={styles.postRow}>
                         {
-                          gallery.posts.map((post, index) => {
+                          galleriesData[gallery.id].map((post, index) => {
                             return (
                               <Post {...post} key={post.id} even={index === 0} />
                             );
@@ -70,6 +70,7 @@ class HomeTab extends Component {
 export default connect((state) => {
   return {
     homePageData: state.data.home.data,
+    galleriesData: state.data.galleries,
     loading: !state.data.home.loaded,
   };
 })(HomeTab);

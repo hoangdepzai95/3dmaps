@@ -6,10 +6,12 @@ const initialState = {
   experience: { loaded: false, data: [] },
   map: { loaded: false, data: [] },
   galleries: {},
+  categories: {},
 };
 
 function formatPostData(galleries, isExperience) {
   const field = isExperience ? 'experiences' : 'posts';
+  let postsData = {};
   let rs = galleries.filter(gallery => gallery[field].length);
   rs = rs.map((gallery) => {
     gallery[field].map((post) => {
@@ -21,19 +23,30 @@ function formatPostData(galleries, isExperience) {
       if (isExperience) post.seo.featured_image = `http://staging.3dmaps.vn${post.seo.featured_image}`;
       return post;
     });
+    postsData[gallery.id] = gallery[field];
     return gallery;
   });
-  return rs;
+  return {rs, postsData};
 }
 
 const data = (state = initialState, action) => {
   switch (action.type) {
     case RECEIVE_HOME_GALLERY:
-      return _.assign({}, state, { home: { loaded: true, data: formatPostData(action.galleries) } });
+      const homeData = formatPostData(action.galleries);
+      return _.assign({}, state,
+        {
+          home: { loaded: true, data: homeData.rs },
+          galleries: homeData.postsData,
+        },
+      );
     case RESET_DATA:
       return initialState;
     case RECEIVE_EXPERIENCE_CATEGORY:
-      return _.assign({}, state, { experience: { loaded: true, data: formatPostData(action.categories, true) } });
+      const experienceData = formatPostData(action.categories, true);
+      return _.assign({}, state,
+        { experience: { loaded: true, data: experienceData.rs } },
+        categories: experienceData.postsData,
+      );
     default:
       return state;
   }

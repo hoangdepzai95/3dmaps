@@ -1,8 +1,9 @@
 import { StyleSheet } from 'react-native';
+import { PostImageWidth } from '../../../styles/home';
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    width: PostImageWidth,
   },
   footer: {
     paddingTop: 3,
