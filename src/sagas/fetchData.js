@@ -8,6 +8,7 @@ import {
   receiveExperienceCategory,
   GET_POST,
   receivePost,
+  stopLoadingPost,
  } from '../actions/fetchData';
 import Api from '../api';
 import alert from '../util/alert';
@@ -43,7 +44,7 @@ function* getPost(action) {
     const response = yield call(Api.getPost, action.id, action.page, action.postType);
     yield put(receivePost(action.id, action.page, response.data, action.postType));
   } catch (err) {
-    yield put(receivePost(action.id, action.page - 1, [], action.postType));
+    yield put(stopLoadingPost(action.id, action.postType));
   }
 }
 

@@ -21,7 +21,7 @@ class HomeTab extends Component {
   }
   onEndReached(id) {
     const { postsData } = this.props;
-    if (!postsData.gallery[id].loading) {
+    if (!postsData.gallery[id].loading && postsData.gallery[id].hasMore) {
       this.props.dispatch(getPost(id, postsData.gallery[id].currentPage + 1, 'gallery'));
     }
   }
@@ -62,6 +62,7 @@ class HomeTab extends Component {
                         <HorizontalListView
                           loading={postsData.gallery[gallery.id].loading}
                           horizontal
+                          hasMore={postsData.gallery[gallery.id].hasMore}
                           onEndReached={this.onEndReached.bind(this, gallery.id)}
                           data={postsData.gallery[gallery.id].data}
                           renderRow={this.renderPost}

@@ -4,7 +4,8 @@ import Loading from '../Loading';
 
 export default class HorizontalListView extends Component {
   renderFooter = () => {
-    const { loading } = this.props;
+    const { loading, hasMore } = this.props;
+    if (!hasMore) return null;
     return (
       <Loading
         style={{ paddingHorizontal: 50, opacity: loading ? 1 : 0 }}
@@ -24,7 +25,7 @@ export default class HorizontalListView extends Component {
         alwaysBounceHorizontal={false}
         horizontal={horizontal}
         onEndReached={onEndReached}
-        onEndReachedThreshold={300}
+        onEndReachedThreshold={200}
         bounces={false}
         bouncesZoom={false}
         renderFooter={this.renderFooter}

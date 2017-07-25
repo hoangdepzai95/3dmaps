@@ -1,5 +1,13 @@
 import _ from 'lodash';
-import { RECEIVE_HOME_GALLERY, RESET_DATA, RECEIVE_EXPERIENCE_CATEGORY, RECEIVE_POST, GET_POST } from '../actions/fetchData';
+import {
+  RECEIVE_HOME_GALLERY,
+  RESET_DATA,
+  RECEIVE_EXPERIENCE_CATEGORY,
+  RECEIVE_POST,
+  GET_POST,
+  STOP_LOADING_POST,
+} from '../actions/fetchData';
+import { PER_PAGE } from '../config';
 
 const initialState = {
   home: { loaded: false, data: [] },
@@ -29,7 +37,12 @@ function formatPostData(galleries, isExperience) {
   let rs = galleries.filter(gallery => gallery[field].length);
   rs = rs.map((gallery) => {
     gallery[field] = formatPosts(gallery[field], isExperience);
-    postsData[gallery.id] = { currentPage: 1, loading: false, data: gallery[field] };
+    postsData[gallery.id] = {
+      currentPage: 1,
+      loading: false,
+      data: gallery[field],
+      hasMore: gallery[field].length >= PER_PAGE,
+    };
     return gallery;
   });
   return { rs, postsData };
@@ -51,10 +64,11 @@ const data = (state = initialState, action) => {
       return initialState;
     case RECEIVE_EXPERIENCE_CATEGORY: {
       const experienceData = formatPostData(action.categories, true);
+      postsData.category = experienceData.postsData;
       return _.assign({}, state,
         {
           experience: { loaded: true, data: experienceData.rs },
-          categories: experienceData.postsData,
+          postsData,
         },
       );
     }
@@ -67,8 +81,12 @@ const data = (state = initialState, action) => {
       target.loading = false;
       target.data = [...target.data, ...formatPosts(action.data)];
       target.currentPage = action.page;
+      if (!action.data.length) target.hasMore = false;
       return _.assign({}, state, { postsData });
     }
+    case STOP_LOADING_POST:
+      postsData[action.postType][action.id].loading = false;
+      return _.assign({}, state, { postsData });
     default:
       return state;
   }

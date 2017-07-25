@@ -5,6 +5,7 @@ export const RECEIVE_EXPERIENCE_CATEGORY = 'RECEIVE_EXPERIENCE_CATEGORY';
 export const RESET_DATA = 'RESET_DATA';
 export const GET_POST = 'GET_GALLERY_POST';
 export const RECEIVE_POST = 'RECEIVE_GALLERY_POST';
+export const STOP_LOADING_POST = 'STOP_LOADING_POST';
 
 export function getHomeGallery() {
   return {
@@ -49,6 +50,13 @@ export function receivePost(id, page, data, postType) {
     type: RECEIVE_POST,
     data,
     page,
+    id,
+    postType,
+  };
+}
+export function stopLoadingPost(id, postType) {
+  return {
+    type: STOP_LOADING_POST,
     id,
     postType,
   };

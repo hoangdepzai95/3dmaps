@@ -24,12 +24,10 @@ class Experience extends Component {
   onSelectGallery(name) {
     this.setState({ selectedGallery: name });
   }
-  shouldComponentUpdate(nextProps) {
+  componentWillReceiveProps(nextProps) {
     if (nextProps.activeTab === 'experience' && this.props.activeTab !== 'experience' && nextProps.loading) {
       this.props.dispatch(getExperienceCategory());
     }
-    return nextProps.loading !== this.props.loading ||
-           nextProps.data !== this.props.data;
   }
   renderPost = (post) => {
     return (
@@ -37,11 +35,11 @@ class Experience extends Component {
     );
   }
   onEndReached() {
-    
+
   }
   render() {
     const { selectedGallery, suggestionLocations } = this.state;
-    const { onPressFilter, onScroll, loading, categoriesData } = this.props;
+    const { onPressFilter, onScroll, loading, postsData } = this.props;
     const categories = this.props.data;
     if (selectedGallery) {
       return <SelectedGallery onPressFilter={onPressFilter} onScroll={onScroll} />;
@@ -75,8 +73,8 @@ class Experience extends Component {
                       <View style={homeStyles.postRow}>
                         <HorizontalListView
                           horizontal
-                          onEndReached={this.onEndReached.bind(this, gallery.id)}
-                          data={categoriesData[category.id]}
+                          onEndReached={this.onEndReached.bind(this, category.id)}
+                          data={postsData.category[category.id].data}
                           renderRow={this.renderPost}
                         />
                       </View>
@@ -114,6 +112,6 @@ export default connect((state) => {
     loading: !state.data.experience.loaded,
     activeTab: state.layout.activeTab,
     data: state.data.experience.data,
-    categoriesData: state.data.categories,
+    postsData: state.data.postsData,
   };
 })(Experience);
