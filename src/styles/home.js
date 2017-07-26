@@ -69,5 +69,8 @@ const styles = StyleSheet.create({
     color: '#969696',
     fontWeight: '200',
   },
+  galleryTitle: {
+    fontWeight: 'bold',
+  },
 });
 export default styles;

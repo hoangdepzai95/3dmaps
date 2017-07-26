@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { View, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
-import _ from 'lodash';
 import { getHomeGallery } from '../../actions/fetchData';
 import Loading from '../../components/Loading';
 import styles from '../../styles/home';
@@ -13,8 +12,7 @@ class HomeTab extends Component {
     this.props.dispatch(getHomeGallery());
   }
   render() {
-    const { onScroll, loading, stackHome } = this.props;
-    const isOpenGallery = _.last(stackHome) === 'gallery';
+    const { onScroll, loading } = this.props;
     return (
       <View style={styles.container}>
         {
@@ -30,9 +28,9 @@ class HomeTab extends Component {
             >
               <Galleries />
               <View style={styles.footerSpace} />
-              <Gallery />
             </ScrollView>
         }
+        <Gallery />
       </View>
     );
   }

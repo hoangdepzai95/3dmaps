@@ -1,6 +1,5 @@
-import * as Progress from 'react-native-progress';
 import React from 'react';
-import { View } from 'react-native';
+import { View, ActivityIndicator } from 'react-native';
 
 const Loading = ({ style }) => {
   return (
@@ -10,7 +9,7 @@ const Loading = ({ style }) => {
         alignItems: 'center',
       }, style]}
     >
-      <Progress.Circle size={25} indeterminate color="#7076eb" borderWidth={2} />
+      <ActivityIndicator color="#7076eb" size={25} />
     </View>
   );
 };

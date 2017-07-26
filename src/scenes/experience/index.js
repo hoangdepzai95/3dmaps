@@ -66,7 +66,7 @@ class Experience extends Component {
                         onPress={this.onSelectGallery.bind(this, category.name)}
                       >
                         <View style={homeStyles.card}>
-                          <Text>{category.name}</Text>
+                          <Text style={homeStyles.galleryTitle}>{category.name}</Text>
                           <Text style={homeStyles.seeAllText}>{I18n.t('SEE_ALL')}</Text>
                         </View>
                       </TouchableOpacity>

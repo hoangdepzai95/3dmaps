@@ -27,7 +27,7 @@ class Gallery extends Component {
     return (
       <View style={styles.container}>
         <View style={homeStyles.card}>
-          <Text>{gallery.name}</Text>
+          <Text style={homeStyles.galleryTitle}>{gallery.name}</Text>
         </View>
         <VerticalListView
           loading={postsData.gallery[gallery.id].loading}

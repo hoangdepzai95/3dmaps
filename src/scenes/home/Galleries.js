@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
-import { View, ScrollView, TouchableOpacity, Text } from 'react-native';
+import { View, TouchableOpacity, Text } from 'react-native';
 import { connect } from 'react-redux';
 import I18n from 'i18n-js';
-import Post from './post';
 import { getHomeGallery, getPost } from '../../actions/fetchData';
-import Loading from '../../components/Loading';
 import styles from '../../styles/home';
 import { pushSubTab, setActiveGallery } from '../../actions/layout';
 import Posts from './Posts';
+import { PER_PAGE } from '../../config';
 
 class Galleries extends Component {
   componentDidMount() {
@@ -38,12 +37,12 @@ class Galleries extends Component {
                   onPress={this.seeAll.bind(this, gallery.id)}
                 >
                   <View style={styles.card}>
-                    <Text>{gallery.name}</Text>
+                    <Text style={styles.galleryTitle}>{gallery.name}</Text>
                     <Text style={styles.seeAllText}>{I18n.t('SEE_ALL')}</Text>
                   </View>
                 </TouchableOpacity>
                 <View style={styles.postRow}>
-                  <Posts posts={postsData.gallery[gallery.id].data.slice(0, 20)} />
+                  <Posts posts={postsData.gallery[gallery.id].data.slice(0, PER_PAGE)} />
                 </View>
               </View>
             );

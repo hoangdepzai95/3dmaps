@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { ScrollView } from 'react-native';
 import Post from './post';
 import Loading from '../../components/Loading';
+import { getPost } from '../../actions/fetchData';
 
 export default class Posts extends Component {
   shouldComponentUpdate(nextProps) {
