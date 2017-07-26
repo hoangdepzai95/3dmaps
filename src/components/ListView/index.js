@@ -38,7 +38,6 @@ export default class HorizontalListView extends Component {
     onEndReached(id);
   }
   render() {
-    console.log('render list view');
     const { renderRow, horizontal } = this.props;
     return (
       <ListView

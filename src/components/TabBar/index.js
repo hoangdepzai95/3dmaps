@@ -221,17 +221,12 @@ class TabBar extends Component {
         <View style={[styles.mainContainer]}>
           <TabsContent tabs={this.props.children} onMounted={this.onTabContentMounted} />
           {
-            isMainTab ?
+            activeTab !== '_account' ?
             null :
             <View style={[{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: '#FFF', zIndex: 9999 }]}>
               {
                 activeTab === '_account' ?
                   <Account />
-                  : null
-              }
-              {
-                 activeTab === 'home' && _.last(stackHome) === 'gallery' ?
-                   <Gallery />
                   : null
               }
             </View>

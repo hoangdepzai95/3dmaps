@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
+import _ from 'lodash';
 
 import homeStyles from '../../../styles/home';
 import VerticalListView from '../../../components/ListView';
 import Post from './post';
 import { getPost } from '../../../actions/fetchData';
+import styles from './style';
 
 class Gallery extends Component {
   onEndReached(id) {
@@ -20,9 +22,10 @@ class Gallery extends Component {
     );
   }
   render() {
-    const { postsData, gallery } = this.props;
+    const { postsData, gallery, stackHome } = this.props;
+    if (!gallery || stackHome[0] !== 'gallery') return null;
     return (
-      <View style={homeStyles.container}>
+      <View style={styles.container}>
         <View style={homeStyles.card}>
           <Text>{gallery.name}</Text>
         </View>
@@ -42,5 +45,6 @@ export default connect((state) => {
   return {
     postsData: state.data.postsData,
     gallery: state.data.home.data.find(o => o.id === state.layout.activeGallery),
+    stackHome: state.layout.stackHome,
   };
 })(Gallery);

@@ -9,6 +9,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 25,
     padding,
+    position: 'relative',
   },
   footerSpace: {
     height: height / 8,
