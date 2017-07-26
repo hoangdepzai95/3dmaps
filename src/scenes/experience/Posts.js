@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { ScrollView } from 'react-native';
-import Post from './post';
+import Post from '../home/post';
 
 export default class Posts extends Component {
   shouldComponentUpdate(nextProps) {

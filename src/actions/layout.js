@@ -4,7 +4,8 @@ export const CHANGE_LOADING = 'CHANGE_LOADING';
 export const SHARE_TAB_BAR = 'SHARE_TAB_BAR';
 export const PUSH_SUB_TAB = 'PUSH_SUB_TAB';
 export const POP_SUB_TAB = 'POP_SUB_TAB';
-export const SET_ACTIVE_GALLERY ='SET_ACTIVE_GALLERY';
+export const SET_ACTIVE_GALLERY = 'SET_ACTIVE_GALLERY';
+export const SET_ACTIVE_CATEGORY = 'SET_ACTIVE_CATEGORY';
 
 export function setActiveTab(tabId) {
   return {
@@ -47,6 +48,13 @@ export function popSubTab(stackName) {
 export function setActiveGallery(id) {
   return {
     type: SET_ACTIVE_GALLERY,
+    id,
+  };
+}
+
+export function setActiveCategory(id) {
+  return {
+    type: SET_ACTIVE_CATEGORY,
     id,
   };
 }
