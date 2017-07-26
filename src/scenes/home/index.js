@@ -19,7 +19,7 @@ class HomeTab extends Component {
     this.props.dispatch(setActiveGallery(id));
     this.props.dispatch(pushSubTab('stackHome', 'gallery'));
   }
-  onEndReached(id) {
+  onEndReached = (id) => {
     const { postsData } = this.props;
     if (!postsData.gallery[id].loading && postsData.gallery[id].hasMore) {
       this.props.dispatch(getPost(id, postsData.gallery[id].currentPage + 1, 'gallery'));
@@ -32,6 +32,7 @@ class HomeTab extends Component {
   }
   render() {
     const { onScroll, homePageData, loading, postsData } = this.props;
+    console.log('render home');
     return (
       <View style={styles.container}>
         {
@@ -44,6 +45,7 @@ class HomeTab extends Component {
               alwaysBounceVertical={false}
               bounces={false}
               bouncesZoom={false}
+              style={{ display: 'none' }}
             >
               {
                 homePageData.map((gallery) => {
@@ -59,14 +61,6 @@ class HomeTab extends Component {
                         </View>
                       </TouchableOpacity>
                       <View style={styles.postRow}>
-                        <HorizontalListView
-                          loading={postsData.gallery[gallery.id].loading}
-                          horizontal
-                          hasMore={postsData.gallery[gallery.id].hasMore}
-                          onEndReached={this.onEndReached.bind(this, gallery.id)}
-                          data={postsData.gallery[gallery.id].data}
-                          renderRow={this.renderPost}
-                        />
                       </View>
                     </View>
                   );

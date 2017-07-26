@@ -103,7 +103,7 @@ export default class MainPage extends Component {
               tabId="home"
               onScroll={this.onScroll}
             />
-            <ExperiencePage
+            <HomeTab
               tabLabel={I18n.t('EXPERIENCE')}
               tabId="experience"
               onScroll={this.onScroll}

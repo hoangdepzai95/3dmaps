@@ -31,13 +31,13 @@ class TabBar extends Component {
     this.tabAnimateValue = new Animated.Value(0);
     this.tabAnimation = Animated.timing(this.tabAnimateValue, {
       toValue: 1,
-      duration: 150,
+      duration: 50,
     });
     this.scrollX = new Animated.Value(0);
     this.underlineWidthValue = new Animated.Value(0);
     this.underlineWidthAnimation = Animated.timing(this.underlineWidthValue, {
       toValue: 1,
-      duration: 150,
+      duration: 50,
     });
   }
   componentWillMount() {
@@ -116,11 +116,13 @@ class TabBar extends Component {
       inputRange: [0, 1],
       outputRange: [this.labelsSize[activeTab], this.labelsSize[id]],
     });
+    this.props.dispatch(setActiveTab(id));
     this.setState(
       { leftAnimation, widthAnimation },
       () => {
-        this.props.dispatch(setActiveTab(id));
-        Animated.parallel([this.tabAnimation, this.underlineWidthAnimation]).start();
+        setTimeout(() => {
+          Animated.parallel([this.tabAnimation, this.underlineWidthAnimation]).start();
+        }, 0);
       },
     );
     React.Children.map(this.props.children, (child, index) => {
