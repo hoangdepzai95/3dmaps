@@ -6,6 +6,7 @@ import Loading from '../../components/Loading';
 import styles from '../../styles/home';
 import Galleries from './Galleries';
 import Category from './gallery';
+import PostDetail from '../post-detail';
 
 class HomeTab extends Component {
   componentWillReceiveProps(nextProps) {
@@ -33,6 +34,7 @@ class HomeTab extends Component {
             </ScrollView>
         }
         <Category />
+        <PostDetail type="experience" />
       </View>
     );
   }

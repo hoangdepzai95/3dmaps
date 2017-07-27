@@ -50,7 +50,7 @@ class Gallery extends Component {
           data.items.map((post) => {
             if (!post) return <View style={{ flex: 1 }} key="_empty-post" />;
             return (
-              <Post {...post} key={post.id} even />
+              <Post {...post} key={post.id} even type="experience" />
             );
           })
         }

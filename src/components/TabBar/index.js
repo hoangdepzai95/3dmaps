@@ -209,7 +209,7 @@ class TabBar extends Component {
     return rs;
   }
   render() {
-    const { onPressFilter, activeTab, onChangeTab, stackHome } = this.props;
+    const { onPressFilter, activeTab, onChangeTab, stackHome, stackExperience } = this.props;
     const isMainTab = this.isMainTab();
     const MapAndFilterWidth = I18n.currentLocale() === 'vi_VN' ? width * 0.46 : width * 0.378;
     const MapAndFilterFeft = (width / 2) - (MapAndFilterWidth / 2);
@@ -233,7 +233,7 @@ class TabBar extends Component {
           }
         </View>
         {
-          activeTab === 'home' ?
+          activeTab === 'home' && _.last(stackHome) !== 'postDetail' ?
             <View style={[homeStyles.mapAndFilter, { width: MapAndFilterWidth, left: MapAndFilterFeft }]} >
               <MapAndFilter
                 onPressMap={() => { onChangeTab('map'); }}
@@ -244,7 +244,7 @@ class TabBar extends Component {
             null
         }
         {
-          activeTab === 'experience' ?
+          activeTab === 'experience' && _.last(stackExperience) !== 'postDetail' ?
             <View style={homeStyles.filterStyle} elevation={5}>
               <Filter
                 onPressFilter={onPressFilter}

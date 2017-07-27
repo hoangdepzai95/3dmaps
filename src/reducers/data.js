@@ -20,6 +20,11 @@ const initialState = {
   },
 };
 
+function stripIframeUrl(value) {
+  if (!value) return '';
+  const source = value.split(' ').find(o => o.indexOf('https://my.matterport.com/show/?m=') !== -1);
+  return source.slice(5, source.length - 1);
+}
 function formatPosts(posts, isExperience) {
   return posts.map((post) => {
     post.formatedAddress = [
@@ -27,6 +32,7 @@ function formatPosts(posts, isExperience) {
       post.address.district.name,
       post.address.city.name,
     ].filter(o => _.trim(o)).join(', ');
+    if (!isExperience) post.formatedUrl = stripIframeUrl(post.matterport_url);
     if (isExperience) post.seo.featured_image = `http://staging.3dmaps.vn${post.seo.featured_image}`;
     return post;
   });

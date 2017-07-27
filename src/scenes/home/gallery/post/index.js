@@ -5,10 +5,15 @@ import PostImage from '../../../../components/post-image';
 import styles, { containerWidth } from './style';
 import startstyles from '../../../../styles/starRating';
 import homeStyles from '../../../../styles/home';
+import PostWrapper from '../../../../components/PostWrapper';
 
 const Post = (props) => {
   return (
-    <View style={[styles.container, props.even ? { marginRight: 13 } : null]}>
+    <PostWrapper
+      style={[styles.container, props.even ? { marginRight: 13 } : null]}
+      post={props}
+      type={props.type}
+    >
       <View style={styles.header}>
         <View style={styles.rating}>
           <View style={styles.headerLine1}>
@@ -37,7 +42,7 @@ const Post = (props) => {
         <Text style={styles.smallText}>{props.formatedAddress}</Text>
       </View>
       <PostImage {...props} width={containerWidth} />
-    </View>
+    </PostWrapper>
   );
 };
 export default Post;

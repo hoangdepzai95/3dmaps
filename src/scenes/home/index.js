@@ -6,6 +6,7 @@ import Loading from '../../components/Loading';
 import styles from '../../styles/home';
 import Galleries from './Galleries';
 import Gallery from './gallery';
+import PostDetail from '../post-detail';
 
 class HomeTab extends Component {
   componentDidMount() {
@@ -31,6 +32,7 @@ class HomeTab extends Component {
             </ScrollView>
         }
         <Gallery />
+        <PostDetail type="home" />
       </View>
     );
   }

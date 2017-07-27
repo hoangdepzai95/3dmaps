@@ -7,6 +7,7 @@ import {
   POP_SUB_TAB,
   SET_ACTIVE_GALLERY,
   SET_ACTIVE_CATEGORY,
+  SET_ACTIVE_POST,
 } from '../actions/layout';
 import { INIT_APP } from '../actions/auth';
 
@@ -19,6 +20,11 @@ const initialState = {
   stackExperience: [],
   activeGallery: null,
   activeCategory: null,
+  activePost: {
+    home: null,
+    experience: null,
+    saved: null,
+  },
 };
 
 const layout = (state = initialState, action) => {
@@ -33,7 +39,7 @@ const layout = (state = initialState, action) => {
       return _.assign({}, state, { App: action.App });
     case PUSH_SUB_TAB:
       return _.assign({}, state,
-        { [action.stackName]: [...state[action.stackName], action.subTab] },
+        { [action.stackName]: _.uniq([...state[action.stackName], action.subTab]) },
       );
     case POP_SUB_TAB:
       return _.assign({}, state, { [action.stackName]: _.dropRight(state[action.stackName]) });
@@ -41,6 +47,11 @@ const layout = (state = initialState, action) => {
       return _.assign({}, state, { activeGallery: action.id });
     case SET_ACTIVE_CATEGORY:
       return _.assign({}, state, { activeCategory: action.id });
+    case SET_ACTIVE_POST: {
+      const activePost = _.clone(state.activePost);
+      activePost[action.postType] = action.post;
+      return _.assign({}, state, { activePost });
+    }
     default:
       return state;
   }

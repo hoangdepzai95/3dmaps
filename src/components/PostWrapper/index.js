@@ -1,0 +1,29 @@
+import React, { Component } from 'react';
+import { TouchableOpacity } from 'react-native';
+import { connect } from 'react-redux';
+
+import { setActivePost, pushSubTab } from '../../actions/layout';
+
+class PostWrapper extends Component {
+  onPressPost = () => {
+    const { post, type } = this.props;
+    this.props.dispatch(setActivePost(post, type));
+    if (type === 'home') {
+      this.props.dispatch(pushSubTab('stackHome', 'postDetail'));
+    } else if (type === 'experience') {
+      this.props.dispatch(pushSubTab('stackExperience', 'postDetail'));
+    }
+  }
+  render() {
+    return (
+      <TouchableOpacity
+        onPress={this.onPressPost}
+        style={this.props.style}
+      >
+        {this.props.children}
+      </TouchableOpacity>
+    );
+  }
+}
+
+export default connect()(PostWrapper);

@@ -33,12 +33,12 @@ class Gallery extends Component {
   }
   renderPost = (post) => {
     return (
-      <Post {...post} key={post.id} />
+      <Post {...post} key={post.id} type="home" />
     );
   }
   render() {
     const { postsData, gallery, stackHome } = this.props;
-    if (!gallery || stackHome[0] !== 'gallery') return null;
+    if (!gallery || (stackHome[0] !== 'gallery' && !stackHome[1])) return null;
     return (
       <Animated.View style={[styles.container, { transform: [{ scaleY: this.scaleY }] }]}>
         <View style={homeStyles.card}>

@@ -12,7 +12,6 @@ const {
   StyleSheet,
   InteractionManager,
   Platform,
-  Image,
 } = ReactNative;
 const TimerMixin = require('react-timer-mixin');
 
@@ -94,6 +93,10 @@ const ScrollableTabView = React.createClass({
   },
 
   goToPage(pageNumber, animated = !this.props.scrollWithoutAnimation) {
+    if (pageNumber === 2) {
+      this._onChangeTab.bind(this, currentPage, pageNumber);
+      return;
+    }
     const offset = pageNumber * this.state.containerWidth;
     if (this.scrollView && this.scrollView._component && this.scrollView._component.scrollTo) {
       this.scrollView._component.scrollTo({x: offset, y: 0, animated, });
@@ -221,6 +224,7 @@ const ScrollableTabView = React.createClass({
 
   _handleLayout(e) {
     const { width, } = e.nativeEvent.layout;
+
     if (Math.round(width) !== Math.round(this.state.containerWidth)) {
       this.setState({ containerWidth: width, });
       this.requestAnimationFrame(() => {
@@ -241,8 +245,9 @@ const ScrollableTabView = React.createClass({
       activeTab: this.state.currentPage,
       scrollX: this.state.scrollX,
       scrollValue: this.state.scrollValue,
-      containerWidth: this.state.containerWidth - 100,
+      containerWidth: this.state.containerWidth,
     };
+
     if (this.props.tabBarBackgroundColor) {
       tabBarProps.backgroundColor = this.props.tabBarBackgroundColor;
     }
@@ -266,17 +271,11 @@ const ScrollableTabView = React.createClass({
         [this.props.tabBarPosition === 'overlayTop' ? 'top' : 'bottom']: 0,
       };
     }
-    const iconBackStyle = {
-      width: 10,
-      height: 10,
-    };
-    return <View style={[styles.container, this.props.style, ]} >
-      <View style={styles.tabarContainer}>
-        {this.props.tabBarPosition === 'top' && this.renderTabBar(tabBarProps)}
-      </View>
-      <View style={styles.mainContainer}>
-        {this.renderScrollableContent()}
-      </View>
+
+    return <View style={[styles.container, this.props.style, ]} onLayout={this._handleLayout}>
+      {this.props.tabBarPosition === 'top' && this.renderTabBar(tabBarProps)}
+      {this.renderScrollableContent()}
+      {(this.props.tabBarPosition === 'bottom' || overlayTabs) && this.renderTabBar(tabBarProps)}
     </View>;
   },
 });
@@ -290,10 +289,4 @@ const styles = StyleSheet.create({
   scrollableContentAndroid: {
     flex: 1,
   },
-  tabarContainer: {
-    flex: 27,
-  },
-  mainContainer: {
-    flex: 311,
-  }
 });

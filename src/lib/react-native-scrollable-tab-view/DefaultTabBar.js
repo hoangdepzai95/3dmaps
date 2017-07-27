@@ -5,7 +5,6 @@ const {
   Text,
   View,
   Animated,
-  Image,
 } = ReactNative;
 const Button = require('./Button');
 
@@ -25,19 +24,12 @@ const DefaultTabBar = React.createClass({
 
   getDefaultProps() {
     return {
-      activeTextColor: 'navy',
+      activeTextColor: '#7076eb',
       inactiveTextColor: 'black',
       backgroundColor: null,
     };
   },
-  getInitialState() {
-    return {
-    };
-  },
-  handleLayout(e, name) {
-    const { width, } = e.nativeEvent.layout;
-    this.setState({ [name]: width, });
-  },
+
   renderTabOption(name, page) {
   },
 
@@ -45,74 +37,45 @@ const DefaultTabBar = React.createClass({
     const { activeTextColor, inactiveTextColor, textStyle, } = this.props;
     const textColor = isTabActive ? activeTextColor : inactiveTextColor;
     const fontWeight = isTabActive ? 'bold' : 'normal';
-    const fontSize = 12;
+
     return <Button
+      style={[styles.flexOne]}
       key={name}
       accessible={true}
       accessibilityLabel={name}
       accessibilityTraits='button'
       onPress={() => onPressHandler(page)}
-      onLayout={(e) => { this.handleLayout(e, page) }}
     >
-      <View style={[styles.tab, this.props.tabStyle, ]} >
-        <Text style={[{color: textColor, fontWeight, fontSize }, textStyle, ]}>
+      <View style={[styles.tab, this.props.tabStyle, page === 1 ? styles.middleTab : null ]}>
+        <Text style={[{color: textColor, fontWeight, }, textStyle ]}>
           {name}
         </Text>
       </View>
     </Button>;
   },
-  getTotalTabWith(state) {
-    let rs = 0;
-    Object.keys(state).forEach((key) => {
-      if (parseInt(key) >= 0) {
-        rs = rs + state[key];
-      }
-    })
-    return rs;
-  },
-  getActiveTabLeft(space) {
-    // optimize with good function later
-    const activeTab  = this.props.activeTab;
-    if (activeTab == 0) {
-      return 0;
-    } else if (activeTab == 1) {
-      return this.state[0] + space;
-    } else if (activeTab == 2) {
-      // only god know why this work, i have no idea
-      return this.state[2] * 2 + space - 1;
-    }
-  },
+
   render() {
     const containerWidth = this.props.containerWidth;
     const numberOfTabs = this.props.tabs.length;
     const tabUnderlineStyle = {
       position: 'absolute',
-      width: this.state[this.props.activeTab],
+      width: containerWidth / numberOfTabs,
       height: 3,
-      backgroundColor: 'navy',
+      backgroundColor: '#7076eb',
       bottom: 0,
     };
-    const space = (this.state.containerWidth - this.getTotalTabWith(this.state)) / (numberOfTabs - 1) ;
-     const left = this.props.scrollValue.interpolate({
-       inputRange: [0, 1, ], outputRange: [0, this.getActiveTabLeft(space), ],
-     });
-    // const left = this.getActiveTabLeft(space);
+
+    const left = this.props.scrollValue.interpolate({
+      inputRange: [0, 1, ], outputRange: [0,  containerWidth / numberOfTabs, ],
+    });
     return (
-      <View style={styles.tabsWarpper}>
-        <View style={styles.leftArea}>
-          <Image source={require('../../../assets/images/chevron_left.png')} style={styles.iconBackStyle} />
-        </View>
-        <View style={[{backgroundColor: this.props.backgroundColor, }, this.props.style, styles.tabs]} onLayout={(e) => {this.handleLayout(e, 'containerWidth')} }>
-          {this.props.tabs.map((name, page) => {
-            const isTabActive = this.props.activeTab === page;
-            const renderTab = this.props.renderTab || this.renderTab;
-            return renderTab(name, page, isTabActive, this.props.goToPage);
-          })}
-          <Animated.View style={[tabUnderlineStyle, { left, }, this.props.underlineStyle, ]} />
-        </View>
-        <View style={styles.rightArea}>
-          <Image source={require('../../../assets/images/ic_my.png')} style={styles.iconAccountStyle} />
-        </View>
+      <View style={[styles.tabs, {backgroundColor: this.props.backgroundColor, }, this.props.style, ]}>
+        {this.props.tabs.map((name, page) => {
+          const isTabActive = this.props.activeTab === page;
+          const renderTab = this.props.renderTab || this.renderTab;
+          return renderTab(name, page, isTabActive, this.props.goToPage);
+        })}
+        <Animated.View style={[tabUnderlineStyle, { left, }, this.props.underlineStyle, ]} />
       </View>
     );
   },
@@ -120,45 +83,28 @@ const DefaultTabBar = React.createClass({
 
 const styles = StyleSheet.create({
   tab: {
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    height: '100%',
+    paddingBottom: 10,
   },
   flexOne: {
     flex: 1,
   },
   tabs: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    flex: 117,
-  },
-  tabsWarpper: {
     height: 50,
     flexDirection: 'row',
-    height: '100%',
+    justifyContent: 'space-around',
+    borderWidth: 1,
+    borderTopWidth: 0,
+    borderLeftWidth: 0,
+    borderRightWidth: 0,
+    borderColor: '#ccc',
   },
-  leftArea : {
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    flexDirection: 'row',
-    flex: 44,
-  },
-  rightArea: {
-    flex: 49,
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    flexDirection: 'row',
-  },
-  iconBackStyle : {
-    width: 20,
-    height: 20,
-    marginLeft: 20,
-    tintColor: '#1069ff',
-  },
-  iconAccountStyle : {
-    width: 15,
-    height: 15,
-    marginRight: 25,
+  middleTab: {
+    borderRightWidth: 1,
+    borderLeftWidth: 1,
+    borderColor: '#ccc',
   },
 });
 

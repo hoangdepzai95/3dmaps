@@ -15,7 +15,7 @@ export default class Posts extends Component {
         {
          posts.map((post) => {
            return (
-             <Post {...post} key={post.id} even />
+             <Post {...post} key={post.id} even type="experience" />
            );
          })
         }
