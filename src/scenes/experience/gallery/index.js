@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Animated } from 'react-native';
 import { connect } from 'react-redux';
+import _ from 'lodash';
 
 import homeStyles from '../../../styles/home';
 import VerticalListView from '../../../components/ListView';
@@ -9,6 +10,21 @@ import { getPost } from '../../../actions/fetchData';
 import styles from './style';
 
 class Gallery extends Component {
+  constructor(props) {
+    super(props);
+    this.scaleY = new Animated.Value(0.2);
+  }
+  componentWillUpdate(nextProps) {
+    if ((_.last(nextProps.stackExperience) === 'category') &&
+        (_.last(this.props.stackExperience) !== 'category')
+  ) {
+      Animated.timing(this.scaleY, {
+        toValue: 1,
+        duration: 200,
+        useNativeDriver: true,
+      }).start();
+    }
+  }
   onEndReached(id) {
     const { postsData } = this.props;
     if (!postsData.category[id].loading && postsData.category[id].hasMore) {
@@ -45,7 +61,7 @@ class Gallery extends Component {
     const { postsData, category, stackExperience } = this.props;
     if (!category || stackExperience[0] !== 'category') return null;
     return (
-      <View style={styles.container}>
+      <Animated.View style={[styles.container, { transform: [{ scaleY: this.scaleY }] }]}>
         <View style={homeStyles.card}>
           <Text style={homeStyles.galleryTitle}>{category.name}</Text>
         </View>
@@ -56,7 +72,7 @@ class Gallery extends Component {
           data={this.couplePosts(postsData.gallery[category.id].data)}
           renderRow={this.renderPost}
         />
-      </View>
+      </Animated.View>
     );
   }
 }

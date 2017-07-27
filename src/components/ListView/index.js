@@ -52,6 +52,7 @@ export default class HorizontalListView extends Component {
         bounces={false}
         bouncesZoom={false}
         renderFooter={this.renderFooter}
+        initialListSize={1}
       />
     );
   }

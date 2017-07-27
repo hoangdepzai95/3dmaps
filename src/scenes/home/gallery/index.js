@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, ScrollView } from 'react-native';
+import { View, Text, Animated } from 'react-native';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 
@@ -10,6 +10,21 @@ import { getPost } from '../../../actions/fetchData';
 import styles from './style';
 
 class Gallery extends Component {
+  constructor(props) {
+    super(props);
+    this.scaleY = new Animated.Value(0.2);
+  }
+  componentWillUpdate(nextProps) {
+    if ((_.last(nextProps.stackHome) === 'gallery') &&
+        (_.last(this.props.stackHome) !== 'gallery')
+  ) {
+      Animated.timing(this.scaleY, {
+        toValue: 1,
+        duration: 200,
+        useNativeDriver: true,
+      }).start();
+    }
+  }
   onEndReached(id) {
     const { postsData } = this.props;
     if (!postsData.gallery[id].loading && postsData.gallery[id].hasMore) {
@@ -25,7 +40,7 @@ class Gallery extends Component {
     const { postsData, gallery, stackHome } = this.props;
     if (!gallery || stackHome[0] !== 'gallery') return null;
     return (
-      <View style={styles.container}>
+      <Animated.View style={[styles.container, { transform: [{ scaleY: this.scaleY }] }]}>
         <View style={homeStyles.card}>
           <Text style={homeStyles.galleryTitle}>{gallery.name}</Text>
         </View>
@@ -36,7 +51,7 @@ class Gallery extends Component {
           data={postsData.gallery[gallery.id].data}
           renderRow={this.renderPost}
         />
-      </View>
+      </Animated.View>
     );
   }
 }
