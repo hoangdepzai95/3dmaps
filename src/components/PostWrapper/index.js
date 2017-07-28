@@ -19,6 +19,7 @@ class PostWrapper extends Component {
       <TouchableOpacity
         onPress={this.onPressPost}
         style={this.props.style}
+        activeOpacity={0.95}
       >
         {this.props.children}
       </TouchableOpacity>

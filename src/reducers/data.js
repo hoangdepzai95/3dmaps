@@ -25,6 +25,15 @@ function stripIframeUrl(value) {
   const source = value.split(' ').find(o => o.indexOf('https://my.matterport.com/show/?m=') !== -1);
   return source.slice(5, source.length - 1);
 }
+function getImages(images) {
+  if (!Array.isArray(images)) return [];
+  return images.map((image) => {
+    let v = String(10000000000 + image.id);
+    v = v.slice(1);
+    image.url = `http://maapvn.com/admin/images/post/IMG${v}.jpeg?1494409196`;
+    return image;
+  });
+}
 function formatPosts(posts, isExperience) {
   return posts.map((post) => {
     post.formatedAddress = [
@@ -32,6 +41,7 @@ function formatPosts(posts, isExperience) {
       post.address.district.name,
       post.address.city.name,
     ].filter(o => _.trim(o)).join(', ');
+    post.images = getImages(post.images);
     if (!isExperience) post.formatedUrl = stripIframeUrl(post.matterport_url);
     if (isExperience) post.seo.featured_image = `http://staging.3dmaps.vn${post.seo.featured_image}`;
     return post;

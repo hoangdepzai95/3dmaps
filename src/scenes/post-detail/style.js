@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
     paddingTop: 13,
   },
   webView: {
-    height: height / 2.5,
+    height: height / 2,
   },
 });
 

@@ -320,12 +320,16 @@ var ViewPager = React.createClass({
           {bodyComponents}
         </Animated.View>
 
-        {this.renderPageIndicator({goToPage: this.goToPage,
+        {
+          pageIDs.length > 1 ?
+          this.renderPageIndicator({goToPage: this.goToPage,
                             pageCount: pageIDs.length,
                             activePage: this.state.currentPage,
                             scrollValue: this.state.scrollValue,
                             scrollOffset: this.childIndex,
-                          })}
+                          })
+              : null
+          }
       </View>
     );
   }
