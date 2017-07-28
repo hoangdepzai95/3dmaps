@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Dimensions, TouchableOpacity, Animated } from 'react-native';
+import { View, Text, Dimensions, TouchableOpacity, Animated, BackHandler } from 'react-native';
 import { EvilIcons, Entypo } from '@expo/vector-icons';
 import _ from 'lodash';
 import I18n from 'i18n-js';
@@ -11,7 +11,6 @@ import Filter from '../../components/Filter';
 import TabsContent from './TabsContent';
 import homeStyles from '../../styles/home';
 import Account from '../../scenes/account';
-import Gallery from '../../scenes/home/gallery';
 
 const { height, width } = Dimensions.get('window');
 
@@ -46,6 +45,7 @@ class TabBar extends Component {
   }
   componentDidMount() {
     this.props.onMounted(this);
+    BackHandler.addEventListener('hardwareBackPress', this.handelBackAndroid);
   }
   getDistance = (currentTab, nextTab) => {
     return this.tabsPositon[nextTab] - this.tabsPositon[currentTab];
@@ -67,6 +67,18 @@ class TabBar extends Component {
   }
   onTabContentMounted = (scrollView) => {
     this.scrollView = scrollView;
+  }
+  handelBackAndroid = () => {
+    const { activeTab, stackHome, stackExperience } = this.props;
+    if (
+      activeTab === '_account' ||
+      (stackHome.length && activeTab === 'home') ||
+      (stackExperience.length && activeTab === 'experience')
+    ) {
+      this.onPressBack();
+      return true;
+    }
+    BackHandler.exitApp();
   }
   handleOnLayout(id, e) {
     // on last call handleOnLayout
@@ -133,7 +145,7 @@ class TabBar extends Component {
     this.props.showHeader();
   }
   renderTabs = (isMainTab) => {
-    const { activeTab, stackHome } = this.props;
+    const { activeTab } = this.props;
     const marginLeft = this.tabSpace ? this.tabSpace / 2 : 0;
     const iconSize = height / 25;
     return (

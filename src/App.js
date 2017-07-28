@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { AsyncStorage, View } from 'react-native';
+import { AsyncStorage, View, BackHandler } from 'react-native';
 import AppLoading from './components/AppLoading';
 
 import Router from './Router';
 import { initApp } from './actions/auth';
-import { changeLoading } from './actions/layout';
 
 class App extends Component {
   constructor(props) {
@@ -17,6 +16,7 @@ class App extends Component {
   }
   componentWillMount() {
     this.props.dispatch(initApp(this));
+    this.handelBackAndroid();
   }
   componentDidUpdate(prevProps, preState) {
     const { firstOpenApp, initDone } = this.props;
@@ -37,6 +37,12 @@ class App extends Component {
         );
       }, 0);
     }
+  }
+  handelBackAndroid = () => {
+    BackHandler.addEventListener('hardwareBackPress', () => {
+      console.log('back');
+      return true;
+    });
   }
   forceRender = () => {
     this.setState(
@@ -64,5 +70,8 @@ export default connect((state) => {
   return {
     initDone: state.auth.initDone,
     loading: state.layout.loading || !state.auth.initDone,
+    activeTab: state.layout.active,
+    stackHome: state.layout.stackHome,
+    stackExperience: state.layout.stackExperience,
   };
 })(App);
