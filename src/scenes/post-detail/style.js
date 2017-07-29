@@ -16,6 +16,12 @@ const styles = StyleSheet.create({
   webView: {
     height: height / 2,
   },
+  footer: {
+    backgroundColor: '#FFF',
+    borderRadius: 8,
+    paddingVertical: 25,
+    paddingHorizontal: 13,
+  },
 });
 
 export default styles;

@@ -93,8 +93,9 @@ const ScrollableTabView = React.createClass({
   },
 
   goToPage(pageNumber, animated = !this.props.scrollWithoutAnimation) {
+    const currentPage = this.state.currentPage;
     if (pageNumber === 2) {
-      this._onChangeTab.bind(this, currentPage, pageNumber);
+      this._onChangeTab.call(this, currentPage, pageNumber);
       return;
     }
     const offset = pageNumber * this.state.containerWidth;
@@ -102,7 +103,6 @@ const ScrollableTabView = React.createClass({
       this.scrollView._component.scrollTo({x: offset, y: 0, animated, });
     }
 
-    const currentPage = this.state.currentPage;
     this.updateSceneKeys({
       page: pageNumber,
       callback: this._onChangeTab.bind(this, currentPage, pageNumber),

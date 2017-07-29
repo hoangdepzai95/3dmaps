@@ -5,8 +5,9 @@ import _ from 'lodash';
 import styles from './style';
 import TabView from '../../lib/react-native-scrollable-tab-view';
 import Slider from './Slider';
+import { setActiveTab } from '../../actions/layout';
 
-const { height, width } = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 
 class PostDetail extends Component {
   constructor(props) {
@@ -34,6 +35,12 @@ class PostDetail extends Component {
       useNativeDriver: true,
     }).start();
   }
+  openComments() {
+    this.props.dispatch(setActiveTab('_comment'));
+  }
+  onChangeTab = (e) => {
+    if (e.i === 2) this.openComments();
+  }
   render() {
     const { type, post, stackHome, stackExperience } = this.props;
     if ((type === 'home' && _.last(stackHome) !== 'postDetail') || !post) return null;
@@ -44,6 +51,7 @@ class PostDetail extends Component {
           <TabView
             tabBarPosition="bottom"
             locked
+            onChangeTab={this.onChangeTab}
           >
             <Slider
               tabLabel="IMAGES"
@@ -59,6 +67,7 @@ class PostDetail extends Component {
           </TabView>
         </View>
         <View style={styles.footer}>
+          <Text>{post.title}</Text>
         </View>
       </Animated.View>
     );

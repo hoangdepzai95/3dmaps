@@ -11,6 +11,7 @@ import Filter from '../../components/Filter';
 import TabsContent from './TabsContent';
 import homeStyles from '../../styles/home';
 import Account from '../../scenes/account';
+import Comments from '../../scenes/post-detail/Comments';
 
 const { height, width } = Dimensions.get('window');
 
@@ -72,6 +73,7 @@ class TabBar extends Component {
     const { activeTab, stackHome, stackExperience } = this.props;
     if (
       activeTab === '_account' ||
+      activeTab === '_comment' ||
       (stackHome.length && activeTab === 'home') ||
       (stackExperience.length && activeTab === 'experience')
     ) {
@@ -200,20 +202,32 @@ class TabBar extends Component {
               </View>
               : null
           }
+          {
+            activeTab === '_comment' ?
+              <View style={styles.profile}>
+                <Text>{I18n.t('COMMENTS')}</Text>
+              </View>
+              : null
+          }
         </View>
-        <TouchableOpacity
-          style={styles.rightArea}
-          onPress={this.onPressAccount}
-        >
-          <EvilIcons name="user" size={iconSize} />
-        </TouchableOpacity>
+        {
+          activeTab === '_comment' ?
+            <View style={styles.rightArea} />
+            :
+            <TouchableOpacity
+              style={styles.rightArea}
+              onPress={this.onPressAccount}
+            >
+              <EvilIcons name="user" size={iconSize} />
+            </TouchableOpacity>
+        }
       </View>
     );
   }
   isMainTab() {
     const { activeTab, stackHome, stackExperience } = this.props;
     let rs = true;
-    if (activeTab === '_account') {
+    if (activeTab === '_account' || activeTab === '_comment') {
       rs = false;
     } else if ((activeTab === 'home' && stackHome.length) || (activeTab === 'experience' && stackExperience.length)) {
       rs = false;
@@ -233,12 +247,17 @@ class TabBar extends Component {
         <View style={[styles.mainContainer]}>
           <TabsContent tabs={this.props.children} onMounted={this.onTabContentMounted} />
           {
-            activeTab !== '_account' ?
+            activeTab !== '_account' && activeTab !== '_comment' ?
             null :
             <View style={[{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: '#FFF', zIndex: 9999 }]}>
               {
                 activeTab === '_account' ?
                   <Account />
+                  : null
+              }
+              {
+                activeTab === '_comment' ?
+                  <Comments />
                   : null
               }
             </View>
