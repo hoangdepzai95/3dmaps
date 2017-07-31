@@ -6,6 +6,8 @@ import {
   RECEIVE_POST,
   GET_POST,
   STOP_LOADING_POST,
+  RECEIVE_COMMENTS,
+  RECEIVE_COMMENT,
 } from '../actions/fetchData';
 import { PER_PAGE } from '../config';
 
@@ -17,6 +19,11 @@ const initialState = {
     gallery: {},
     category: {},
     savedContent: {},
+  },
+  comments: {
+    data: [],
+    currentPage: 0,
+    hasMore: true,
   },
 };
 
@@ -103,8 +110,21 @@ const data = (state = initialState, action) => {
     case STOP_LOADING_POST:
       postsData[action.postType][action.id].loading = false;
       return _.assign({}, state, { postsData });
+    case RECEIVE_COMMENTS: {
+      const comments = _.clone(state.comments);
+      comments.currentPage = action.page;
+      comments.data = [...comments.data, ...action.data];
+      comments.hasMore = !!action.data.length;
+      return _.assign({}, state, { comments });
+    }
+    case RECEIVE_COMMENT: {
+      const comments = _.clone(state.comments);
+      comments.data = [action.comment, ...comments.data];
+      return _.assign({}, state, { comments });
+    }
     default:
       return state;
+
   }
 };
 export default data;

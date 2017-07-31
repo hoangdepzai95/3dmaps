@@ -44,6 +44,10 @@ export default {
       return axios.get(`posts?locale=${getLocale()}&page=${page}&per_page=${PER_PAGE}&gallery_id=${id}`)
     }
   },
+  getComments(postId, postType, page) {
+    console.log(`comments?item_id=${postId}&page=15&per_page=${page}&item_type=${postType}`);
+    return axios.get(`comments?item_id=${postId}&page=1&per_page=${page}&item_type=${postType}`);
+  },
   getExperienceCategory() {
     return axios.get(`categories?locale=${getLocale()}&experiences=${PER_PAGE}`);
   },
@@ -60,4 +64,12 @@ export default {
   getUserBackendInfo(userId) {
     return axios.get(`users?id=${userId}`);
   },
+  postComment(userId, postType, postId, content) {
+    return axios.post('comments', {
+      user_id: userId,
+      item_type: postType,
+      item_id: postId,
+      content,
+    });
+  }
 };

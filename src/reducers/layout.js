@@ -25,12 +25,19 @@ const initialState = {
     experience: null,
     saved: null,
   },
+  commentType: '',
 };
 
 const layout = (state = initialState, action) => {
   switch (action.type) {
     case SET_ACTIVE_TAB:
-      return _.assign({}, state, { activeTab: action.tabId, prevTab: state.activeTab });
+      return _.assign({}, state,
+        {
+          activeTab: action.tabId,
+          prevTab: state.activeTab,
+          commentType: action.tabId === '_comment' ? action.data : state.commentType,
+        },
+      );
     case BACK_TAB:
       return _.assign({}, state, { activeTab: state.prevTab || state.activeTab, prevTab: '' });
     case CHANGE_LOADING:
@@ -39,7 +46,9 @@ const layout = (state = initialState, action) => {
       return _.assign({}, state, { App: action.App });
     case PUSH_SUB_TAB:
       return _.assign({}, state,
-        { [action.stackName]: _.uniq([...state[action.stackName], action.subTab]) },
+        {
+          [action.stackName]: _.uniq([...state[action.stackName], action.subTab]),
+        },
       );
     case POP_SUB_TAB:
       return _.assign({}, state, { [action.stackName]: _.dropRight(state[action.stackName]) });

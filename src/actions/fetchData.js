@@ -6,6 +6,10 @@ export const RESET_DATA = 'RESET_DATA';
 export const GET_POST = 'GET_GALLERY_POST';
 export const RECEIVE_POST = 'RECEIVE_GALLERY_POST';
 export const STOP_LOADING_POST = 'STOP_LOADING_POST';
+export const GET_COMMENTS = 'GET_COMMENTS';
+export const RECEIVE_COMMENTS = 'RECEIVE_COMMENTS';
+export const POST_COMMENT = 'POST_COMMENT';
+export const RECEIVE_COMMENT = 'RECEIVE_COMMENT';
 
 export function getHomeGallery() {
   return {
@@ -59,5 +63,36 @@ export function stopLoadingPost(id, postType) {
     type: STOP_LOADING_POST,
     id,
     postType,
+  };
+}
+export function getComments(postId, postType, page) {
+  return {
+    type: GET_COMMENTS,
+    postId,
+    postType,
+    page,
+  };
+}
+export function receiveComments(data, page) {
+  return {
+    type: RECEIVE_COMMENTS,
+    data,
+    page,
+  };
+}
+
+export function postComment(userId, postType, postId, content) {
+  return {
+    type: POST_COMMENT,
+    userId,
+    postType,
+    postId,
+    content,
+  };
+}
+export function receiveComment(comment) {
+  return {
+    type: RECEIVE_COMMENT,
+    comment,
   };
 }

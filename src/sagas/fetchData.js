@@ -9,6 +9,10 @@ import {
   GET_POST,
   receivePost,
   stopLoadingPost,
+  GET_COMMENTS,
+  receiveComments,
+  POST_COMMENT,
+  receiveComment,
  } from '../actions/fetchData';
 import Api from '../api';
 import alert from '../util/alert';
@@ -52,8 +56,40 @@ function* getPost(action) {
 function* watchGetPost() {
   yield takeEvery(GET_POST, getPost);
 }
+function* getComments(action) {
+  try {
+    const response = yield call(Api.getComments, action.postId, action.postType, action.page);
+    yield put(receiveComments(response.data, action.page));
+  } catch (err) {
+  }
+}
+
+
+function* watchGetComments() {
+  yield takeEvery(GET_COMMENTS, getComments);
+}
+function* postComment(action) {
+  try {
+    const response = yield call(
+      Api.postComment,
+      action.userId,
+      action.postType,
+      action.postId,
+      action.content,
+    );
+    console.log(response, 'create');
+    yield put(receiveComment(response.data));
+  } catch (err) {
+  }
+}
+
+function* watchPostComment() {
+  yield takeLatest(POST_COMMENT, postComment);
+}
 export function* fetchData() {
   yield fork(watchGetHomeGallery);
   yield fork(watchGetExperienceCategory);
   yield fork(watchGetPost);
+  yield fork(watchGetComments);
+  yield fork(watchPostComment);
 }

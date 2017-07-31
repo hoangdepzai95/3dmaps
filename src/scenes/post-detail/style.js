@@ -13,14 +13,42 @@ const styles = StyleSheet.create({
     zIndex: 999999,
     paddingTop: 13,
   },
-  webView: {
-    height: height / 2,
-  },
   footer: {
-    backgroundColor: '#FFF',
     borderRadius: 8,
-    paddingVertical: 25,
-    paddingHorizontal: 13,
+    borderBottomLeftRadius: 0,
+    borderBottomRightRadius: 0,
+    marginTop: 25,
+    backgroundColor: '#FFF',
+    margin: 13,
+    marginBottom: 0,
+    padding: 10,
+  },
+  titleText: {
+    maxWidth: '70%',
+  },
+  headerLine1: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 5,
+  },
+  headerLine2: {
+    marginBottom: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  headerLine3: {
+    marginBottom: 10,
+    flexDirection: 'row',
+  },
+  colLine2: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  smallText: {
+    fontSize: 11,
+  },
+  starRating: {
+    marginRight: -15,
   },
 });
 

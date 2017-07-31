@@ -5,6 +5,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  input: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+  },
 });
 
 export default styles;

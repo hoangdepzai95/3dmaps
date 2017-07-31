@@ -14,8 +14,6 @@ const styles = StyleSheet.create({
     padding: 8,
     justifyContent: 'flex-start',
   },
-  rating: {
-  },
   titleText: {
     maxWidth: '70%',
   },
@@ -35,10 +33,6 @@ const styles = StyleSheet.create({
   },
   smallText: {
     fontSize: 11,
-  },
-  statusText: {
-  },
-  likeText: {
   },
   starRating: {
     marginRight: -15,

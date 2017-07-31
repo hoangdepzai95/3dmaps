@@ -8,10 +8,11 @@ export const SET_ACTIVE_GALLERY = 'SET_ACTIVE_GALLERY';
 export const SET_ACTIVE_CATEGORY = 'SET_ACTIVE_CATEGORY';
 export const SET_ACTIVE_POST = 'SET_ACTIVE_POST';
 
-export function setActiveTab(tabId) {
+export function setActiveTab(tabId, data) {
   return {
     type: SET_ACTIVE_TAB,
     tabId,
+    data,
   };
 }
 export function backTab() {
