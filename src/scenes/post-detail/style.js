@@ -13,6 +13,9 @@ const styles = StyleSheet.create({
     zIndex: 999999,
     paddingTop: 13,
   },
+  tabs: {
+    height: height / 2,
+  },
   footer: {
     borderRadius: 8,
     borderBottomLeftRadius: 0,

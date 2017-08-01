@@ -13,7 +13,7 @@ class HomeTab extends Component {
     this.props.dispatch(getHomeGallery());
   }
   render() {
-    const { onScroll, loading } = this.props;
+    const { onScroll, loading, showPostDetail } = this.props;
     return (
       <View style={styles.container}>
         {
@@ -32,7 +32,11 @@ class HomeTab extends Component {
             </ScrollView>
         }
         <Gallery />
-        <PostDetail type="home" />
+        {
+          showPostDetail ?
+            <PostDetail type="home" />
+            : null
+        }
       </View>
     );
   }
@@ -41,5 +45,6 @@ class HomeTab extends Component {
 export default connect((state) => {
   return {
     loading: !state.data.home.loaded,
+    showPostDetail: !!state.layout.stackHome.find(o => o === 'postDetail'),
   };
 })(HomeTab);

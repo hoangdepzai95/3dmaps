@@ -40,7 +40,7 @@ const login = (state = initialState, action) => {
     case RECEIVE_LOGIN_FACEBOOK:
       return _.assign({}, state, { token: action.token, authType: 'facebook' });
     case LOG_OUT :
-      return _.assign({}, state, { token: '', authType: 'guest' });
+      return _.assign({}, state, { token: '', authType: 'guest', userInfo: null });
     case SKIP_LOGIN:
       return _.assign({}, state, { authType: 'guest' });
     case RECEIVE_USER_INFO:

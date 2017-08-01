@@ -2,47 +2,37 @@ import React, { Component } from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import styles from './style';
-import { getComments } from '../../../actions/fetchData';
-import Loading from '../../../components/Loading';
+import { setActiveTab } from '../../../actions/layout';
 
 class Comment extends Component {
-  componentDidMount() {
-    const { postType, id, currentPage } = this.props;
-    this.props.dispatch(getComments(id, postType, currentPage + 1));
+  onPressComment = () => {
+    if (this.props.disable) return;
+    this.props.dispatch(setActiveTab('_comment', 'Post'));
   }
   render() {
-    const { loading, comment } = this.props;
-    if (!loading && !comment) return null;
+    const { comment, style, disable } = this.props;
+    if (!comment) return null;
     return (
-      <TouchableOpacity style={styles.container}>
-        {
-         loading ?
-           <Loading />
-           :
-           <View style={styles.content}>
-             <View>
-              <View style={styles.header}>
-                <View style={styles.userInfo}>
-                  <Image source={{ uri: comment.user.avatar }} style={styles.avatar} />
-                  <Text>{comment.user.fullname}</Text>
-                </View>
-                <Text style={styles.time}> 2min ago</Text>
-              </View>
-             </View>
-             <View style={styles.comment}>
-              <Text>{comment.content}</Text>
-             </View>
-           </View>
-       }
+      <TouchableOpacity
+        style={[styles.container, style]}
+        onPress={this.onPressComment}
+        activeOpacity={disable ? 1 : 0.3}
+      >
+         <View>
+          <View style={[styles.header, disable ? { borderBottomWidth: 0 } : null]}>
+            <View style={styles.userInfo}>
+              <Image source={{ uri: comment.user.avatar }} style={styles.avatar} />
+              <Text>{comment.user.fullname}</Text>
+            </View>
+            <Text style={styles.time}> 2min ago</Text>
+          </View>
+         </View>
+         <View style={styles.comment}>
+           <Text>{comment.content}</Text>
+         </View>
       </TouchableOpacity>
     );
   }
 }
 
-export default connect((state) => {
-  return {
-    comment: state.data.comments.data[0],
-    currentPage: state.data.comments.currentPage,
-    loading: state.data.comments.hasMore && !state.data.comments.data[0],
-  };
-})(Comment);
+export default connect()(Comment);

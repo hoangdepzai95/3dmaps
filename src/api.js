@@ -45,8 +45,7 @@ export default {
     }
   },
   getComments(postId, postType, page) {
-    console.log(`comments?item_id=${postId}&page=15&per_page=${page}&item_type=${postType}`);
-    return axios.get(`comments?item_id=${postId}&page=1&per_page=${page}&item_type=${postType}`);
+    return axios.get(`comments?item_id=${postId}&page=${page}&per_page=15&item_type=${postType}`);
   },
   getExperienceCategory() {
     return axios.get(`categories?locale=${getLocale()}&experiences=${PER_PAGE}`);

@@ -1,0 +1,91 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "react-native-webview-autoheight",
+        "scope": null,
+        "escapedName": "react-native-webview-autoheight",
+        "name": "react-native-webview-autoheight",
+        "rawSpec": "",
+        "spec": "latest",
+        "type": "tag"
+      },
+      "C:\\Users\\hoang\\3dmaps"
+    ]
+  ],
+  "_from": "react-native-webview-autoheight@latest",
+  "_id": "react-native-webview-autoheight@1.0.4",
+  "_inCache": true,
+  "_location": "/react-native-webview-autoheight",
+  "_nodeVersion": "7.6.0",
+  "_npmOperationalInternal": {
+    "host": "packages-18-east.internal.npmjs.com",
+    "tmp": "tmp/react-native-webview-autoheight-1.0.4.tgz_1490163362031_0.7839697310701013"
+  },
+  "_npmUser": {
+    "name": "elton",
+    "email": "elton@welbour.com"
+  },
+  "_npmVersion": "4.1.2",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "react-native-webview-autoheight",
+    "scope": null,
+    "escapedName": "react-native-webview-autoheight",
+    "name": "react-native-webview-autoheight",
+    "rawSpec": "",
+    "spec": "latest",
+    "type": "tag"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/react-native-webview-autoheight/-/react-native-webview-autoheight-1.0.4.tgz",
+  "_shasum": "13e21664eb11d9b9952d047de363920e082a1820",
+  "_shrinkwrap": null,
+  "_spec": "react-native-webview-autoheight",
+  "_where": "C:\\Users\\hoang\\3dmaps",
+  "author": {
+    "name": "Elton Jain"
+  },
+  "bugs": {
+    "url": "https://github.com/scazzy/react-native-webview-autoheight/issues"
+  },
+  "dependencies": {},
+  "description": "React Native WebView with AutoHeight",
+  "devDependencies": {},
+  "directories": {},
+  "dist": {
+    "shasum": "13e21664eb11d9b9952d047de363920e082a1820",
+    "tarball": "https://registry.npmjs.org/react-native-webview-autoheight/-/react-native-webview-autoheight-1.0.4.tgz"
+  },
+  "gitHead": "b6296a0bf075d2680c6491b6fabd4ab57cad1f67",
+  "homepage": "https://github.com/scazzy/react-native-webview-autoheight#readme",
+  "keywords": [
+    "react",
+    "native",
+    "webview",
+    "auto",
+    "height"
+  ],
+  "license": "ISC",
+  "main": "index.js",
+  "maintainers": [
+    {
+      "name": "elton",
+      "email": "elton@welbour.com"
+    }
+  ],
+  "name": "react-native-webview-autoheight",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/scazzy/react-native-webview-autoheight.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "1.0.4"
+}

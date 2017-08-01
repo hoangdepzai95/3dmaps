@@ -38,7 +38,7 @@ export default class HorizontalListView extends Component {
     onEndReached(id);
   }
   render() {
-    const { renderRow, horizontal } = this.props;
+    const { renderRow, horizontal, onEndReachedThreshold } = this.props;
     return (
       <ListView
         dataSource={this.dataSource}
@@ -48,7 +48,7 @@ export default class HorizontalListView extends Component {
         alwaysBounceHorizontal={false}
         horizontal={horizontal}
         onEndReached={this.onEndReached}
-        onEndReachedThreshold={horizontal ? 200 : 400}
+        onEndReachedThreshold={onEndReachedThreshold || horizontal ? 200 : 400}
         bounces={false}
         bouncesZoom={false}
         renderFooter={this.renderFooter}

@@ -58,9 +58,12 @@ function* watchGetPost() {
 }
 function* getComments(action) {
   try {
+    console.log('get');
     const response = yield call(Api.getComments, action.postId, action.postType, action.page);
+    console.log(response);
     yield put(receiveComments(response.data, action.page));
   } catch (err) {
+    console.log(err);
   }
 }
 

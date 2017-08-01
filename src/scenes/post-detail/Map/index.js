@@ -11,8 +11,8 @@ class Map extends Component {
     return {
       longitude: data[1],
       latitude: data[0],
-      longitudeDelta: 0.1,
-      latitudeDelta: 0.1,
+      longitudeDelta: 0.05,
+      latitudeDelta: 0.05,
     };
   }
   renderPost = (posts) => {
