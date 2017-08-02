@@ -7,6 +7,7 @@ export const POP_SUB_TAB = 'POP_SUB_TAB';
 export const SET_ACTIVE_GALLERY = 'SET_ACTIVE_GALLERY';
 export const SET_ACTIVE_CATEGORY = 'SET_ACTIVE_CATEGORY';
 export const SET_ACTIVE_POST = 'SET_ACTIVE_POST';
+export const SHARE_MAIN_PAGE = 'SHARE_MAIN_PAGE';
 
 export function setActiveTab(tabId, data) {
   return {
@@ -66,5 +67,12 @@ export function setActivePost(post, postType) {
     type: SET_ACTIVE_POST,
     post,
     postType,
+  };
+}
+
+export function sharMainPage(instance) {
+  return {
+    type: SHARE_MAIN_PAGE,
+    instance,
   };
 }

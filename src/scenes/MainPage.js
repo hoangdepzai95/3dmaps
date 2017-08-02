@@ -7,12 +7,14 @@ import {
     Dimensions,
 } from 'react-native';
 import I18n from 'i18n-js';
+import { connect } from 'react-redux';
 
 import MapPage from './map';
 import HomeTab from './home';
 import ExperiencePage from './experience';
 import AutoCompleteSearch from '../components/AutoCompleteSearch';
 import TabBar from '../components/TabBar';
+import { sharMainPage } from '../actions/layout';
 
 const { height } = Dimensions.get('window');
 
@@ -32,12 +34,15 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
-export default class MainPage extends Component {
+class MainPage extends Component {
   constructor(props) {
     super(props);
     this.headerHeight = new Animated.Value(0);
     this.marginTop = new Animated.Value(0);
     this.prevOffsetY = 0;
+  }
+  componentDidMount() {
+    this.props.dispatch(sharMainPage(this));
   }
   onTabViewMounted = (tabView) => {
     this.tabView = tabView;
@@ -119,3 +124,5 @@ export default class MainPage extends Component {
     );
   }
 }
+
+export default connect()(MainPage);

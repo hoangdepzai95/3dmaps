@@ -17,6 +17,10 @@ class Comments extends Component {
   componentDidMount() {
     const { post, type } = this.props;
     this.props.dispatch(getComments(post.id, type, 1));
+    this.props.MainPage.hideHeader();
+  }
+  componentWillUnmount() {
+    this.props.MainPage.showHeader();
   }
   onChange = (text) => {
     this.setState({ text });
@@ -85,5 +89,6 @@ export default connect((state) => {
     loading: state.data.comments.loading,
     comments: state.data.comments.data,
     hasMore: state.data.comments.hasMore,
+    MainPage: state.layout.MainPage,
   };
 })(Comments);

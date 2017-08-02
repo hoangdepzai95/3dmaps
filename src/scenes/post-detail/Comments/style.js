@@ -5,24 +5,26 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f6f6f6',
-    paddingTop: 20,
+    paddingTop: 10,
   },
   input: {
     borderWidth: 1,
     borderColor: '#ccc',
-    padding: 10,
+    paddingHorizontal: 10,
+    paddingVertical: 10,
     borderRadius: 8,
-    marginBottom: 10,
+    marginBottom: 5,
     width: '100%',
+    height: height / 8,
   },
   comment: {
     marginBottom: 0,
     marginTop: 10,
   },
   postComment: {
-    marginHorizontal: 50,
-    marginBottom: 20,
-    alignItems: 'center',
+    marginHorizontal: 10,
+    marginBottom: 5,
+    alignItems: 'flex-end',
   },
   button: {
     width: 100,

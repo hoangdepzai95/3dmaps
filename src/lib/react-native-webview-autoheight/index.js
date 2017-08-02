@@ -24,9 +24,18 @@ const injectedScript = function() {
       setTimeout(waitForBridge, 200);
     }
     else {
+      let width = 0;
+      if(document.documentElement.clientWidth>document.body.clientWidth)
+      {
+        width = document.documentElement.clientWidth
+      }
+      else
+      {
+        width = document.body.clientWidth
+      }
       const images = document.getElementsByTagName('img');
       for (let i = 0; i < images.length; i++) {
-        images[i].setAttribute("style", `width: ${window.innerWidth}px; height: ${window.innerWidth * 0.65}px;`);
+        images[i].setAttribute("style", `width: ${width}px; height: ${width * 0.65}px;`);
       }
       let height = 0;
       if(document.documentElement.clientHeight>document.body.clientHeight)

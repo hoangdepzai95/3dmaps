@@ -8,6 +8,7 @@ import {
   STOP_LOADING_POST,
   GET_COMMENTS,
   RECEIVE_COMMENTS,
+  RECEIVE_COMMENT,
 } from '../actions/fetchData';
 import { PER_PAGE } from '../config';
 
@@ -116,8 +117,12 @@ const data = (state = initialState, action) => {
       comments.currentPage = action.page;
       comments.data = [...comments.data, ...action.data];
       comments.hasMore = !!action.data.length;
-      console.log(comments.hasMore, 'recieve');
       comments.loading = false;
+      return _.assign({}, state, { comments });
+    }
+    case RECEIVE_COMMENT: {
+      const comments = _.clone(state.comments);
+      comments.data = [action.comment, ...comments.data];
       return _.assign({}, state, { comments });
     }
     case GET_COMMENTS: {

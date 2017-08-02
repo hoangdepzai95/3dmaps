@@ -8,6 +8,7 @@ import {
   SET_ACTIVE_GALLERY,
   SET_ACTIVE_CATEGORY,
   SET_ACTIVE_POST,
+  SHARE_MAIN_PAGE,
 } from '../actions/layout';
 import { INIT_APP } from '../actions/auth';
 
@@ -16,6 +17,7 @@ const initialState = {
   prevTab: '',
   loading: false,
   App: null,
+  MainPage: null,
   stackHome: [],
   stackExperience: [],
   activeGallery: null,
@@ -61,6 +63,8 @@ const layout = (state = initialState, action) => {
       activePost[action.postType] = action.post;
       return _.assign({}, state, { activePost });
     }
+    case SHARE_MAIN_PAGE:
+      return _.assign({}, state, { MainPage: action.instance });
     default:
       return state;
   }
