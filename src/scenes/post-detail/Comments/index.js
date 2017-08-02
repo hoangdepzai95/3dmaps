@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { View, TextInput, Button, Text, TouchableOpacity } from 'react-native';
+import { View, TextInput, Text, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
+import I18n from 'i18n-js';
 
 import styles from './style';
 import { postComment, getComments } from '../../../actions/fetchData';
@@ -33,6 +34,7 @@ class Comments extends Component {
   }
   postComment = () => {
     const { post, type, userInfo } = this.props;
+    if (!this.state.text.trim()) return;
     this.props.dispatch(postComment(userInfo.id, type, post.id, this.state.text));
   }
   renderComment = (comment) => {
@@ -53,13 +55,13 @@ class Comments extends Component {
                 onChangeText={this.onChange}
                 value={text}
                 underlineColorAndroid="transparent"
-                multiline
+                autoCorrect={false}
               />
               <TouchableOpacity
                 onPress={this.postComment}
                 style={styles.button}
               >
-                <Text style={styles.buttonText}>Comment</Text>
+                <Text style={styles.buttonText}>{I18n.t('Comment')}</Text>
               </TouchableOpacity>
             </View>
             : null

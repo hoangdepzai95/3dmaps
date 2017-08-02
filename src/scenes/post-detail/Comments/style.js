@@ -10,12 +10,11 @@ const styles = StyleSheet.create({
   input: {
     borderWidth: 1,
     borderColor: '#ccc',
-    paddingHorizontal: 10,
-    paddingVertical: 10,
     borderRadius: 8,
     marginBottom: 5,
     width: '100%',
-    height: height / 8,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
   },
   comment: {
     marginBottom: 0,
@@ -36,6 +35,9 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: '#FFF',
+  },
+  comments: {
+    paddingBottom: 30,
   },
 });
 

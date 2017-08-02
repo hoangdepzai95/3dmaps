@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text } from 'react-native';
+import I18n from 'i18n-js';
 import StarRatingBar from '../../../../lib/react-native-star-rating-view/StarRatingBar';
 import PostImage from '../../../../components/post-image';
 import styles, { containerWidth } from './style';
@@ -30,12 +31,16 @@ const Post = (props) => {
           </View>
           <View style={styles.headerLine2}>
             <View style={styles.colLine2}>
-              <Text style={[homeStyles.statusText, styles.smallText, styles.statusText]}>TRENDING NOW</Text>
-              <Text style={[homeStyles.timeText, styles.smallText]}>  5 minutes ago</Text>
+              {
+                props.trending ?
+                  <Text style={[homeStyles.statusText, styles.smallText, styles.statusText]}>{I18n.t('TRENDING_NOW')}</Text>
+                  : null
+              }
+              <Text style={[homeStyles.timeText, styles.smallText]}>5 minutes ago</Text>
             </View>
             <View style={styles.colLine2}>
-              <Text style={[styles.likeText, styles.smallText]}>5 likes </Text>
-              <Text style={styles.smallText}>10 reviews</Text>
+              <Text style={[styles.likeText, styles.smallText]}>{props.like_num} {I18n.t('likes')} </Text>
+              <Text style={styles.smallText}>{props.reviews} {I18n.t('reviews')}</Text>
             </View>
           </View>
         </View>

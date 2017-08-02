@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, Dimensions, Animated } from 'react-native';
 import { connect } from 'react-redux';
 import _ from 'lodash';
+import I18n from 'i18n-js';
 import styles from './style';
 import WebView from '../../lib/react-native-webview-autoheight';
 import TabView from '../../lib/react-native-scrollable-tab-view';
@@ -27,6 +28,11 @@ class PostDetail extends Component {
   }
   componentWillMount() {
     this.playAnimation();
+  }
+  componentWillReceiveProps(nextProps) {
+    if (this.props.empty && !nextProps.empty) {
+      this.playAnimation();
+    }
   }
   openComments() {
     this.props.dispatch(setActiveTab('_comment', 'Post'));
@@ -61,7 +67,7 @@ class PostDetail extends Component {
             onChangeTab={this.onChangeTab}
           >
             <Slider
-              tabLabel="IMAGES"
+              tabLabel={I18n.t('IMAGES')}
               images={post.images.map(o => o.url)}
               width={width}
             />
@@ -70,11 +76,11 @@ class PostDetail extends Component {
                 <WebView
                   source={{ uri: post.formatedUrl }}
                   style={{ flex: 1 }}
-                  tabLabel="3D MAP"
+                  tabLabel={I18n.t('3D_MAPS')}
                 />
                 : null
             }
-            <Text tabLabel='COMMENTS'>project</Text>
+            <Text tabLabel={I18n.t('COMMENTS')} />
           </TabView>
         </View>
         <View style={[loaded ? null : { height: 1, opacity: 0 }]}>
@@ -94,14 +100,18 @@ class PostDetail extends Component {
               </View>
               <View style={styles.headerLine2}>
                 <View style={styles.colLine2}>
-                  <Text style={[homeStyles.statusText, styles.smallText, styles.statusText]}>TRENDING NOW</Text>
-                  <Text style={[homeStyles.timeText, styles.smallText]}>  5 minutes ago</Text>
+                  {
+                    post.trending ?
+                      <Text style={[homeStyles.statusText, styles.smallText, styles.statusText]}>{I18n.t('TRENDING_NOW')}</Text>
+                      : null
+                  }
+                  <Text style={[homeStyles.timeText, styles.smallText]}>5 minutes ago</Text>
                 </View>
               </View>
             </View>
             <View style={styles.headerLine3}>
-              <Text style={[styles.likeText, styles.smallText]}>5 likes </Text>
-              <Text style={styles.smallText}>10 reviews</Text>
+              <Text style={[styles.likeText, styles.smallText]}>{post.like_num} {I18n.t('likes')} </Text>
+              <Text style={styles.smallText}>{post.reviews} {I18n.t('reviews')}</Text>
             </View>
             <WebView
               source={{ html: post.content }}

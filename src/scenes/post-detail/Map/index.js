@@ -36,6 +36,7 @@ class Map extends Component {
       <MapView
         style={styles.container}
         initialRegion={latlong}
+        scrollEnabled={false}
       >
         <MapView.Marker
           coordinate={latlong}

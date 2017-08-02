@@ -51,6 +51,7 @@ export default class HorizontalListView extends Component {
         onEndReachedThreshold={onEndReachedThreshold || horizontal ? 200 : 400}
         bounces={false}
         bouncesZoom={false}
+        enableEmptySections
         renderFooter={this.renderFooter}
         initialListSize={1}
       />

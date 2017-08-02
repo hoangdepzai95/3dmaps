@@ -52,6 +52,7 @@ function formatPosts(posts, isExperience) {
     ].filter(o => _.trim(o)).join(', ');
     post.images = getImages(post.images);
     if (!isExperience) post.formatedUrl = stripIframeUrl(post.matterport_url);
+    post.trending = _.random(0, 10) < 3;
     if (isExperience) post.seo.featured_image = `http://staging.3dmaps.vn${post.seo.featured_image}`;
     return post;
   });

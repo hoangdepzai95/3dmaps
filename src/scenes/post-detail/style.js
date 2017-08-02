@@ -53,6 +53,9 @@ const styles = StyleSheet.create({
   starRating: {
     marginRight: -15,
   },
+  statusText: {
+    marginRight: 5,
+  },
 });
 
 export default styles;

@@ -47,7 +47,7 @@ const injectedScript = function() {
         height = document.body.clientHeight
       }
       setTimeout(() => {
-        postMessage(height)
+        postMessage(height + 20)
       }, 0);
     }
   }
