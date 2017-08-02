@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import I18n from 'i18n-js';
 import StarRatingBar from '../../../../lib/react-native-star-rating-view/StarRatingBar';
+import TimeAgo from '../../../../lib/react-native-timeago';
 import PostImage from '../../../../components/post-image';
 import styles, { containerWidth } from './style';
 import startstyles from '../../../../styles/starRating';
@@ -36,7 +37,10 @@ const Post = (props) => {
                   <Text style={[homeStyles.statusText, styles.smallText, styles.statusText]}>{I18n.t('TRENDING_NOW')}</Text>
                   : null
               }
-              <Text style={[homeStyles.timeText, styles.smallText]}>5 minutes ago</Text>
+              <TimeAgo
+                time={props.created_at}
+                style={[homeStyles.timeText, styles.smallText]}
+              />
             </View>
             <View style={styles.colLine2}>
               <Text style={[styles.likeText, styles.smallText]}>{props.like_num} {I18n.t('likes')} </Text>

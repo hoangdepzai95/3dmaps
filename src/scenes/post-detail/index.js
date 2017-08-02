@@ -3,6 +3,7 @@ import { View, Text, Dimensions, Animated } from 'react-native';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 import I18n from 'i18n-js';
+import TimeAgo from '../../lib/react-native-timeago';
 import styles from './style';
 import WebView from '../../lib/react-native-webview-autoheight';
 import TabView from '../../lib/react-native-scrollable-tab-view';
@@ -105,7 +106,10 @@ class PostDetail extends Component {
                       <Text style={[homeStyles.statusText, styles.smallText, styles.statusText]}>{I18n.t('TRENDING_NOW')}</Text>
                       : null
                   }
-                  <Text style={[homeStyles.timeText, styles.smallText]}>5 minutes ago</Text>
+                  <TimeAgo
+                    time={post.created_at}
+                    style={[homeStyles.timeText, styles.smallText]}
+                  />
                 </View>
               </View>
             </View>
