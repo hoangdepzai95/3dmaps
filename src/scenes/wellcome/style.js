@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
   },
   facebookLogin: {
     backgroundColor: '#3b5998',
-    borderRadius: 8,
+    borderRadius: 4,
     height: '15%',
     marginBottom: '3%',
     flexDirection: 'row',
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
   },
   googleLogin: {
     backgroundColor: '#d34836',
-    borderRadius: 8,
+    borderRadius: 4,
     height: '15%',
     flexDirection: 'row',
     justifyContent: 'center',

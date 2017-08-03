@@ -64,18 +64,17 @@ class Comments extends Component {
                 <Text style={styles.buttonText}>{I18n.t('Comment')}</Text>
               </TouchableOpacity>
             </View>
-            : null
+            :
+            <Text style={styles.signText}>{I18n.t('Sign_In_To_Comment')}</Text>
         }
-        <View style={styles.comments}>
-          <VerticalListView
-            loading={loading}
-            hasMore
-            onEndReachedThreshold={200}
-            onEndReached={this.onEndReached}
-            data={comments}
-            renderRow={this.renderComment}
-          />
-        </View>
+        <VerticalListView
+          loading={loading}
+          hasMore
+          onEndReachedThreshold={200}
+          onEndReached={this.onEndReached}
+          data={comments}
+          renderRow={this.renderComment}
+        />
       </View>
     );
   }

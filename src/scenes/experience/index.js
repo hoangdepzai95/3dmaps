@@ -15,7 +15,7 @@ class HomeTab extends Component {
     }
   }
   render() {
-    const { onScroll, loading } = this.props;
+    const { onScroll, loading, showPostDetail } = this.props;
     return (
       <View style={styles.container}>
         {
@@ -34,7 +34,11 @@ class HomeTab extends Component {
             </ScrollView>
         }
         <Category />
-        <PostDetail type="experience" />
+        {
+          showPostDetail ?
+            <PostDetail type="experience" />
+            : null
+        }
       </View>
     );
   }
@@ -44,5 +48,6 @@ export default connect((state) => {
   return {
     loading: !state.data.experience.loaded,
     activeTab: state.layout.activeTab,
+    showPostDetail: !!state.layout.stackExperience.find(o => o === 'postDetail'),
   };
 })(HomeTab);

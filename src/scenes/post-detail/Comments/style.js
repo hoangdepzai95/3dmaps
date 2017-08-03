@@ -17,12 +17,12 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
   },
   comment: {
-    marginBottom: 0,
-    marginTop: 10,
+    marginBottom: 10,
+    marginTop: 0,
   },
   postComment: {
     marginHorizontal: 10,
-    marginBottom: 5,
+    marginBottom: 15,
     alignItems: 'flex-end',
   },
   button: {
@@ -38,6 +38,11 @@ const styles = StyleSheet.create({
   },
   comments: {
     paddingBottom: 30,
+  },
+  signText: {
+    color: '#7076eb',
+    textAlign: 'center',
+    marginBottom: 15,
   },
 });
 

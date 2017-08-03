@@ -10,6 +10,7 @@ import {
   SET_ACTIVE_POST,
   SHARE_MAIN_PAGE,
 } from '../actions/layout';
+import { RESET_DATA } from '../actions/fetchData';
 import { INIT_APP } from '../actions/auth';
 
 const initialState = {
@@ -65,6 +66,13 @@ const layout = (state = initialState, action) => {
     }
     case SHARE_MAIN_PAGE:
       return _.assign({}, state, { MainPage: action.instance });
+    case RESET_DATA: {
+      const cloneState = _.clone(state);
+      cloneState.activeTab = 'home';
+      cloneState.stackHome = [];
+      cloneState.stackExperience = [];
+      return cloneState;
+    }
     default:
       return state;
   }

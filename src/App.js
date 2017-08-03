@@ -40,7 +40,6 @@ class App extends Component {
   }
   handelBackAndroid = () => {
     BackHandler.addEventListener('hardwareBackPress', () => {
-      console.log('back');
       return true;
     });
   }

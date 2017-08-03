@@ -44,6 +44,7 @@ export function setUpI18n(locale) {
       TRENDING_NOW: 'TRENDING NOW',
       likes: 'likes',
       reviews: 'reviews',
+      Sign_In_To_Comment: 'Sign in to comment',
     },
     vi_VN: {
       HOME: 'TRANG CHỦ',
@@ -84,6 +85,7 @@ export function setUpI18n(locale) {
       TRENDING_NOW: 'ĐANG THỊNH HÀNH',
       likes: 'thích',
       reviews: 'đánh giá',
+      Sign_In_To_Comment: 'Đăng nhập để bình luận',
     },
   };
 }

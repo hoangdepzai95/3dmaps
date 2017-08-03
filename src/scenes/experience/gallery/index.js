@@ -69,7 +69,7 @@ class Gallery extends Component {
           loading={postsData.category[category.id].loading}
           hasMore
           onEndReached={this.onEndReached.bind(this, category.id)}
-          data={this.couplePosts(postsData.gallery[category.id].data)}
+          data={this.couplePosts(postsData.category[category.id].data)}
           renderRow={this.renderPost}
         />
       </Animated.View>

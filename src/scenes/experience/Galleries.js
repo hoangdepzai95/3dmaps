@@ -39,7 +39,7 @@ class Galleries extends Component {
                   </View>
                 </TouchableOpacity>
                 <View style={styles.postRow}>
-                  <Posts posts={postsData.gallery[category.id].data.slice(0, PER_PAGE)} />
+                  <Posts posts={postsData.category[category.id].data.slice(0, PER_PAGE)} />
                 </View>
               </View>
             );

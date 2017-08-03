@@ -17,7 +17,6 @@ export default class HorizontalListView extends Component {
     }
   }
   render() {
-    console.log('render');
     const { renderRow } = this.props;
     return (
       <ListView

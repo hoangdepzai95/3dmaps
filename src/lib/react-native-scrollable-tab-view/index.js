@@ -94,7 +94,7 @@ const ScrollableTabView = React.createClass({
 
   goToPage(pageNumber, animated = !this.props.scrollWithoutAnimation) {
     const currentPage = this.state.currentPage;
-    if (pageNumber === 2) {
+    if (pageNumber === this.props.children.length - 1) {
       this._onChangeTab.call(this, currentPage, pageNumber);
       return;
     }
@@ -219,6 +219,7 @@ const ScrollableTabView = React.createClass({
       i: currentPage,
       ref: this._children()[currentPage],
       from: prevPage,
+      currentPage,
     });
   },
 

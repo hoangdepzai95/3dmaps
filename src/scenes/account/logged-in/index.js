@@ -17,6 +17,7 @@ class LoggedIn extends Component {
     this.props.dispatch(logOut());
   }
   changeLocale(locale) {
+    if (this.props.locale === locale) return;
     I18n.locale = locale;
     AsyncStorage.setItem('locale', locale);
     this.props.dispatch(resetData());
@@ -78,5 +79,6 @@ export default connect((state) => {
     vnSelected: state.auth.locale === 'vi_VN',
     engSelected: state.auth.locale !== 'vi_VN',
     App: state.layout.App,
+    locale: state.auth.locale,
   };
 })(LoggedIn);

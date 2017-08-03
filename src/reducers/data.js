@@ -1,9 +1,9 @@
 import _ from 'lodash';
 import {
   RECEIVE_HOME_GALLERY,
-  RESET_DATA,
   RECEIVE_EXPERIENCE_CATEGORY,
   RECEIVE_POST,
+  RESET_DATA,
   GET_POST,
   STOP_LOADING_POST,
   GET_COMMENTS,
@@ -62,6 +62,7 @@ function formatPostData(galleries, isExperience) {
   let postsData = {};
   let rs = galleries.filter(gallery => gallery[field].length);
   rs = rs.map((gallery) => {
+    gallery.name = gallery.name.toUpperCase();
     gallery[field] = formatPosts(gallery[field], isExperience);
     postsData[gallery.id] = {
       currentPage: 1,
@@ -127,6 +128,7 @@ const data = (state = initialState, action) => {
       return _.assign({}, state, { comments });
     }
     case GET_COMMENTS: {
+      const comments = _.clone(state.comments);
       if (action.page === 1) {
         return _.assign({}, state,
           {
@@ -139,7 +141,8 @@ const data = (state = initialState, action) => {
           },
         );
       }
-      return state;
+      comments.loading = true;
+      return _.assign({}, state, { comments });
     }
     default:
       return state;
