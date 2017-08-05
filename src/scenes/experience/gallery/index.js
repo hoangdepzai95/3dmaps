@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, Animated } from 'react-native';
 import { connect } from 'react-redux';
+import I18n from 'i18n-js';
 import _ from 'lodash';
 
 import homeStyles from '../../../styles/home';
@@ -8,6 +9,7 @@ import VerticalListView from '../../../components/ListView';
 import Post from './post';
 import { getPost } from '../../../actions/fetchData';
 import styles from './style';
+import SuggestPlace from '../../post-detail/SuggestPlace';
 
 class Gallery extends Component {
   constructor(props) {
@@ -57,6 +59,14 @@ class Gallery extends Component {
       </View>
     );
   }
+  renderSuggest = () => {
+    return (
+      <View style={styles.suggest}>
+        <Text style={styles.postText}>{I18n.t('SUGGESTED_POSTS')}</Text>
+        <SuggestPlace />
+      </View>
+    );
+  }
   render() {
     const { postsData, category, stackExperience } = this.props;
     if (!category || stackExperience[0] !== 'category') return null;
@@ -71,6 +81,7 @@ class Gallery extends Component {
           onEndReached={this.onEndReached.bind(this, category.id)}
           data={this.couplePosts(postsData.category[category.id].data)}
           renderRow={this.renderPost}
+          renderFooter={this.renderSuggest}
         />
       </Animated.View>
     );

@@ -15,11 +15,12 @@ import { PER_PAGE } from '../config';
 const initialState = {
   home: { loaded: false, data: [] },
   experience: { loaded: false, data: [] },
-  map: { loaded: false, data: [] },
+  maps: { loaded: false, data: [] },
   postsData: {
     gallery: {},
     category: {},
     savedContent: {},
+    maps: {},
   },
   comments: {
     data: [],

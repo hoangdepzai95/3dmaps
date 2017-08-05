@@ -9,10 +9,8 @@ import Category from './gallery';
 import PostDetail from '../post-detail';
 
 class HomeTab extends Component {
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.activeTab === 'experience' && this.props.activeTab !== 'experience' && nextProps.loading) {
-      this.props.dispatch(getExperienceCategory());
-    }
+  componentDidMount() {
+    this.props.dispatch(getExperienceCategory());
   }
   render() {
     const { onScroll, loading, showPostDetail } = this.props;
@@ -46,7 +44,7 @@ class HomeTab extends Component {
 
 export default connect((state) => {
   return {
-    loading: !state.data.experience.loaded,
+    loading: !state.data.experience.loaded || !state.data.home.loaded,
     activeTab: state.layout.activeTab,
     showPostDetail: !!state.layout.stackExperience.find(o => o === 'postDetail'),
   };

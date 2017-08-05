@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import { MapView } from 'expo';
 import _ from 'lodash';
-import shortid from 'shortid';
 import { Text, View, Dimensions } from 'react-native';
+import { connect } from 'react-redux';
 import StarRatingBar from '../../lib/react-native-star-rating-view/StarRatingBar';
 
 import ImageSlider from '../../components/ImageSlider';
 import styles from './style';
 import startstyles from '../../styles/starRating';
+import Loading from '../../components/Loading';
+import { getMapPosts } from '../../actions/fetchData';
 
 const { height, width } = Dimensions.get('window');
 
@@ -92,6 +94,11 @@ class Map extends Component {
       ],
     };
   }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.activeTab === 'map' && this.props.activeTab !== 'map' && nextProps.loading) {
+      this.props.dispatch(getMapPosts());
+    }
+  }
   onRegionChangeComplete = (region) => {
     this.setState({ region });
   }
@@ -137,7 +144,15 @@ class Map extends Component {
   }
   render() {
     const { posts, region, activePostIndex } = this.state;
+    const { loading } = this.props;
     const activePost = posts[activePostIndex];
+    if (loading) {
+      return (
+        <View style={[styles.container, { marginTop: 20 }]}>
+          <Loading />
+        </View>
+      );
+    }
     return (
       <View style={styles.container}>
         <MapView
@@ -187,4 +202,9 @@ class Map extends Component {
     );
   }
 }
-export default Map;
+export default connect((state) => {
+  return {
+    loading: !state.data.maps.loaded,
+    activeTab: state.layout.activeTab,
+  };
+})(Map);

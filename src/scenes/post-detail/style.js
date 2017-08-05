@@ -56,6 +56,13 @@ const styles = StyleSheet.create({
   statusText: {
     marginRight: 5,
   },
+  suggests: {
+    margin: 13,
+    marginTop: 40,
+  },
+  placeText: {
+    marginBottom: 10,
+  },
 });
 
 export default styles;

@@ -11,6 +11,9 @@ const styles = StyleSheet.create({
     zIndex: 99999,
     padding: 13,
   },
+  postText: {
+    marginBottom: 10,
+  },
 });
 
 export default styles;

@@ -10,6 +10,8 @@ export const GET_COMMENTS = 'GET_COMMENTS';
 export const RECEIVE_COMMENTS = 'RECEIVE_COMMENTS';
 export const POST_COMMENT = 'POST_COMMENT';
 export const RECEIVE_COMMENT = 'RECEIVE_COMMENT';
+export const GET_MAP_POSTS = 'GET_MAP_POSTS';
+export const RECEIVE_MAP_POSTS = 'RECEIVE_MAP_POSTS';
 
 export function getHomeGallery() {
   return {
@@ -94,5 +96,17 @@ export function receiveComment(comment) {
   return {
     type: RECEIVE_COMMENT,
     comment,
+  };
+}
+
+export function getMapPosts() {
+  return {
+    type: GET_MAP_POSTS,
+  };
+}
+
+export function receiveMapPost() {
+  return {
+    type: RECEIVE_MAP_POSTS,
   };
 }

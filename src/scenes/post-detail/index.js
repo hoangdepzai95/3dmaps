@@ -15,6 +15,8 @@ import startstyles from '../../styles/starRating';
 import homeStyles from '../../styles/home';
 import Map from './Map';
 import Comment from './Comment';
+import SuggestPlace from './SuggestPlace';
+import SuggestExperience from './SuggestExperience';
 
 const { width } = Dimensions.get('window');
 
@@ -31,7 +33,10 @@ class PostDetail extends Component {
     this.playAnimation();
   }
   componentWillReceiveProps(nextProps) {
-    if (this.props.empty && !nextProps.empty) {
+    if (
+      (this.props.empty && !nextProps.empty) ||
+      (this.props.post !== nextProps.post)
+    ) {
       this.playAnimation();
     }
   }
@@ -47,8 +52,13 @@ class PostDetail extends Component {
   }
   onAnimateEnd = () => {
     this.setState({ animateEnd: true });
+    if (this.scrollView) {
+      this.scrollView._component.scrollTo({ y: 0 });
+      this.forceUpdate();
   }
-  playAnimation() {
+}
+  playAnimation = () => {
+    this.scaleY.setValue(0.2);
     Animated.timing(this.scaleY, {
       toValue: 1,
       duration: 200,
@@ -62,7 +72,10 @@ class PostDetail extends Component {
     const loaded = animateEnd && webViewUpdated;
     return (
       <View style={styles.container}>
-        <Animated.ScrollView style={{ transform: [{ scale: this.scaleY }] }}>
+        <Animated.ScrollView
+          style={{ transform: [{ scale: this.scaleY }] }}
+          ref={(scroll) => { this.scrollView = scroll; }}
+        >
             <View style={styles.tabs}>
               {
                 post.formatedUrl ?
@@ -141,7 +154,12 @@ class PostDetail extends Component {
             <Comment
               comment={post.comments[0]}
             />
-            <Text>{I18n.t('Suggested_Places')}</Text>
+            <View style={styles.suggests}>
+              <Text style={styles.placeText}>{I18n.t('Suggested_Places')}</Text>
+              <SuggestPlace />
+              <Text style={styles.placeText}>{I18n.t('Suggested_Experience')}</Text>
+              <SuggestExperience />
+            </View>
           </View>
           {
             loaded ?

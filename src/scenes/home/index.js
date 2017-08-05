@@ -44,7 +44,7 @@ class HomeTab extends Component {
 
 export default connect((state) => {
   return {
-    loading: !state.data.home.loaded,
+    loading: !state.data.experience.loaded || !state.data.home.loaded,
     showPostDetail: !!state.layout.stackHome.find(o => o === 'postDetail'),
   };
 })(HomeTab);

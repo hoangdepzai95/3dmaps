@@ -24,7 +24,7 @@ export function setUpI18n(locale) {
       IMAGES: 'IMAGES',
       COMMENTS: 'COMMENTS',
       Suggested_Places: 'Suggested Places',
-      Suggested_Experience: 'Suggested_Experience',
+      Suggested_Experience: 'Suggested Experience',
       PROFILE: 'PROFILE',
       Sign_in_with_Facebook: 'Sign in with Facebook',
       Sign_in_with_Google: 'Sign in with Google',
@@ -45,6 +45,7 @@ export function setUpI18n(locale) {
       likes: 'likes',
       reviews: 'reviews',
       Sign_In_To_Comment: 'Sign in to comment',
+      SUGGESTED_POSTS: 'SUGGESTED POSTS',
     },
     vi_VN: {
       HOME: 'TRANG CHỦ',
@@ -86,6 +87,7 @@ export function setUpI18n(locale) {
       likes: 'thích',
       reviews: 'đánh giá',
       Sign_In_To_Comment: 'Đăng nhập để bình luận',
+      SUGGESTED_POSTS: 'Các bài đăng gợi ý',
     },
   };
 }

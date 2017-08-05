@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ListView, Dimensions } from 'react-native';
+import { ListView, Dimensions, View } from 'react-native';
 import Loading from '../Loading';
 
 const { height } = Dimensions.get('window');
@@ -11,16 +11,21 @@ export default class HorizontalListView extends Component {
     this.dataSource = this.ds.cloneWithRows(this.props.data);
   }
   renderFooter = () => {
-    const { loading, hasMore, horizontal } = this.props;
+    const { loading, hasMore, horizontal, renderFooter } = this.props;
     if (!hasMore) return null;
     return (
-      <Loading
-        style={{
-          paddingHorizontal: 50,
-          opacity: loading ? 1 : 0,
-          paddingBottom: horizontal ? 0 : height / 8,
-        }}
-      />
+      <View>
+        {
+          renderFooter ? renderFooter() : null
+        }
+        <Loading
+          style={{
+            paddingHorizontal: 50,
+            opacity: loading ? 1 : 0,
+            paddingBottom: horizontal ? 0 : height / 8,
+          }}
+        />
+      </View>
     );
   }
   shouldComponentUpdate(nextProps) {
