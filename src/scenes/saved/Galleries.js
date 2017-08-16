@@ -3,21 +3,21 @@ import { View, TouchableOpacity, Text } from 'react-native';
 import { connect } from 'react-redux';
 import I18n from 'i18n-js';
 import styles from '../../styles/home';
-import { pushSubTab, setActiveGallery } from '../../actions/layout';
-import Posts from './Posts';
+import { pushSubTab, setActiveSavedGallery } from '../../actions/layout';
+import Posts from '../home/Posts';
 import { PER_PAGE } from '../../config';
 
 class Galleries extends Component {
   seeAll(id) {
-    this.props.dispatch(setActiveGallery(id));
-    this.props.dispatch(pushSubTab('stackHome', 'gallery'));
+    this.props.dispatch(setActiveSavedGallery(id));
+    this.props.dispatch(pushSubTab('stackAccount', 'gallery'));
   }
   render() {
-    const { homePageData, postsData } = this.props;
+    const { savedData, postsData } = this.props;
     return (
       <View style={{ flex: 1 }}>
         {
-          homePageData.map((gallery) => {
+          savedData.map((gallery) => {
             return (
               <View key={gallery.id} style={styles.gallery}>
                 <TouchableOpacity
@@ -30,7 +30,7 @@ class Galleries extends Component {
                   </View>
                 </TouchableOpacity>
                 <View style={styles.postRow}>
-                  <Posts posts={postsData.gallery[gallery.id].data.slice(0, PER_PAGE)} />
+                  <Posts posts={postsData.saved[gallery.id].data.slice(0, PER_PAGE)} type="saved" />
                 </View>
               </View>
             );
@@ -43,7 +43,7 @@ class Galleries extends Component {
 
 export default connect((state) => {
   return {
-    homePageData: state.data.home.data,
+    savedData: state.data.saved.data,
     postsData: state.data.postsData,
   };
 })(Galleries);

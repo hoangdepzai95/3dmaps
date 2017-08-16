@@ -7,7 +7,7 @@ export default class Posts extends Component {
     return this.props.posts.length !== nextProps.posts.length;
   }
   render() {
-    const { posts } = this.props;
+    const { posts, type } = this.props;
     return (
       <ScrollView
         horizontal
@@ -15,7 +15,7 @@ export default class Posts extends Component {
         {
          posts.map((post) => {
            return (
-             <Post {...post} key={post.id} even type="home" />
+             <Post {...post} key={post.id} even type={type || 'home'} />
            );
          })
         }

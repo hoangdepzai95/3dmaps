@@ -63,7 +63,7 @@ class Gallery extends Component {
     return (
       <View style={styles.suggest}>
         <Text style={styles.postText}>{I18n.t('SUGGESTED_POSTS')}</Text>
-        <SuggestPlace />
+        <SuggestPlace type="experience" />
       </View>
     );
   }

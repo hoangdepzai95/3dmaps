@@ -9,6 +9,7 @@ import {
   SET_ACTIVE_CATEGORY,
   SET_ACTIVE_POST,
   SHARE_MAIN_PAGE,
+  SET_ACTIVE_SAVED_GALLERY,
 } from '../actions/layout';
 import { RESET_DATA } from '../actions/fetchData';
 import { INIT_APP } from '../actions/auth';
@@ -21,14 +22,18 @@ const initialState = {
   MainPage: null,
   stackHome: [],
   stackExperience: [],
+  stackAccount: [],
+  stackHistory: [],
   activeGallery: null,
   activeCategory: null,
+  activeSavedGallery: null,
   activePost: {
     home: null,
     experience: null,
     saved: null,
   },
   commentType: '',
+  commentItemType: '',
 };
 
 const layout = (state = initialState, action) => {
@@ -37,12 +42,13 @@ const layout = (state = initialState, action) => {
       return _.assign({}, state,
         {
           activeTab: action.tabId,
-          prevTab: state.activeTab,
-          commentType: action.tabId === '_comment' ? action.data : state.commentType,
+          stackHistory: [...state.stackHistory, state.activeTab],
+          commentType: action.tabId === '_comment' ? action.data.type : state.commentType,
+          commentItemType: action.tabId === '_comment' ? action.data.itemType : state.commentItemType,
         },
       );
     case BACK_TAB:
-      return _.assign({}, state, { activeTab: state.prevTab || state.activeTab, prevTab: '' });
+      return _.assign({}, state, { activeTab: _.last(state.stackHistory) || state.activeTab, stackHistory: _.dropRight(state.stackHistory) });
     case CHANGE_LOADING:
       return _.assign({}, state, { loading: action.loading });
     case INIT_APP:
@@ -59,6 +65,8 @@ const layout = (state = initialState, action) => {
       return _.assign({}, state, { activeGallery: action.id });
     case SET_ACTIVE_CATEGORY:
       return _.assign({}, state, { activeCategory: action.id });
+    case SET_ACTIVE_SAVED_GALLERY:
+      return _.assign({}, state, { activeSavedGallery: action.id });
     case SET_ACTIVE_POST: {
       const activePost = _.clone(state.activePost);
       activePost[action.postType] = action.post;

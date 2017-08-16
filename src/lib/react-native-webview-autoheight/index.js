@@ -16,27 +16,31 @@ import {
   View,
   Dimensions,
   WebView,
+  InteractionManager,
 } from 'react-native';
 
 const injectedScript = function() {
+  function setSize() {
+    let width = 0;
+    if(document.documentElement.clientWidth>document.body.clientWidth)
+    {
+      width = document.documentElement.clientWidth
+    }
+    else
+    {
+      width = document.body.clientWidth
+    }
+    const images = document.getElementsByTagName('img');
+    for (let i = 0; i < images.length; i++) {
+      images[i].setAttribute("style", `width: ${width}px; height: ${width * 0.65}px;`);
+    }
+  }
+  window.onload = setSize;
   function waitForBridge() {
     if (window.postMessage.length !== 1){
       setTimeout(waitForBridge, 200);
     }
     else {
-      let width = 0;
-      if(document.documentElement.clientWidth>document.body.clientWidth)
-      {
-        width = document.documentElement.clientWidth
-      }
-      else
-      {
-        width = document.body.clientWidth
-      }
-      const images = document.getElementsByTagName('img');
-      for (let i = 0; i < images.length; i++) {
-        images[i].setAttribute("style", `width: ${width}px; height: ${width * 0.65}px;`);
-      }
       let height = 0;
       if(document.documentElement.clientHeight>document.body.clientHeight)
       {
@@ -46,9 +50,7 @@ const injectedScript = function() {
       {
         height = document.body.clientHeight
       }
-      setTimeout(() => {
-        postMessage(height + 20)
-      }, 0);
+      postMessage(height + 20)
     }
   }
   waitForBridge();
@@ -73,11 +75,16 @@ export default class MyWebView extends Component {
   }
 
   _onMessage = (e) => {
-    this.setState({
-      webViewHeight: parseInt(e.nativeEvent.data)
-    }, () => {
-      this.props.updated();
-    });
+    const height = parseInt(e.nativeEvent.data);
+    if (height > 0) {
+      InteractionManager.runAfterInteractions(() => {
+        this.setState({
+          webViewHeight: height
+        }, () => {
+          this.props.updated();
+        });
+      });
+    }
   }
 
   render () {

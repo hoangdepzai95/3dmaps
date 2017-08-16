@@ -7,10 +7,10 @@ import Posts from '../../home/Posts';
 
 class SuggestPlace extends Component {
   render() {
-    const { posts } = this.props;
+    const { posts, type } = this.props;
     return (
       <View>
-        <Posts posts={posts} />
+        <Posts posts={posts} type={type} />
       </View>
     );
   }

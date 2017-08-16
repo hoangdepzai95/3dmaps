@@ -6,6 +6,7 @@ export const PUSH_SUB_TAB = 'PUSH_SUB_TAB';
 export const POP_SUB_TAB = 'POP_SUB_TAB';
 export const SET_ACTIVE_GALLERY = 'SET_ACTIVE_GALLERY';
 export const SET_ACTIVE_CATEGORY = 'SET_ACTIVE_CATEGORY';
+export const SET_ACTIVE_SAVED_GALLERY = 'SET_ACTIVE_SAVED_GALLERY';
 export const SET_ACTIVE_POST = 'SET_ACTIVE_POST';
 export const SHARE_MAIN_PAGE = 'SHARE_MAIN_PAGE';
 
@@ -61,7 +62,12 @@ export function setActiveCategory(id) {
     id,
   };
 }
-
+export function setActiveSavedGallery(id) {
+  return {
+    type: SET_ACTIVE_SAVED_GALLERY,
+    id,
+  };
+}
 export function setActivePost(post, postType) {
   return {
     type: SET_ACTIVE_POST,

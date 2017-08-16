@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { View, Text, Dimensions, Animated } from 'react-native';
+import { View, Text, Dimensions, Animated, WebView, InteractionManager } from 'react-native';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 import I18n from 'i18n-js';
 import TimeAgo from '../../lib/react-native-timeago';
 import styles from './style';
-import WebView from '../../lib/react-native-webview-autoheight';
+import CustomWebView from '../../lib/react-native-webview-autoheight';
 import TabView from '../../lib/react-native-scrollable-tab-view';
 import Slider from './Slider';
 import Loading from '../../components/Loading';
@@ -33,16 +33,23 @@ class PostDetail extends Component {
     this.playAnimation();
   }
   componentWillReceiveProps(nextProps) {
-    if (
-      (this.props.empty && !nextProps.empty) ||
-      (this.props.post !== nextProps.post)
-    ) {
+    if (this.props.empty && !nextProps.empty) {
       this.playAnimation();
     }
+    if (this.props.post.id !== nextProps.post.id) {
+      InteractionManager.runAfterInteractions(() => {
+        this.scrollToTop();
+      });
+    }
   }
-  openComments() {
-    const { type } = this.props;
-    this.props.dispatch(setActiveTab('_comment', type === 'home' ? 'Post' : 'Experience'));
+  scrollToTop = () => {
+    if (this.scrollView) {
+      this.scrollView._component.scrollTo({ x: 0, y: 0, animated: true });
+    }
+  }
+  openComments = () => {
+    const { itemType, type } = this.props;
+    this.props.dispatch(setActiveTab('_comment', { type, itemType }));
   }
   onChangeTab(haveMapTab, e) {
     if (e.i === (haveMapTab ? 2 : 1)) this.openComments();
@@ -52,11 +59,7 @@ class PostDetail extends Component {
   }
   onAnimateEnd = () => {
     this.setState({ animateEnd: true });
-    if (this.scrollView) {
-      this.scrollView._component.scrollTo({ y: 0 });
-      this.forceUpdate();
   }
-}
   playAnimation = () => {
     this.scaleY.setValue(0.2);
     Animated.timing(this.scaleY, {
@@ -66,10 +69,10 @@ class PostDetail extends Component {
     }).start(this.onAnimateEnd);
   }
   render() {
-    const { post, empty } = this.props;
+    const { post, empty, type } = this.props;
     const { animateEnd, webViewUpdated } = this.state;
     if (empty) return null;
-    const loaded = animateEnd && webViewUpdated;
+    const loaded = animateEnd;
     return (
       <View style={styles.container}>
         <Animated.ScrollView
@@ -111,56 +114,67 @@ class PostDetail extends Component {
                 </TabView>
               }
           </View>
-          <View style={[loaded ? null : { height: 1, opacity: 0 }, styles.footerContaier]}>
-            <View style={styles.footer}>
-              <View style={styles.rating}>
-                <View style={styles.headerLine1}>
-                  <Text style={styles.titleText}>{post.title}</Text>
-                  <StarRatingBar
-                    score={post.rating}
-                    allowsHalfStars={false}
-                    accurateHalfStars={false}
-                    readOnly
-                    style={styles.starRating}
-                    starStyle={startstyles.star}
-                    spacing={startstyles.space}
+          {
+            loaded ?
+              <View style={[styles.footerContaier]}>
+                <View style={styles.footer}>
+                  <View style={styles.rating}>
+                    <View style={styles.headerLine1}>
+                      <Text style={styles.titleText}>{post.title}</Text>
+                      <StarRatingBar
+                        score={post.rating}
+                        allowsHalfStars={false}
+                        accurateHalfStars={false}
+                        readOnly
+                        style={styles.starRating}
+                        starStyle={startstyles.star}
+                        spacing={startstyles.space}
+                      />
+                    </View>
+                    <View style={styles.headerLine2}>
+                      <View style={styles.colLine2}>
+                        {
+                          post.trending ?
+                            <Text style={[homeStyles.statusText, styles.smallText, styles.statusText]}>{I18n.t('TRENDING_NOW')}</Text>
+                            : null
+                        }
+                        <TimeAgo
+                          time={post.created_at}
+                          style={[homeStyles.timeText, styles.smallText]}
+                        />
+                      </View>
+                    </View>
+                  </View>
+                  <View style={styles.headerLine3}>
+                    <Text style={[styles.likeText, styles.smallText]}>{post.like_num} {I18n.t('likes')} </Text>
+                    <Text style={styles.smallText}>{post.reviews} {I18n.t('reviews')}</Text>
+                  </View>
+                  <CustomWebView
+                    source={{ html: post.content }}
+                    width={width - 50}
+                    updated={this.webViewUpdated}
                   />
                 </View>
-                <View style={styles.headerLine2}>
-                  <View style={styles.colLine2}>
-                    {
-                      post.trending ?
-                        <Text style={[homeStyles.statusText, styles.smallText, styles.statusText]}>{I18n.t('TRENDING_NOW')}</Text>
-                        : null
-                    }
-                    <TimeAgo
-                      time={post.created_at}
-                      style={[homeStyles.timeText, styles.smallText]}
-                    />
-                  </View>
+                <Map post={post} />
+                <Comment
+                  comment={post.comments[0]}
+                  openComments={this.openComments}
+                />
+                <View style={styles.suggests}>
+                  <Text style={styles.placeText}>{I18n.t('Suggested_Places')}</Text>
+                  <SuggestPlace
+                    idPost={post.id}
+                    type={type}
+                  />
+                  <Text style={styles.placeText}>{I18n.t('Suggested_Experience')}</Text>
+                  <SuggestExperience
+                    idPost={post.id}
+                    type={type}
+                  />
                 </View>
               </View>
-              <View style={styles.headerLine3}>
-                <Text style={[styles.likeText, styles.smallText]}>{post.like_num} {I18n.t('likes')} </Text>
-                <Text style={styles.smallText}>{post.reviews} {I18n.t('reviews')}</Text>
-              </View>
-              <WebView
-                source={{ html: post.content }}
-                width={width - 50}
-                updated={this.webViewUpdated}
-              />
-            </View>
-            <Map post={post} />
-            <Comment
-              comment={post.comments[0]}
-            />
-            <View style={styles.suggests}>
-              <Text style={styles.placeText}>{I18n.t('Suggested_Places')}</Text>
-              <SuggestPlace />
-              <Text style={styles.placeText}>{I18n.t('Suggested_Experience')}</Text>
-              <SuggestExperience />
-            </View>
-          </View>
+              : null
+          }
           {
             loaded ?
              null
@@ -175,11 +189,15 @@ class PostDetail extends Component {
 
 export default connect((state, ownProps) => {
   const post = state.layout.activePost[ownProps.type];
+  console.log(post);
   const empty = (ownProps.type === 'home' && _.last(state.layout.stackHome) !== 'postDetail') ||
                 (ownProps.type === 'experience' && _.last(state.layout.stackExperience) !== 'postDetail') ||
+                (ownProps.type === 'saved' && _.last(state.layout.stackAccount) !== 'postDetail') ||
                 !post;
+  const itemType = typeof post.post_id !== 'undefined' ? 'Post' : 'Experience';
   return {
     post,
     empty,
+    itemType,
   };
 })(PostDetail);

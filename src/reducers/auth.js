@@ -15,6 +15,7 @@ const initialState = {
   authType: '',
   token: '',
   locale: '',
+  location: null,
 };
 
 const login = (state = initialState, action) => {
@@ -26,6 +27,7 @@ const login = (state = initialState, action) => {
       } else if (action.ggToken) {
         authType = 'google';
       }
+      console.log(action.location);
       return _.assign(
         {},
         state,
@@ -35,6 +37,7 @@ const login = (state = initialState, action) => {
           token: action.fbToken || action.ggToken,
           authType,
           locale: action.locale,
+          location: action.location,
         },
       );
     case RECEIVE_LOGIN_FACEBOOK:

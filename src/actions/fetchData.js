@@ -12,6 +12,8 @@ export const POST_COMMENT = 'POST_COMMENT';
 export const RECEIVE_COMMENT = 'RECEIVE_COMMENT';
 export const GET_MAP_POSTS = 'GET_MAP_POSTS';
 export const RECEIVE_MAP_POSTS = 'RECEIVE_MAP_POSTS';
+export const GET_SAVED = 'GET_SAVED';
+export const RECEIVE_SAVED = 'RECEIVE_SAVED';
 
 export function getHomeGallery() {
   return {
@@ -105,8 +107,21 @@ export function getMapPosts() {
   };
 }
 
-export function receiveMapPost() {
+export function receiveMapPost(data) {
   return {
     type: RECEIVE_MAP_POSTS,
+    data,
+  };
+}
+export function getSaved(userId) {
+  return {
+    type: GET_SAVED,
+    userId,
+  };
+}
+export function receiveSaved(data) {
+  return {
+    type: RECEIVE_SAVED,
+    data,
   };
 }

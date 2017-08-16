@@ -5,7 +5,7 @@ import { Entypo, Ionicons, SimpleLineIcons, MaterialCommunityIcons } from '@expo
 import styles from './style';
 
 const { height } = Dimensions.get('window');
-const ToolTag = ({ label, iconName, iconType }) => {
+const ToolTag = ({ label, iconName, iconType, onPress }) => {
   let leftIcon;
   const iconSize = height / 25;
   if (iconType === 'SimpleLineIcons') {
@@ -16,7 +16,11 @@ const ToolTag = ({ label, iconName, iconType }) => {
     leftIcon = <Ionicons size={iconSize} name={iconName} />;
   }
   return (
-    <TouchableOpacity style={styles.container} activeOpacity={0.3}>
+    <TouchableOpacity
+      style={styles.container}
+      activeOpacity={0.3}
+      onPress={onPress}
+    >
       {leftIcon}
       <Text style={styles.label}>{label}</Text>
       <Entypo name="chevron-right" size={iconSize} color="#1069ff" />

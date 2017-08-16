@@ -1,6 +1,8 @@
 import React from 'react';
-import { View, Image } from 'react-native';
+import { View } from 'react-native';
 import getStyles from '../styles/SliderEntry.style';
+import PostWrapper from '../../../components/PostWrapper';
+import PostImage from '../../../components/post-image';
 
 const SliderEntry = ({ data, containerWidth, containerHeight }) => {
   const styles = getStyles(containerWidth, containerHeight);
@@ -8,10 +10,9 @@ const SliderEntry = ({ data, containerWidth, containerHeight }) => {
     <View
       style={styles.styles.slideInnerContainer}
     >
-      <Image
-        source={{ uri: data.image }}
-        style={styles.styles.image}
-      />
+      <PostWrapper>
+        <PostImage {...data} />
+      </PostWrapper>
     </View>
   );
 };

@@ -15,13 +15,15 @@ export function initApp(App) {
   };
 }
 
-export function receiveInitApp(fbToken, ggToken, firstOpen, locale) {
+export function receiveInitApp(fbToken, ggToken, firstOpen, locale, userId, location) {
   return {
     type: RECEIVE_INIT_APP,
     fbToken,
     ggToken,
     firstOpen,
     locale,
+    userId,
+    location,
   };
 }
 

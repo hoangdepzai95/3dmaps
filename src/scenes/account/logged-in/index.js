@@ -5,9 +5,10 @@ import I18n from 'i18n-js';
 
 import { logOut, changeLocale } from '../../../actions/auth';
 import { resetData } from '../../../actions/fetchData';
+import { pushSubTab } from '../../../actions/layout';
 import styles from './style';
 import ToolTag from '../ToolTag';
-
+import Saved from '../../saved';
 
 class LoggedIn extends Component {
   logOut = () => {
@@ -23,6 +24,9 @@ class LoggedIn extends Component {
     this.props.dispatch(resetData());
     this.props.App.forceRender();
     this.props.dispatch(changeLocale(locale));
+  }
+  onPressSaved = () => {
+    this.props.dispatch(pushSubTab('stackAccount', 'saved'));
   }
   render() {
     const { userInfo, vnSelected, engSelected } = this.props;
@@ -63,11 +67,17 @@ class LoggedIn extends Component {
           <Text style={styles.userName}>{userInfo.fullname}</Text>
         </View>
         <View style={styles.footerTools}>
-          <ToolTag label={I18n.t('SAVED_CONTENTS')} iconType="Ionicons" iconName="md-heart-outline" />
+          <ToolTag
+            label={I18n.t('SAVED_CONTENTS')}
+            iconType="Ionicons"
+            iconName="md-heart-outline"
+            onPress={this.onPressSaved}
+          />
           <ToolTag label={I18n.t('ACCOUNT_SETTINGS')} iconType="SimpleLineIcons" iconName="settings" />
           <ToolTag label={I18n.t('HELP_AND_SUPPORT')} iconType="MaterialCommunityIcons" iconName="information-outline" />
         </View>
         <Text style={styles.bottomText}>{I18n.t('COPYRIGHT_TEXT')}</Text>
+        <Saved />
       </View>
     );
   }

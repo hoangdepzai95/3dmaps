@@ -9,7 +9,6 @@ export default class Slider extends Component {
     this.dataSource = new ViewPager.DataSource({
       pageHasChanged: (p1, p2) => p1 !== p2,
     });
-    this.data = this.dataSource.cloneWithPages(this.props.images);
   }
   renderPage = (data) => {
     const { width } = this.props;
@@ -21,6 +20,7 @@ export default class Slider extends Component {
     );
   }
   render() {
+    this.data = this.dataSource.cloneWithPages(this.props.images);
     return (
       <ViewPager
         style={this.props.style}

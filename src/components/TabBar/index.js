@@ -57,11 +57,13 @@ class TabBar extends Component {
     }
   }
   onPressBack = () => {
-    const { activeTab } = this.props;
+    const { activeTab, stackAccount } = this.props;
     if (activeTab === 'home') {
       this.props.dispatch(popSubTab('stackHome'));
     } else if (activeTab === 'experience') {
       this.props.dispatch(popSubTab('stackExperience'));
+    } else if (activeTab === '_account' && stackAccount.length) {
+      this.props.dispatch(popSubTab('stackAccount'));
     } else {
       this.props.dispatch(backTab());
     }
@@ -70,12 +72,13 @@ class TabBar extends Component {
     this.scrollView = scrollView;
   }
   handelBackAndroid = () => {
-    const { activeTab, stackHome, stackExperience } = this.props;
+    const { activeTab, stackHome, stackExperience, stackAccount } = this.props;
     if (
       activeTab === '_account' ||
       activeTab === '_comment' ||
       (stackHome.length && activeTab === 'home') ||
-      (stackExperience.length && activeTab === 'experience')
+      (stackExperience.length && activeTab === 'experience') ||
+      (stackAccount.length && activeTab === '_account')
     ) {
       this.onPressBack();
       return true;
@@ -147,7 +150,7 @@ class TabBar extends Component {
     this.props.showHeader();
   }
   renderTabs = (isMainTab) => {
-    const { activeTab } = this.props;
+    const { activeTab, stackAccount } = this.props;
     const marginLeft = this.tabSpace ? this.tabSpace / 2 : 0;
     const iconSize = height / 25;
     return (
@@ -196,7 +199,7 @@ class TabBar extends Component {
             : null
           }
           {
-            activeTab === '_account' ?
+            activeTab === '_account' && !stackAccount.length ?
               <View style={styles.profile}>
                 <Text>{I18n.t('PROFILE')}</Text>
               </View>
@@ -209,9 +212,16 @@ class TabBar extends Component {
               </View>
               : null
           }
+          {
+            stackAccount[0] === 'saved' && activeTab === '_account' ?
+              <View style={styles.profile}>
+                <Text>{I18n.t('SAVED')}</Text>
+              </View>
+              : null
+          }
         </View>
         {
-          activeTab === '_comment' ?
+          activeTab === '_comment' || stackAccount.length ?
             <View style={styles.rightArea} />
             :
             <TouchableOpacity
@@ -227,7 +237,7 @@ class TabBar extends Component {
   isMainTab() {
     const { activeTab, stackHome, stackExperience } = this.props;
     let rs = true;
-    if (activeTab === '_account' || activeTab === '_comment') {
+    if (activeTab === '_account' || activeTab === '_comment' || activeTab === '_saved') {
       rs = false;
     } else if ((activeTab === 'home' && stackHome.length) || (activeTab === 'experience' && stackExperience.length)) {
       rs = false;
@@ -295,5 +305,6 @@ export default connect((state) => {
     prevTab: state.layout.prevTab,
     stackHome: state.layout.stackHome,
     stackExperience: state.layout.stackExperience,
+    stackAccount: state.layout.stackAccount,
   };
 })(TabBar);

@@ -3,12 +3,11 @@ import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import TimeAgo from '../../../lib/react-native-timeago';
 import styles from './style';
-import { setActiveTab } from '../../../actions/layout';
 
 class Comment extends Component {
   onPressComment = () => {
     if (this.props.disable) return;
-    this.props.dispatch(setActiveTab('_comment', 'Post'));
+    this.props.openComments();
   }
   render() {
     const { comment, style, disable } = this.props;

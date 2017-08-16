@@ -16,82 +16,15 @@ const { height, width } = Dimensions.get('window');
 class Map extends Component {
   constructor(props) {
     super(props);
+    const { location } = this.props;
     this.state = {
       region: {
-        longitude: -122,
-        latitude: 37,
-        longitudeDelta: 1,
-        latitudeDelta: 1,
+        longitude: location ? location.longitude : 105.84197,
+        latitude: location ? location.latitude : 21.0177,
+        longitudeDelta: 0.05,
+        latitudeDelta: 0.05,
       },
       activePostIndex: 1,
-      posts: [
-        {
-          coordinate: {
-            longitude: -122.5,
-            latitude: 37.01,
-          },
-          title: 'post1',
-          image: 'http://maapvn.com/admin/images/post/IMG0000000145.jpeg?1494490153',
-          rate: 4,
-          tags: ['Experiance', 'Place', 'Home', 'House', 'What', 'Shopping'],
-          address: 'Golden place, tu liem , ha noi',
-        },
-        {
-          coordinate: {
-            longitude: -122.6,
-            latitude: 37.04,
-          },
-          title: 'post2',
-          image: 'http://maapvn.com/admin/images/post/IMG0000000140.jpeg?1494409196',
-          rate: 3,
-          tags: ['Experiance', 'Place', 'Home', 'House', 'What', 'Shopping'],
-          address: 'Golden place, tu liem , ha noi',
-        },
-        {
-          coordinate: {
-            longitude: -121,
-            latitude: 37.06,
-          },
-          title: 'post3',
-          image: 'http://maapvn.com/admin/images/post/IMG0000000059.jpeg?1494399433',
-          rate: 1,
-          tags: ['Experiance', 'Place', 'Home', 'Play', 'What', 'Shopping'],
-          address: 'Golden place, tu liem , ha noi',
-        },
-        {
-          coordinate: {
-            longitude: -120,
-            latitude: 37.16,
-          },
-          title: 'post6',
-          image: 'http://maapvn.com/admin/images/post/IMG0000000059.jpeg?1494399433',
-          rate: 4,
-          tags: ['Experiance', 'Place', 'Home', 'Dog', 'What', 'Shopping'],
-          address: 'Golden place, ha dong , ha noi',
-        },
-        {
-          coordinate: {
-            longitude: -123,
-            latitude: 37.26,
-          },
-          title: 'post4',
-          image: 'http://maapvn.com/admin/images/post/IMG0000000059.jpeg?1494399433',
-          rate: 2,
-          tags: ['Experiance', 'Place', 'Cat', 'House', 'What', 'Big'],
-          address: ' place, vu tron phung , ha noi',
-        },
-        {
-          coordinate: {
-            longitude: -122.3,
-            latitude: 37.16,
-          },
-          title: 'post7',
-          image: 'http://maapvn.com/admin/images/post/IMG0000000059.jpeg?1494399433',
-          rate: 3,
-          tags: ['Experiance', 'Place', 'Home', 'What', 'Shopping'],
-          address: 'Golden place, hai ba trung , ha noi',
-        },
-      ],
     };
   }
   componentWillReceiveProps(nextProps) {
@@ -116,14 +49,15 @@ class Map extends Component {
     this.setState({ activePostIndex: index, region });
   }
   renderPost = (posts) => {
+    const { activePostIndex } = this.state;
     return (
       posts.map((post, index) => {
         return (
           <MapView.Marker
             coordinate={post.coordinate}
-            key={post.title}
-            pinColor="#42b983"
+            pinColor={activePostIndex === index ? '#7076eb' : '#42b983'}
             onPress={this.onPressMarker.bind(this, post, index)}
+            key={post.id}
           >
             <MapView.Callout onPress={this.onPressCallOut.bind(this, post, index)}>
               <View>
@@ -136,15 +70,15 @@ class Map extends Component {
     );
   }
   onSnapToItem = (index) => {
-    const { posts } = this.state;
+    const { posts } = this.props;
     const region = _.cloneDeep(this.state.region);
     region.latitude = posts[index].coordinate.latitude;
     region.longitude = posts[index].coordinate.longitude;
     this.setState({ activePostIndex: index, region });
   }
   render() {
-    const { posts, region, activePostIndex } = this.state;
-    const { loading } = this.props;
+    const { region, activePostIndex } = this.state;
+    const { loading, posts } = this.props;
     const activePost = posts[activePostIndex];
     if (loading) {
       return (
@@ -175,7 +109,7 @@ class Map extends Component {
             <View style={styles.rating}>
               <Text style={styles.boldText}>{activePost.title}</Text>
               <StarRatingBar
-                score={activePost.rate}
+                score={activePost.rating}
                 allowsHalfStars={false}
                 accurateHalfStars={false}
                 readOnly
@@ -194,7 +128,7 @@ class Map extends Component {
                 })
               }
             </View>
-            <Text style={styles.textFooter}>{activePost.address}</Text>
+            <Text style={styles.textFooter}>{activePost.formatedAddress}</Text>
             <Text style={styles.textFooter}>5 Likes 10 Reviews</Text>
           </View>
         </View>
@@ -206,5 +140,8 @@ export default connect((state) => {
   return {
     loading: !state.data.maps.loaded,
     activeTab: state.layout.activeTab,
+    locale: state.auth.locale,
+    posts: state.data.postsData.maps,
+    location: state.auth.location ? state.auth.location.coords : null,
   };
 })(Map);

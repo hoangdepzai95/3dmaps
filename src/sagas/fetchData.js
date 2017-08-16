@@ -13,6 +13,10 @@ import {
   receiveComments,
   POST_COMMENT,
   receiveComment,
+  GET_MAP_POSTS,
+  receiveMapPost,
+  GET_SAVED,
+  receiveSaved,
  } from '../actions/fetchData';
 import Api from '../api';
 import alert from '../util/alert';
@@ -85,10 +89,36 @@ function* postComment(action) {
 function* watchPostComment() {
   yield takeLatest(POST_COMMENT, postComment);
 }
+function* getMapPosts(action) {
+  try {
+    const response = yield call(Api.getMapPosts);
+    yield put(receiveMapPost(response.data));
+  } catch (err) {
+  }
+}
+
+function* watchGetMapPosts() {
+  yield takeLatest(GET_MAP_POSTS, getMapPosts);
+}
+function* getSaved(action) {
+  try {
+    const response = yield call(Api.getSaved, 1);
+    console.log(response);
+    yield put(receiveSaved(response.data));
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+function* watchGetsaved() {
+  yield takeLatest(GET_SAVED, getSaved);
+}
 export function* fetchData() {
   yield fork(watchGetHomeGallery);
   yield fork(watchGetExperienceCategory);
   yield fork(watchGetPost);
   yield fork(watchGetComments);
   yield fork(watchPostComment);
+  yield fork(watchGetMapPosts);
+  yield fork(watchGetsaved);
 }

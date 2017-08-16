@@ -81,10 +81,9 @@ class Comments extends Component {
 }
 
 export default connect((state) => {
-  const type = state.layout.commentType;
   return {
-    type,
-    post: state.layout.activePost[type === 'Post' ? 'home' : 'experience'],
+    type: state.layout.commentItemType,
+    post: state.layout.activePost[state.layout.commentType],
     userInfo: state.auth.userInfo,
     currentPage: state.data.comments.currentPage,
     loading: state.data.comments.loading,

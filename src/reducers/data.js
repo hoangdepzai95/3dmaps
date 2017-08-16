@@ -9,18 +9,21 @@ import {
   GET_COMMENTS,
   RECEIVE_COMMENTS,
   RECEIVE_COMMENT,
+  RECEIVE_MAP_POSTS,
+  RECEIVE_SAVED,
 } from '../actions/fetchData';
 import { PER_PAGE } from '../config';
 
 const initialState = {
   home: { loaded: false, data: [] },
   experience: { loaded: false, data: [] },
-  maps: { loaded: false, data: [] },
+  maps: { loaded: false },
+  saved: { loaded: false, dta: [] },
   postsData: {
     gallery: {},
     category: {},
-    savedContent: {},
-    maps: {},
+    saved: {},
+    maps: [],
   },
   comments: {
     data: [],
@@ -44,8 +47,9 @@ function getImages(images) {
     return image;
   });
 }
-function formatPosts(posts, isExperience) {
+function formatPosts(posts, isExperience, type) {
   return posts.map((post) => {
+    if (type === 'saved') isExperience = post.object_type === 'Experience';
     post.formatedAddress = [
       post.address.detail,
       post.address.district.name,
@@ -54,17 +58,23 @@ function formatPosts(posts, isExperience) {
     post.images = getImages(post.images);
     if (!isExperience) post.formatedUrl = stripIframeUrl(post.matterport_url);
     post.trending = _.random(0, 10) < 3;
-    if (isExperience) post.seo.featured_image = `http://staging.3dmaps.vn${post.seo.featured_image}`;
+    if (post.latlon) {
+      post.coordinate = {
+        longitude: parseFloat(post.latlon.split(',')[1]),
+        latitude: parseFloat(post.latlon.split(',')[0]),
+      };
+    }
     return post;
   });
 }
-function formatPostData(galleries, isExperience) {
-  const field = isExperience ? 'experiences' : 'posts';
+function formatPostData(galleries, isExperience, type) {
+  let field = isExperience ? 'experiences' : 'posts';
+  if (type === 'saved') field = 'items';
   let postsData = {};
   let rs = galleries.filter(gallery => gallery[field].length);
   rs = rs.map((gallery) => {
     gallery.name = gallery.name.toUpperCase();
-    gallery[field] = formatPosts(gallery[field], isExperience);
+    gallery[field] = formatPosts(gallery[field], isExperience, type);
     postsData[gallery.id] = {
       currentPage: 1,
       loading: false,
@@ -74,6 +84,13 @@ function formatPostData(galleries, isExperience) {
     return gallery;
   });
   return { rs, postsData };
+}
+function formatMapPost(posts) {
+  return posts.map((post) => {
+    const isExperience = typeof post.post_id === 'undefined';
+    post.tags = [];
+    return formatPosts([post], isExperience)[0];
+  });
 }
 const data = (state = initialState, action) => {
   const postsData = _.clone(state.postsData);
@@ -96,6 +113,16 @@ const data = (state = initialState, action) => {
       return _.assign({}, state,
         {
           experience: { loaded: true, data: experienceData.rs },
+          postsData,
+        },
+      );
+    }
+    case RECEIVE_SAVED: {
+      const savedData = formatPostData(action.data, false, 'saved');
+      postsData.saved = savedData.postsData;
+      return _.assign({}, state,
+        {
+          saved: { loaded: true, data: savedData.rs },
           postsData,
         },
       );
@@ -145,6 +172,9 @@ const data = (state = initialState, action) => {
       comments.loading = true;
       return _.assign({}, state, { comments });
     }
+    case RECEIVE_MAP_POSTS:
+      postsData.maps = formatMapPost(action.data);
+      return _.assign({}, state, { postsData, maps: { loaded: true } });
     default:
       return state;
 
