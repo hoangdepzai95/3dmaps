@@ -189,7 +189,6 @@ class PostDetail extends Component {
 
 export default connect((state, ownProps) => {
   const post = state.layout.activePost[ownProps.type];
-  console.log(post);
   const empty = (ownProps.type === 'home' && _.last(state.layout.stackHome) !== 'postDetail') ||
                 (ownProps.type === 'experience' && _.last(state.layout.stackExperience) !== 'postDetail') ||
                 (ownProps.type === 'saved' && _.last(state.layout.stackAccount) !== 'postDetail') ||

@@ -9,5 +9,8 @@ const styles = StyleSheet.create({
     bottom: 0,
     zIndex: 999,
   },
+  header: {
+    justifyContent: 'space-between',
+  },
 });
 export default styles;

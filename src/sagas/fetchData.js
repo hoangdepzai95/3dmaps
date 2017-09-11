@@ -103,10 +103,8 @@ function* watchGetMapPosts() {
 function* getSaved(action) {
   try {
     const response = yield call(Api.getSaved, 1);
-    console.log(response);
     yield put(receiveSaved(response.data));
   } catch (err) {
-    console.log(err);
   }
 }
 

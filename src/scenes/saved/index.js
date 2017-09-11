@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, ScrollView } from 'react-native';
+import { View, ScrollView, Text } from 'react-native';
 import { connect } from 'react-redux';
 import { getSaved } from '../../actions/fetchData';
 import Loading from '../../components/Loading';
@@ -32,6 +32,14 @@ class HomeTab extends Component {
               bounces={false}
               bouncesZoom={false}
             >
+              <View style={styles.header}>
+                <View>
+                  <Text>Invite frineds</Text>
+                </View>
+                <View>
+                  <Text>Invite frineds</Text>
+                </View>
+              </View>
               <Galleries />
               <View style={homeStyles.footerSpace} />
             </ScrollView>

@@ -303,7 +303,6 @@ var ViewPager = React.createClass({
     return (
       <View style={{flex: 1}}
         onLayout={(event) => {
-            // console.log('ViewPager.onLayout()');
             var viewWidth = event.nativeEvent.layout.width;
             if (!viewWidth || this.state.viewWidth === viewWidth) {
               return;
