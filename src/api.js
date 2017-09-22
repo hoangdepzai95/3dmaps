@@ -54,8 +54,8 @@ export default {
       return axios.get(`posts?locale=${getLocale()}&page=${page}&per_page=${PER_PAGE}&gallery_id=${id}`)
     }
   },
-  getSaved(userId) {
-    return axios.get(`favorites?user_id=${userId}`);
+  getSaved(userId){
+    return axios.get(`favorites?user_id=${userId}&items=${PER_PAGE}`);
   },
   getComments(postId, postType, page) {
     return axios.get(`comments?item_id=${postId}&page=${page}&per_page=15&item_type=${postType}`);

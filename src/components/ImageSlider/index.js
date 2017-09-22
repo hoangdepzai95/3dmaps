@@ -12,7 +12,7 @@ export default class example extends Component {
     }
   }
   getSlides = () => {
-    const { source, containerHeight, containerWidth } = this.props;
+    const { source, containerHeight, containerWidth, type } = this.props;
     if (!source) {
       return null;
     }
@@ -23,6 +23,7 @@ export default class example extends Component {
           key={`carousel-entry-${index}`}
           even={(index + 1) % 2 === 0}
           data={data}
+          type={type}
           containerWidth={containerWidth}
           containerHeight={containerHeight}
         />

@@ -10,6 +10,7 @@ import {
   SET_ACTIVE_POST,
   SHARE_MAIN_PAGE,
   SET_ACTIVE_SAVED_GALLERY,
+  SET_ACTIVE_SAVE,
 } from '../actions/layout';
 import { RESET_DATA } from '../actions/fetchData';
 import { INIT_APP } from '../actions/auth';
@@ -23,6 +24,8 @@ const initialState = {
   stackHome: [],
   stackExperience: [],
   stackAccount: [],
+  stackSave: [],
+  stackMap: [],
   stackHistory: [],
   activeGallery: null,
   activeCategory: null,
@@ -31,9 +34,11 @@ const initialState = {
     home: null,
     experience: null,
     saved: null,
+    maps: null,
   },
   commentType: '',
   commentItemType: '',
+  activeSave: {},
 };
 
 const layout = (state = initialState, action) => {
@@ -81,6 +86,8 @@ const layout = (state = initialState, action) => {
       cloneState.stackExperience = [];
       return cloneState;
     }
+    case SET_ACTIVE_SAVE:
+      return _.assign({}, state, { activeSave: action.data });
     default:
       return state;
   }

@@ -9,6 +9,7 @@ export const SET_ACTIVE_CATEGORY = 'SET_ACTIVE_CATEGORY';
 export const SET_ACTIVE_SAVED_GALLERY = 'SET_ACTIVE_SAVED_GALLERY';
 export const SET_ACTIVE_POST = 'SET_ACTIVE_POST';
 export const SHARE_MAIN_PAGE = 'SHARE_MAIN_PAGE';
+export const SET_ACTIVE_SAVE = 'SET_ACTIVE_SAVE';
 
 export function setActiveTab(tabId, data) {
   return {
@@ -80,5 +81,12 @@ export function sharMainPage(instance) {
   return {
     type: SHARE_MAIN_PAGE,
     instance,
+  };
+}
+
+export function setActiveSave(data) {
+  return {
+    type: SET_ACTIVE_SAVE,
+    data,
   };
 }

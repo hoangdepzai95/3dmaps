@@ -3,12 +3,14 @@ import { MapView } from 'expo';
 import _ from 'lodash';
 import { Text, View, Dimensions } from 'react-native';
 import { connect } from 'react-redux';
+import I18n from 'i18n-js';
 import StarRatingBar from '../../lib/react-native-star-rating-view/StarRatingBar';
 
 import ImageSlider from '../../components/ImageSlider';
 import styles from './style';
 import startstyles from '../../styles/starRating';
 import Loading from '../../components/Loading';
+import PostDetail from '../post-detail';
 import { getMapPosts } from '../../actions/fetchData';
 
 const { height, width } = Dimensions.get('window');
@@ -78,7 +80,7 @@ class Map extends Component {
   }
   render() {
     const { region, activePostIndex } = this.state;
-    const { loading, posts } = this.props;
+    const { loading, posts, showPostDetail } = this.props;
     const activePost = posts[activePostIndex];
     if (loading) {
       return (
@@ -99,6 +101,7 @@ class Map extends Component {
         <View style={styles.suggestPlace} >
           <ImageSlider
             source={posts}
+            type="maps"
             containerWidth={width / 1.3}
             containerHeight={height / 5}
             onSnapToItem={this.onSnapToItem}
@@ -129,9 +132,17 @@ class Map extends Component {
               }
             </View>
             <Text style={styles.textFooter}>{activePost.formatedAddress}</Text>
-            <Text style={styles.textFooter}>5 Likes 10 Reviews</Text>
+            <View style={styles.colLine2}>
+              <Text style={[styles.likeText, styles.smallText]}>{activePost.like_num} {I18n.t('likes')} </Text>
+              <Text style={styles.smallText}>{activePost.reviews || 0} {I18n.t('reviews')}</Text>
+            </View>
           </View>
         </View>
+        {
+          showPostDetail ?
+            <PostDetail type="maps" />
+            : null
+        }
       </View>
     );
   }
@@ -143,5 +154,6 @@ export default connect((state) => {
     locale: state.auth.locale,
     posts: state.data.postsData.maps,
     location: state.auth.location ? state.auth.location.coords : null,
+    showPostDetail: !!state.layout.stackMap.find(o => o === 'postDetail'),
   };
 })(Map);

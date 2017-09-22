@@ -16,7 +16,7 @@ export function setUpI18n(locale) {
       Experience: 'Experience',
       RESET: 'RESET',
       SEE_ALL: 'SEE ALL',
-      NEW_BOARD: 'NEW_BOARD',
+      NEW_BOARD: 'NEW BOARD',
       Title: 'Title',
       Setting: 'Setting',
       Private: 'Private',
@@ -32,7 +32,7 @@ export function setUpI18n(locale) {
       HELP_AND_SUPPORT: 'HELP & SUPPORT',
       SAVED_CONTENTS: 'SAVED CONTENTS',
       SAVE_TO: 'SAVE TO',
-      INVITE_FRIEND: 'INVITE FRIEND',
+      INVITE_FRIEND: 'INVITE FRIENDS',
       CREATE_NEW: 'CREATE NEW',
       '3D_MAPS': '3D MAPS',
       SAVED: 'SAVED',
@@ -46,6 +46,8 @@ export function setUpI18n(locale) {
       reviews: 'reviews',
       Sign_In_To_Comment: 'Sign in to comment',
       SUGGESTED_POSTS: 'SUGGESTED POSTS',
+      share_content: 'share content',
+      Save: 'Save',
     },
     vi_VN: {
       HOME: 'TRANG CHỦ',
@@ -88,6 +90,8 @@ export function setUpI18n(locale) {
       reviews: 'đánh giá',
       Sign_In_To_Comment: 'Đăng nhập để bình luận',
       SUGGESTED_POSTS: 'Các bài đăng gợi ý',
+      share_content: 'chia sẻ nội dung',
+      Save: 'Lưu'
     },
   };
 }

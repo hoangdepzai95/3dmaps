@@ -12,6 +12,7 @@ import TabsContent from './TabsContent';
 import homeStyles from '../../styles/home';
 import Account from '../../scenes/account';
 import Comments from '../../scenes/post-detail/Comments';
+import Save from '../../scenes/saved/Save';
 
 const { height, width } = Dimensions.get('window');
 
@@ -57,13 +58,17 @@ class TabBar extends Component {
     }
   }
   onPressBack = () => {
-    const { activeTab, stackAccount } = this.props;
+    const { activeTab, stackAccount, stackSave, stackMap } = this.props;
     if (activeTab === 'home') {
       this.props.dispatch(popSubTab('stackHome'));
     } else if (activeTab === 'experience') {
       this.props.dispatch(popSubTab('stackExperience'));
     } else if (activeTab === '_account' && stackAccount.length) {
       this.props.dispatch(popSubTab('stackAccount'));
+    } else if (activeTab === '_save' && stackSave.length) {
+      this.props.dispatch(popSubTab('stackSave'));
+    } else if (activeTab === 'map' && stackMap.length) {
+      this.props.dispatch(popSubTab('stackMap'));
     } else {
       this.props.dispatch(backTab());
     }
@@ -72,13 +77,16 @@ class TabBar extends Component {
     this.scrollView = scrollView;
   }
   handelBackAndroid = () => {
-    const { activeTab, stackHome, stackExperience, stackAccount } = this.props;
+    const { activeTab, stackHome, stackExperience, stackAccount, stackSave, stackMap } = this.props;
     if (
       activeTab === '_account' ||
       activeTab === '_comment' ||
+      activeTab === '_save' ||
       (stackHome.length && activeTab === 'home') ||
       (stackExperience.length && activeTab === 'experience') ||
-      (stackAccount.length && activeTab === '_account')
+      (stackAccount.length && activeTab === '_account') ||
+      (stackSave.length && activeTab === '_save') ||
+      (stackMap.length && activeTab === 'map')
     ) {
       this.onPressBack();
       return true;
@@ -213,6 +221,13 @@ class TabBar extends Component {
               : null
           }
           {
+            activeTab === '_save' ?
+              <View style={styles.profile}>
+                <Text>{I18n.t('Save')}</Text>
+              </View>
+              : null
+          }
+          {
             stackAccount[0] === 'saved' && activeTab === '_account' ?
               <View style={styles.profile}>
                 <Text>{I18n.t('SAVED')}</Text>
@@ -235,11 +250,11 @@ class TabBar extends Component {
     );
   }
   isMainTab() {
-    const { activeTab, stackHome, stackExperience } = this.props;
+    const { activeTab, stackHome, stackExperience, stackMap } = this.props;
     let rs = true;
-    if (activeTab === '_account' || activeTab === '_comment' || activeTab === '_saved') {
+    if (activeTab === '_account' || activeTab === '_comment' || activeTab === '_saved' || activeTab === '_save') {
       rs = false;
-    } else if ((activeTab === 'home' && stackHome.length) || (activeTab === 'experience' && stackExperience.length)) {
+    } else if ((activeTab === 'home' && stackHome.length) || (activeTab === 'experience' && stackExperience.length) || (activeTab === 'map' && stackMap.length)) {
       rs = false;
     }
     return rs;
@@ -257,7 +272,7 @@ class TabBar extends Component {
         <View style={[styles.mainContainer]}>
           <TabsContent tabs={this.props.children} onMounted={this.onTabContentMounted} />
           {
-            activeTab !== '_account' && activeTab !== '_comment' ?
+            activeTab !== '_account' && activeTab !== '_comment' && activeTab !== '_save' ?
             null :
             <View style={[{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: '#FFF', zIndex: 9999 }]}>
               {
@@ -268,6 +283,11 @@ class TabBar extends Component {
               {
                 activeTab === '_comment' ?
                   <Comments />
+                  : null
+              }
+              {
+                activeTab === '_save' ?
+                  <Save />
                   : null
               }
             </View>
@@ -306,5 +326,7 @@ export default connect((state) => {
     stackHome: state.layout.stackHome,
     stackExperience: state.layout.stackExperience,
     stackAccount: state.layout.stackAccount,
+    stackSave: state.layout.stackSave,
+    stackMap: state.layout.stackMap,
   };
 })(TabBar);

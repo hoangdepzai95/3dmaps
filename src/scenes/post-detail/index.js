@@ -192,6 +192,7 @@ export default connect((state, ownProps) => {
   const empty = (ownProps.type === 'home' && _.last(state.layout.stackHome) !== 'postDetail') ||
                 (ownProps.type === 'experience' && _.last(state.layout.stackExperience) !== 'postDetail') ||
                 (ownProps.type === 'saved' && _.last(state.layout.stackAccount) !== 'postDetail') ||
+                (ownProps.type === 'maps' && _.last(state.layout.stackMap) !== 'postDetail') ||
                 !post;
   const itemType = typeof post.post_id !== 'undefined' ? 'Post' : 'Experience';
   return {

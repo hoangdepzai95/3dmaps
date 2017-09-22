@@ -102,7 +102,7 @@ function* watchGetMapPosts() {
 }
 function* getSaved(action) {
   try {
-    const response = yield call(Api.getSaved, 1);
+    const response = yield call(Api.getSaved, action.userId);
     yield put(receiveSaved(response.data));
   } catch (err) {
   }

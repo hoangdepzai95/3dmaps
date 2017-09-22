@@ -64,6 +64,7 @@ function formatPosts(posts, isExperience, type) {
         latitude: parseFloat(post.latlon.split(',')[0]),
       };
     }
+    post.rating = post.rating ? post.rating : _.random(2, 5);
     return post;
   });
 }
@@ -71,7 +72,7 @@ function formatPostData(galleries, isExperience, type) {
   let field = isExperience ? 'experiences' : 'posts';
   if (type === 'saved') field = 'items';
   let postsData = {};
-  let rs = galleries.filter(gallery => gallery[field].length);
+  let rs = galleries.filter(gallery => gallery[field].length || (type === 'saved'));
   rs = rs.map((gallery) => {
     gallery.name = gallery.name.toUpperCase();
     gallery[field] = formatPosts(gallery[field], isExperience, type);

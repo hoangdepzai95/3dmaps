@@ -49,4 +49,10 @@ export default StyleSheet.create({
   textFooter: {
     fontSize: 11,
   },
+  colLine2: {
+    flexDirection: 'row',
+  },
+  smallText: {
+    fontSize: 11,
+  },
 });

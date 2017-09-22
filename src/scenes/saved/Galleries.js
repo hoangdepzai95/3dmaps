@@ -6,6 +6,7 @@ import styles from '../../styles/home';
 import { pushSubTab, setActiveSavedGallery } from '../../actions/layout';
 import Posts from '../home/Posts';
 import { PER_PAGE } from '../../config';
+import Loading from '../../components/Loading';
 
 class Galleries extends Component {
   seeAll(id) {
@@ -13,28 +14,35 @@ class Galleries extends Component {
     this.props.dispatch(pushSubTab('stackAccount', 'gallery'));
   }
   render() {
-    const { savedData, postsData } = this.props;
+    const { savedData, postsData, loading } = this.props;
     return (
       <View style={{ flex: 1 }}>
         {
-          savedData.map((gallery) => {
-            return (
-              <View key={gallery.id} style={styles.gallery}>
-                <TouchableOpacity
-                  activeOpacity={0.6}
-                  onPress={this.seeAll.bind(this, gallery.id)}
-                >
-                  <View style={styles.card}>
-                    <Text style={styles.galleryTitle}>{gallery.name}</Text>
-                    <Text style={styles.seeAllText}>{I18n.t('SEE_ALL')}</Text>
-                  </View>
-                </TouchableOpacity>
-                <View style={styles.postRow}>
-                  <Posts posts={postsData.saved[gallery.id].data.slice(0, PER_PAGE)} type="saved" />
-                </View>
-              </View>
-            );
-          })
+          loading ?
+            <Loading />
+            :
+            <View>
+              {
+                savedData.map((gallery) => {
+                  return (
+                    <View key={gallery.id} style={styles.gallery}>
+                      <TouchableOpacity
+                        activeOpacity={0.6}
+                        onPress={this.seeAll.bind(this, gallery.id)}
+                      >
+                        <View style={styles.card}>
+                          <Text style={styles.galleryTitle}>{gallery.name}</Text>
+                          <Text style={styles.seeAllText}>{I18n.t('SEE_ALL')}</Text>
+                        </View>
+                      </TouchableOpacity>
+                      <View style={styles.postRow}>
+                        <Posts posts={postsData.saved[gallery.id].data.slice(0, PER_PAGE)} type="saved" />
+                      </View>
+                    </View>
+                  );
+                })
+              }
+            </View>
         }
       </View>
     );
@@ -43,6 +51,7 @@ class Galleries extends Component {
 
 export default connect((state) => {
   return {
+    loading: !state.data.saved.loaded,
     savedData: state.data.saved.data,
     postsData: state.data.postsData,
   };

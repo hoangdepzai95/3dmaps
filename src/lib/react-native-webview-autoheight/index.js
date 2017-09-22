@@ -30,27 +30,29 @@ const injectedScript = function() {
     {
       width = document.body.clientWidth
     }
-    const images = document.getElementsByTagName('img');
-    for (let i = 0; i < images.length; i++) {
-      images[i].setAttribute("style", `width: ${width}px; height: ${width * 0.65}px;`);
-    }
   }
-  window.onload = setSize;
   function waitForBridge() {
     if (window.postMessage.length !== 1){
-      setTimeout(waitForBridge, 200);
+      setTimeout(waitForBridge, 0);
     }
     else {
-      let height = 0;
-      if(document.documentElement.clientHeight>document.body.clientHeight)
+      let width = 0;
+      if(document.documentElement.clientWidth>document.body.clientWidth)
       {
-        height = document.documentElement.clientHeight
+        width = document.documentElement.clientWidth
       }
       else
       {
-        height = document.body.clientHeight
+        width = document.body.clientWidth
       }
-      postMessage(height + 20)
+      const images = document.getElementsByTagName('img');
+      for (let i = 0; i < images.length; i++) {
+        images[i].style.cssText = `width: ${200}px; height: ${200 * 0.65}px;`;
+      }
+      setTimeout(() => {
+        let height = document.body.offsetHeight
+        postMessage(height + 20);
+      }, 500)
     }
   }
   waitForBridge();
@@ -96,7 +98,7 @@ export default class MyWebView extends Component {
         scrollEnabled={this.props.scrollEnabled || false}
         onMessage={this._onMessage}
         javaScriptEnabled={true}
-        automaticallyAdjustContentInsets={true}
+        automaticallyAdjustContentInsets={false}
         {...this.props}
         style={[this.props.style, {height: _h}]}
       />

@@ -59,7 +59,7 @@ class Gallery extends Component {
 export default connect((state) => {
   return {
     postsData: state.data.postsData,
-    gallery: state.data.saved.data.find(o => o.id === state.layout.activeSavedGallery),
+    gallery: (state.data.saved.data || []).find(o => o.id === state.layout.activeSavedGallery),
     stackAccount: state.layout.stackAccount,
   };
 })(Gallery);

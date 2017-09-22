@@ -6,10 +6,16 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   favoriteIcon: {
-    tintColor: 'white',
+    tintColor: 'red',
+  },
+  iconWrapper: {
     position: 'absolute',
-    top: 10,
-    right: 10,
+    top: 5,
+  },
+  shareIcon: {
+    position: 'absolute',
+    top: 3,
+    right: 5,
   },
 });
 export default styles;

@@ -14,6 +14,8 @@ class PostWrapper extends Component {
       this.props.dispatch(pushSubTab('stackExperience', 'postDetail'));
     } else if (type === 'saved') {
       this.props.dispatch(pushSubTab('stackAccount', 'postDetail'));
+    } else if (type === 'maps') {
+      this.props.dispatch(pushSubTab('stackMap', 'postDetail'));
     }
   }
   render() {

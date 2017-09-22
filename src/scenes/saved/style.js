@@ -11,6 +11,19 @@ const styles = StyleSheet.create({
   },
   header: {
     justifyContent: 'space-between',
+    flexDirection: 'row',
+    paddingBottom: 15,
+  },
+  headerLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  headerRight: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  headerText: {
+    color: '#8f90fe',
   },
 });
 export default styles;
